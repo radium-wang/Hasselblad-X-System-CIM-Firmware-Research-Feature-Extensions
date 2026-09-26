@@ -1,0 +1,680 @@
+{
+  "compatibility": {
+    "blockers": [
+      "source and target use different Eagle2 device variants",
+      "target camera-service lacks the object-recognition property/callback contract",
+      "target userspace lacks dependencies required by the source ML runtime",
+      "model filename formats differ; cross-load compatibility remains unverified",
+      "vision kernel modules differ between source and target",
+      "DSP firmware differs between source and target",
+      "shared ML runtime libraries have different ABIs/builds"
+    ],
+    "differing_accelerator_modules": [
+      "lib/modules/vision_cnn.ko",
+      "lib/modules/vision_sgbm.ko",
+      "lib/modules/vision_vcr.ko"
+    ],
+    "differing_common_dependencies": [
+      "libc.so",
+      "libcnntk_cbb.so",
+      "libcutils.so",
+      "libdsp_frwk.so",
+      "libduml_fastrtps.so",
+      "libduml_frwk.so",
+      "libduml_hal.so",
+      "libduml_osal.so",
+      "libduml_util.so",
+      "libduml_vcodec.so",
+      "libdynamic_roi_cbb.so",
+      "libfw_util.so",
+      "libion.so",
+      "liblog.so",
+      "libm.so",
+      "libmot_cbb.so",
+      "libnn_framework.so",
+      "libreid_cbb.so"
+    ],
+    "differing_dsp_firmware": [
+      "firmware/dspf/ss_dsp0.fw",
+      "firmware/dspf/ss_dsp1.fw",
+      "firmware/dspf/ss_dsp2.fw"
+    ],
+    "direct_binary_transplant_ready": false,
+    "missing_target_dependencies": [
+      "libfacex_cbb.so",
+      "libkpt_tk_cbb.so",
+      "libopencv_world.so",
+      "libpoa_cbb.so",
+      "libpose3d_cbb.so",
+      "libvision_cnn.so",
+      "libvision_vcr.so"
+    ],
+    "same_abi": true,
+    "same_android_sdk": true,
+    "same_device_variant": false,
+    "source_backend_contract_complete": true,
+    "source_modes_complete": true,
+    "target_backend_contract_complete": false,
+    "target_modes_complete": false
+  },
+  "io_contract": {
+    "control": {
+      "property": "camera.object_detection",
+      "related_property": "camera.arbitrary_tracking",
+      "values": [
+        "E_ObjectDetection_Off",
+        "E_ObjectDetection_Human",
+        "E_ObjectDetection_Pet",
+        "E_ObjectDetection_Vehicle"
+      ]
+    },
+    "input": "live-view frames consumed by the ML graph",
+    "output": "ObjectInfo lists, AF object-detection callbacks, and tracking target updates"
+  },
+  "schema_version": 1,
+  "scope": "X2D II object-recognition backend to first-generation X2D",
+  "source": {
+    "accelerator_modules": {
+      "lib/modules/vision_cnn.ko": {
+        "sha256": "060fa24d051bf1cb106ddc2edde55543c29d57f7d22138c6a3e0c912d9375dc0",
+        "size": 74512
+      },
+      "lib/modules/vision_sgbm.ko": {
+        "sha256": "2be9bd22881ce12cd05d9e9bc94888dcdfeb32844b94c0cee963fc0aa032b568",
+        "size": 32120
+      },
+      "lib/modules/vision_vcr.ko": {
+        "sha256": "0a89a9a441ba9390ebbba0b2cac96e58b19e005f9478d764cd60c729e273e144",
+        "size": 66088
+      }
+    },
+    "camera_service": {
+      "backend_contract": {
+        "E_ObjectDetection": true,
+        "ObjectInfo": true,
+        "object_detection": true,
+        "onAfObjectDetectionCb": true,
+        "updateDetectedObjects": true
+      },
+      "object_modes": {
+        "E_ObjectDetection_Human": true,
+        "E_ObjectDetection_Off": true,
+        "E_ObjectDetection_Pet": true,
+        "E_ObjectDetection_Vehicle": true
+      },
+      "sha256": "51b9e02f8bfebf388be8dfa163c8e512bee19aeb8ae37a6712727ccc6f26a52d",
+      "size": 13269616
+    },
+    "dsp_firmware": {
+      "firmware/dspf/ss_dsp0.fw": {
+        "sha256": "5dd6da299227bca0d4bf3c1e92482ebcebf709216fc1e1e9efde8bd2cfab5344",
+        "size": 6100480
+      },
+      "firmware/dspf/ss_dsp1.fw": {
+        "sha256": "03f08813e18b577219986495c653b8ad1b58ed9edaad10ffb86cab4c29890572",
+        "size": 5838336
+      },
+      "firmware/dspf/ss_dsp2.fw": {
+        "sha256": "037fdd1476fcb0d738b1ce0f5933d8ddd64ce0a87862e0209dda394e5c6d8b5f",
+        "size": 5838336
+      }
+    },
+    "ml_runtime": {
+      "dependency_records": {
+        "libc.so": {
+          "sha256": "1af0737faf17f3589eb72e03efd31dc1316560b6c14b4c4e2f503d24287d13e4",
+          "size": 1131480
+        },
+        "libcnntk_cbb.so": {
+          "sha256": "0fa098f400839955d700b342492e64b72aacfb996f27568dfb9520a409522b73",
+          "size": 871016
+        },
+        "libcutils.so": {
+          "sha256": "36c1a5c850ebfb9bd1723147f0a32c6d017de54f35af81d0be816d7ea5a9b541",
+          "size": 134952
+        },
+        "libdl.so": {
+          "sha256": "0d40d030eda384fe7d99441954f82670333cb56eb55cb968098ed589a276b53f",
+          "size": 67496
+        },
+        "libdsp_frwk.so": {
+          "sha256": "4d82ab4602c063a52c53250344ea3a55fa6c4502f0a54d90ab8883ed7c5cbfff",
+          "size": 206360
+        },
+        "libduml_fastrtps.so": {
+          "sha256": "d474ccfc8d0ba6b1f9b95021b6ec35ab655ace935e53029e428adb0663d100f2",
+          "size": 6953104
+        },
+        "libduml_frwk.so": {
+          "sha256": "c37925331335c70e2624f987c670afe133ac18e4ae4e22ef47a1ca31b9a07906",
+          "size": 2709648
+        },
+        "libduml_hal.so": {
+          "sha256": "adfb1cf834584d5c2d3e7b8a49c8ff78a919f007b4fe4ee5442a658dafc71d20",
+          "size": 986368
+        },
+        "libduml_osal.so": {
+          "sha256": "f4ec5fa1c23caebc7d05f4adf5b77970f97d30a7e904d2cc9a4544cb846feaa0",
+          "size": 133504
+        },
+        "libduml_util.so": {
+          "sha256": "cf9a3ff433000007f85b19ee4c8d281a57824fa34bc8a0e75d8c97573a14ac72",
+          "size": 860536
+        },
+        "libduml_vcodec.so": {
+          "sha256": "4f7cdf6d676e4e7829eba44f371ec29474ed596d6d857d450c7f63422b02e9cf",
+          "size": 397960
+        },
+        "libdynamic_roi_cbb.so": {
+          "sha256": "172055cd3946ec30139d3f2aa2f4c6abd70e0be869bb2f07a71a21073ea964da",
+          "size": 834080
+        },
+        "libfacex_cbb.so": {
+          "sha256": "3f79f5f8ef7c3952ba6be1b8ee9c27d3719692462b54b0ff3488fccdfa08694d",
+          "size": 764376
+        },
+        "libfw_util.so": {
+          "sha256": "3e56db44845b23905355b6ef8550ff618d6b786be9de1057588d6de53db9e24d",
+          "size": 68264
+        },
+        "libion.so": {
+          "sha256": "4e2033b36c0787fb9e0c809e100d4b3b92e8ef76a48a10e768ca18ad13520188",
+          "size": 68200
+        },
+        "libkpt_tk_cbb.so": {
+          "sha256": "f6ba0b11b1530c33b8f11f0539bd148789577b1a62f536cd6aa49e7c0f2107b4",
+          "size": 346600
+        },
+        "liblog.so": {
+          "sha256": "2621adda0bfd10c089552e3c93f2cde8525510e152d71246380968576d200506",
+          "size": 136840
+        },
+        "libm.so": {
+          "sha256": "925e37ce054699db3b4cad6fe465d84ca344515d175c3bb64a5b4ed276f6a8a4",
+          "size": 265464
+        },
+        "libmot_cbb.so": {
+          "sha256": "1759321f8299e42de26780cb78ea9c8f63934cd0efc8ce3a7c6e624b767b653f",
+          "size": 1829496
+        },
+        "libnn_framework.so": {
+          "sha256": "97915622e7b985f3940fd5ff1f910308519d2ae4bfb43a34659c1a9342c88a4e",
+          "size": 1768040
+        },
+        "libopencv_world.so": {
+          "sha256": "fb2fd18b4df356ab788c186b338360665231be1b09905960fe84109c0e0b43f4",
+          "size": 9379664
+        },
+        "libpoa_cbb.so": {
+          "sha256": "90f676640e39c75016c37ec2d967f79b2b9d58f661162ff0074a84e7bd7397f6",
+          "size": 457144
+        },
+        "libpose3d_cbb.so": {
+          "sha256": "a42931b0866ac3b19ec7698023ee094ae7b841abca0c6ba6189bfb1ac6dbd714",
+          "size": 268776
+        },
+        "libreid_cbb.so": {
+          "sha256": "ada190db16898d296fe6c56508ad27d38ffc836099cdc697dd5522d8b312ee89",
+          "size": 1059432
+        },
+        "libvision_cnn.so": {
+          "sha256": "944aea14666ab1d663ae6e911adb34198b0912fa07b494c38663b0f7d3859dfc",
+          "size": 68472
+        },
+        "libvision_vcr.so": {
+          "sha256": "dfc13d267710d99bcb1d464622805dbb47b91420d5e6d4f281b00937264742d4",
+          "size": 68568
+        }
+      },
+      "needed": [
+        "libc.so",
+        "libcnntk_cbb.so",
+        "libcutils.so",
+        "libdl.so",
+        "libdsp_frwk.so",
+        "libduml_fastrtps.so",
+        "libduml_frwk.so",
+        "libduml_hal.so",
+        "libduml_osal.so",
+        "libduml_util.so",
+        "libduml_vcodec.so",
+        "libdynamic_roi_cbb.so",
+        "libfacex_cbb.so",
+        "libfw_util.so",
+        "libion.so",
+        "libkpt_tk_cbb.so",
+        "liblog.so",
+        "libm.so",
+        "libmot_cbb.so",
+        "libnn_framework.so",
+        "libopencv_world.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so",
+        "libreid_cbb.so",
+        "libvision_cnn.so",
+        "libvision_vcr.so"
+      ],
+      "sha256": "98351d0906f3056cf780c5bf2adce65f544bb258c18dd62cfadb01607bdb1788",
+      "size": 4234424
+    },
+    "model_formats": [
+      "json.eng.enc"
+    ],
+    "models": [
+      {
+        "path": "model/ml/pose2d_car.json.eng.enc",
+        "sha256": "4e33fb7312d55c830a5a1c89c71ad9cf94cf000d0357b6df369d33ac6c5f0e72",
+        "size": 2231296
+      },
+      {
+        "path": "model/ml/pose2d_person.json.eng.enc",
+        "sha256": "476427dce714d458f42d54e7dbc6054e70c47ab8267b024d31fd7a565af925e0",
+        "size": 2206368
+      },
+      {
+        "path": "model/ml/pose2d_pet.json.eng.enc",
+        "sha256": "026a6916592829ac233f20552a360c7078336dbbe084be0a5ede56ce1e3e51a0",
+        "size": 2140608
+      },
+      {
+        "path": "model/ml/reid.json.eng.enc",
+        "sha256": "8de7fd5135ff48c094965b926bc8849066ed03521aa90dea4e456edc124cf018",
+        "size": 2619488
+      },
+      {
+        "path": "model/ml/reid_negative_90.json.eng.enc",
+        "sha256": "bf31202ab61967b7bc67faf7984354a172c67d1f7255a5e83fdd2fb859ef4033",
+        "size": 1894240
+      },
+      {
+        "path": "model/ml/reid_positive_90.json.eng.enc",
+        "sha256": "ad2471858e713607a357532184950d644c6bbab298e0c7905c4632234948b0b6",
+        "size": 1894368
+      },
+      {
+        "path": "model/ml/release_lfe_20240929_e2_47c22e41-e10_320w_320h.json.eng.enc",
+        "sha256": "78473d26c59aa7f9706b465992d43a98f1bf5ce7bc018b135c01e1747004bb92",
+        "size": 234560
+      },
+      {
+        "path": "model/ml/search.json.eng.enc",
+        "sha256": "68cf2a46cc604a020c9c5be62cfacb6ab26df9341a59b2c3087d82e3f3e4d11f",
+        "size": 822368
+      },
+      {
+        "path": "model/ml/search_negative_90.json.eng.enc",
+        "sha256": "a1ae8ec88e14776be67bdc14b2918ad78b21fd14b569e45b08a932d79bad7df8",
+        "size": 822528
+      },
+      {
+        "path": "model/ml/search_positive_90.json.eng.enc",
+        "sha256": "47aba0954881bd6948b0b8fa4e6ec93ebcf371354a5f00803d28579bb0f38c6f",
+        "size": 822528
+      },
+      {
+        "path": "model/ml/template.json.eng.enc",
+        "sha256": "638b378ec25baaebf298bdcb38c094433851f03d0a7cda5898944d2443042d06",
+        "size": 642560
+      },
+      {
+        "path": "model/ml/template_negative_90.json.eng.enc",
+        "sha256": "6c0d3e4edd505dee16e01312e9b92ec4c024c4de26c545fae18be267ce010028",
+        "size": 643008
+      },
+      {
+        "path": "model/ml/template_positive_90.json.eng.enc",
+        "sha256": "88098781f1fce9efda9476dbe26020c3e7af2e3833bedab71a8a59e09558a5bc",
+        "size": 643744
+      },
+      {
+        "path": "model/ml/yolov8-n-car-n90.json.eng.enc",
+        "sha256": "1b49e4ccc40ccb417e284763c3cc333eb89288b94dbfdd0da2f11a95b214a0b6",
+        "size": 4364352
+      },
+      {
+        "path": "model/ml/yolov8-n-car-p90.json.eng.enc",
+        "sha256": "2482ee42414641378c3c50725700999c7e82143f4e5ac82cfc8efd7816d6932c",
+        "size": 4364288
+      },
+      {
+        "path": "model/ml/yolov8-n-car.json.eng.enc",
+        "sha256": "2ad34ef2489721bdd95dc4fdb5c4cbc1fc097d40549047d70b9acf0d7fea4d5a",
+        "size": 4364192
+      },
+      {
+        "path": "model/ml/yolov8-n-person-n90.json.eng.enc",
+        "sha256": "960092dfb98932b59be34b3cbcf3636cee88dd0af19b86af107b9e106065fea2",
+        "size": 4396864
+      },
+      {
+        "path": "model/ml/yolov8-n-person-p90.json.eng.enc",
+        "sha256": "aa88c9b72524bfdbbfee1c68afafa60d6eb2ee4cf88ae05f800f0c63c1c4ab92",
+        "size": 4397408
+      },
+      {
+        "path": "model/ml/yolov8-n-person.json.eng.enc",
+        "sha256": "b34379c6933d28982443ddf046adc6dc0722e790def2f5fa3db2c738729efbf4",
+        "size": 4396896
+      },
+      {
+        "path": "model/ml/yolov8-n-pet-n90.json.eng.enc",
+        "sha256": "20ba135e6601f973002f6b7130e7fa888cbd454e7c0413f4e5ef6bc88ab4ff81",
+        "size": 4206944
+      },
+      {
+        "path": "model/ml/yolov8-n-pet-p90.json.eng.enc",
+        "sha256": "48489b0bf68d2d91599bc21194da02f30a732e55d3f887a1de1e41357f439aa0",
+        "size": 4206976
+      },
+      {
+        "path": "model/ml/yolov8-n-pet.json.eng.enc",
+        "sha256": "6aff65ef7c658a6ebef11d17fa923eaf881ff78bd74042482d7b6945cbf852f0",
+        "size": 4206912
+      }
+    ],
+    "platform": {
+      "abi": "arm64-v8a",
+      "android_release": "9",
+      "android_sdk": "28",
+      "device": "eagle2_hb722",
+      "incremental": "316",
+      "model": "Android HB722 on Eagle2 HB722",
+      "product": "eagle2_hb722"
+    }
+  },
+  "target": {
+    "accelerator_modules": {
+      "lib/modules/vision_cnn.ko": {
+        "sha256": "355b8fe9a47f711a285658db185df0b254db9d8250de2b9a97015dcfdbb9d665",
+        "size": 602152
+      },
+      "lib/modules/vision_sgbm.ko": {
+        "sha256": "202e70f364d247a7de0a30e77a17cc5983833f627f344bf90e7aa54153a26307",
+        "size": 424904
+      },
+      "lib/modules/vision_vcr.ko": {
+        "sha256": "2813371b6f0c50c7841489fbfcfb0f8e0756f070ddda8d55d39210c69d301401",
+        "size": 604312
+      }
+    },
+    "camera_service": {
+      "backend_contract": {
+        "E_ObjectDetection": false,
+        "ObjectInfo": false,
+        "object_detection": false,
+        "onAfObjectDetectionCb": false,
+        "updateDetectedObjects": false
+      },
+      "object_modes": {
+        "E_ObjectDetection_Human": false,
+        "E_ObjectDetection_Off": false,
+        "E_ObjectDetection_Pet": false,
+        "E_ObjectDetection_Vehicle": false
+      },
+      "sha256": "fbcf828f73bca13f0c8b95e7dd0b95ac483ae36954ec06179098c8a1a65f9f82",
+      "size": 11294528
+    },
+    "dsp_firmware": {
+      "firmware/dspf/ss_dsp0.fw": {
+        "sha256": "c6351578a8e5a309e56d0432a6bcb4be401e23059d393f114bd00305d218d579",
+        "size": 1788608
+      },
+      "firmware/dspf/ss_dsp1.fw": {
+        "sha256": "8dbb4cbf98ca5b162ff908f90ae435178b31effbdbee5bb9da6abe59cf20364c",
+        "size": 1526464
+      },
+      "firmware/dspf/ss_dsp2.fw": {
+        "sha256": "d13f3ceb28ec6419d1e55f68c85ebb240bc09a8c5df1031c1d74483cb65edd34",
+        "size": 1526464
+      }
+    },
+    "ml_runtime": {
+      "dependency_records": {
+        "libc.so": {
+          "sha256": "40e9ea6efccfe8757b4afac57972c9a5cce745224d2dcf34ecddf3dfc0a3f7a6",
+          "size": 1126600
+        },
+        "libcnntk_cbb.so": {
+          "sha256": "5dbd77bdfc8fa05b353d3b224559505669a6aa09d5434302233e97ee5bcad886",
+          "size": 842344
+        },
+        "libcutils.so": {
+          "sha256": "5f9e390583b3f65cb4bb448d551e15baa862657221e182fb6aa8f5a117a0a594",
+          "size": 134952
+        },
+        "libdl.so": {
+          "sha256": "0d40d030eda384fe7d99441954f82670333cb56eb55cb968098ed589a276b53f",
+          "size": 67496
+        },
+        "libdsp_frwk.so": {
+          "sha256": "86206124455abb1e7271b25ce38124f3e6e2bc313a04e279654a34b2d3c8a083",
+          "size": 136984
+        },
+        "libduml_fastrtps.so": {
+          "sha256": "3ef1a9b8b9b46f9e1031dc85fa73b4072fbd52476eb98285cb66e2b7812da284",
+          "size": 5183352
+        },
+        "libduml_frwk.so": {
+          "sha256": "bb110a2c94e6ed5b69a99048f3a30db5760754ec12ff4d1bdd7f6f431139b81d",
+          "size": 1527752
+        },
+        "libduml_hal.so": {
+          "sha256": "77875f6f47a2137e5461c61789d44fdd8537e7359c8d7b43ec7ee4737fd15bb3",
+          "size": 592832
+        },
+        "libduml_osal.so": {
+          "sha256": "5b79188061cbb39fc94e67f7e52c40d3094b2a11669974b5141f0db181e6c5a5",
+          "size": 67960
+        },
+        "libduml_util.so": {
+          "sha256": "71dcc8de23133d25c415be948b02b6f43f02f05408a5349463a3dc51cc419d11",
+          "size": 529776
+        },
+        "libduml_vcodec.so": {
+          "sha256": "4c31d196cf52cff60bbb4aba7e38878d8de2f2f873592883e6ba27eaf3ddbebc",
+          "size": 332072
+        },
+        "libdynamic_roi_cbb.so": {
+          "sha256": "ff94694d20d5574d6002bb84634c7786fd9cbb3dd688d037ba86c2907b83128d",
+          "size": 1251800
+        },
+        "libfdc_cbb.so": {
+          "sha256": "c6bc5dca012ab9731447dd650b19f769279c5f867fa71bdcfd3937d9424f2afc",
+          "size": 891424
+        },
+        "libfw_util.so": {
+          "sha256": "d422ec46eeb66147e09771c7bde606e8cd17b615421353f8e3893a09a709435d",
+          "size": 68240
+        },
+        "libion.so": {
+          "sha256": "544ffbb9d66ffbf23b324186e19a0f43264120a202cae9e4c21dc566057e9b2a",
+          "size": 68200
+        },
+        "liblog.so": {
+          "sha256": "7821b454400fc8397995f174ce9bd89e537bf443c5e1ea9ec5313698bf69591e",
+          "size": 136832
+        },
+        "libm.so": {
+          "sha256": "9899ed7e41bfe5bc163a386492dca42af8172f5028b62722551ac6ab529dddaf",
+          "size": 265464
+        },
+        "libml_vcr_acc_drv.so": {
+          "sha256": "65c72720f272275d6035c93c25a948d5c4561d6cd75ea3245c4ceb8fd84e1c49",
+          "size": 124928
+        },
+        "libmot_cbb.so": {
+          "sha256": "675e24d4fcbc2301bd0e32ffb2e1ce285d1d835080604f6b80dae929a6d03d9b",
+          "size": 3598960
+        },
+        "libnn_framework.so": {
+          "sha256": "c616485b88a6c59d5113f761d19756a1ca7862c5e629d503524554acc9bfb089",
+          "size": 3921048
+        },
+        "libproxy_nn_client.so": {
+          "sha256": "274ba73e1106cad9cc5f686597180419f6dd1de9c00e48a25c10869f25304832",
+          "size": 69384
+        },
+        "libreid_cbb.so": {
+          "sha256": "1b9162cda2483db9e0ac5c10bed96e70789c40a16a7e9ff3668bf0767222bd04",
+          "size": 1395312
+        }
+      },
+      "needed": [
+        "libc.so",
+        "libcnntk_cbb.so",
+        "libcutils.so",
+        "libdl.so",
+        "libdsp_frwk.so",
+        "libduml_fastrtps.so",
+        "libduml_frwk.so",
+        "libduml_hal.so",
+        "libduml_osal.so",
+        "libduml_util.so",
+        "libduml_vcodec.so",
+        "libdynamic_roi_cbb.so",
+        "libfdc_cbb.so",
+        "libfw_util.so",
+        "libion.so",
+        "liblog.so",
+        "libm.so",
+        "libml_vcr_acc_drv.so",
+        "libmot_cbb.so",
+        "libnn_framework.so",
+        "libproxy_nn_client.so",
+        "libreid_cbb.so"
+      ],
+      "sha256": "60d73e138fd091fce49454f7a7806c4945e74a8ca2dcf2b1af902e5d9e6cd90a",
+      "size": 4513264
+    },
+    "model_formats": [
+      "other.eng.enc",
+      "tflite.eng.enc"
+    ],
+    "models": [
+      {
+        "path": "model/ml/assets/J_regressor_beta.bin.eng.enc",
+        "sha256": "68d7cc1ee11be2fe444053ea6308975dcfb5648a45d4c599095a771296406b03",
+        "size": 9632
+      },
+      {
+        "path": "model/ml/assets/J_template.bin.eng.enc",
+        "sha256": "b2dcf4979675041ada2841292209b6aa3886703937fa1c7499d440c8a7d0dde9",
+        "size": 672
+      },
+      {
+        "path": "model/ml/assets/bs_mean.bin.eng.enc",
+        "sha256": "6998491758959378055d2034d33350152d8bd4ed1e8ff0b360c14e3a2c3a6899",
+        "size": 1568
+      },
+      {
+        "path": "model/ml/assets/bs_std.bin.eng.enc",
+        "sha256": "e941e7325738adf9762f89478ee212f5180dfd79cecd0a6fc68b630f8ce8c3ae",
+        "size": 1568
+      },
+      {
+        "path": "model/ml/assets/mesh_25/lbs_weights.bin.eng.enc",
+        "sha256": "eee4b5e75395bedc3efadea11531b29a9feb2558bdd3d79b82ee6fdc4af06dca",
+        "size": 1120
+      },
+      {
+        "path": "model/ml/assets/mesh_25/posedirs.bin.eng.enc",
+        "sha256": "3363586780acaa372771eb46eeba05972e230cb06ab5c72761f510f5121b802c",
+        "size": 11424
+      },
+      {
+        "path": "model/ml/assets/mesh_25/shapedirs.bin.eng.enc",
+        "sha256": "2fb2c52d014363fdae2a6f00ad84d7c5f8e8ca0d1c615ee4836966e16d02ee76",
+        "size": 45632
+      },
+      {
+        "path": "model/ml/assets/mesh_25/v_template.bin.eng.enc",
+        "sha256": "8ffa41ccbcddfe571e4016ab5eedca28f7fa14be42ab279e03cb14ea969ef948",
+        "size": 928
+      },
+      {
+        "path": "model/ml/assets/mesh_500/lbs_weights.bin.eng.enc",
+        "sha256": "4eb2dfe108b262d06e128c84f6219ad43eb6f70b267453001f8d702d55c9b37e",
+        "size": 10624
+      },
+      {
+        "path": "model/ml/assets/mesh_500/posedirs.bin.eng.enc",
+        "sha256": "4c827e771135810eb6ab946dd954faad595a7f918547f91d18f6218d51da471b",
+        "size": 216608
+      },
+      {
+        "path": "model/ml/assets/mesh_500/shapedirs.bin.eng.enc",
+        "sha256": "27d558ff80197c18e49fed6aa7ec9b2aaa08b4dbe317c4915b4a58140207cc73",
+        "size": 900608
+      },
+      {
+        "path": "model/ml/assets/mesh_500/v_template.bin.eng.enc",
+        "sha256": "b177ced4f30bacd5a4a080c6ce72402435ab116b34fad444c67794a46df9c211",
+        "size": 6624
+      },
+      {
+        "path": "model/ml/assets/mesh_5023/lbs_weights.bin.eng.enc",
+        "sha256": "c7e4b08c4f7a5391a3e00711cebaa26edddac867d9c4b22fc03bd594f9ee080a",
+        "size": 101088
+      },
+      {
+        "path": "model/ml/assets/mesh_5023/n_template.bin.eng.enc",
+        "sha256": "b37a61c134e458e536a975e47f71a3b263d4c9d1caf5a0ec1d54b8ca107e166d",
+        "size": 60896
+      },
+      {
+        "path": "model/ml/assets/mesh_5023/posedirs.bin.eng.enc",
+        "sha256": "eee6102f6f3c2fc60d48609ddba82d77f52e374eea6fc3ccd2e034b06389b5bd",
+        "size": 2170560
+      },
+      {
+        "path": "model/ml/assets/mesh_5023/shapedirs.bin.eng.enc",
+        "sha256": "e4ae58afb279ef739d840321a5eed59f06e147319eca37ce3d372c556b763c96",
+        "size": 9042016
+      },
+      {
+        "path": "model/ml/assets/mesh_5023/v_template.bin.eng.enc",
+        "sha256": "d048ee0e1e513032d957b02d9f6766c2da86f6b04c081e1c0081453f43db0648",
+        "size": 60896
+      },
+      {
+        "path": "model/ml/assets/parents.bin.eng.enc",
+        "sha256": "1fdfc04e36774dca85ef7ad139ae3537a45d551c10bc07ae724457dd1bb96369",
+        "size": 640
+      },
+      {
+        "path": "model/ml/ec1706.prototxt.eng.enc",
+        "sha256": "9f1c7f8af3a8430e951fa6650f0b2397e0fc1119354a584cca7d2b667b1741c4",
+        "size": 6720
+      },
+      {
+        "path": "model/ml/faceEye.tflite.eng.enc",
+        "sha256": "8f0dfe58f8dc1b4d4107d9ad47beaedba1e3694198eaff09b3130662b14acaca",
+        "size": 746144
+      },
+      {
+        "path": "model/ml/fdc.tflite.eng.enc",
+        "sha256": "7ad9c25fc42a8f0973474c15cf2783392f38c2ac4cdbe1718a20f72ffe2d69bd",
+        "size": 7948800
+      },
+      {
+        "path": "model/ml/search.tflite.eng.enc",
+        "sha256": "902f65430796c73639945defcf5bca7e8f00888bfa078edfb131533dac87bbb8",
+        "size": 5367008
+      },
+      {
+        "path": "model/ml/template.tflite.eng.enc",
+        "sha256": "f7562467e9a539070866871c2929e00152c8f4aa5797e5dd2a3124fc6347a2a0",
+        "size": 5111264
+      }
+    ],
+    "platform": {
+      "abi": "arm64-v8a",
+      "android_release": "9",
+      "android_sdk": "28",
+      "device": "eagle2_ec1706_native",
+      "incremental": "24849",
+      "model": "Android NATIVE on Eagle2 EC1706",
+      "product": "eagle2_ec1706_native"
+    }
+  }
+}

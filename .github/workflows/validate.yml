@@ -1,0 +1,29 @@
+name: Validate public repository
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install offline test dependencies
+        run: python -m pip install pyelftools==0.32 capstone==5.0.6
+      - name: Publication safety check
+        run: python scripts/validate_public_repo.py
+      - name: AF-S candidate tests
+        working-directory: x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate
+        run: python -m unittest test_candidate.py
+      - name: Object-recognition contract tests
+        run: python -m unittest discover -s x2d/object-recognition/CodeTests/offline-contract -p 'test_*.py'
+      - name: Shutter timing analysis tests
+        run: python -m unittest discover -s x2d/CodeTests/shutter-animation-preview -p 'test_analyze_blackout.py'
+

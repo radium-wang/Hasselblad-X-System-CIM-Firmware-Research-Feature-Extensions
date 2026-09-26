@@ -1,0 +1,42 @@
+# Python and editor state
+__pycache__/
+*.py[cod]
+.DS_Store
+.idea/
+.vscode/
+
+# Local environments and caches
+.venv*/
+.research-cache/
+.cache/
+
+# Generated results
+**/outputs/
+**/artifacts/
+**/build/
+**/dist/
+**/native-package/
+*.log
+
+# Vendor firmware, extracted files, models and native binaries
+*.cim
+*.ota
+*.zip
+*.img
+*.dat
+*.elf
+*.so
+*.o
+*.a
+*.bin
+*.enc
+*.model
+
+# Device evidence and local credentials
+*device-report*
+*device-log*
+*.pem
+*.key
+*.p12
+*.dpapi
+

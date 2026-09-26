@@ -1,0 +1,415 @@
+{
+  "direct_runtime_substitution_symbol_complete": false,
+  "method": "unversioned ELF dynamic names; all lib64 libraries assumed visible",
+  "scope": "X2D II dji_ml imports against X2D system/lib64",
+  "source_imports_missing_in_target": [
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libcnntk_cbb.so"
+      ],
+      "symbol": "CNNTKCheck"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libcnntk_cbb.so"
+      ],
+      "symbol": "CNNTKCropOverlapRoi"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libcnntk_cbb.so"
+      ],
+      "symbol": "CNNTKSingleTrackerUpdate"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libcnntk_cbb.so"
+      ],
+      "symbol": "CNNTKTemplateSelect"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "CreatePoseEnhancer"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "EnhanceGeneralPose"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "FaceAttributes2Quality"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "FaceAttributesPostProcess"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "FaceReIDBoxExpand"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "FaceReIDDeInit"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "FaceReIDInit"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libreid_cbb.so"
+      ],
+      "symbol": "FeatureCheckForMainTarget"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libdynamic_roi_cbb.so"
+      ],
+      "symbol": "GetBodyBox"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libmot_cbb.so"
+      ],
+      "symbol": "JdePostProcess"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "Keypoints2Euler"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "symbol": "KptTkDeInit"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "symbol": "KptTkGenerateRoi"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "symbol": "KptTkInit"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so"
+      ],
+      "symbol": "KptTkProcess"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libdynamic_roi_cbb.so"
+      ],
+      "symbol": "MergeBodyEbedding_Det"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFCNNDeinit"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFCNNInit"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFImagePreprocessProcWithAuxConfig"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFUpdateOnlineWeight"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFVCRDeinit"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libnn_framework.so"
+      ],
+      "symbol": "NNFVCRInit"
+    },
+    {
+      "source_only_providers": [
+        "libpoa_cbb.so"
+      ],
+      "source_providers": [
+        "libpoa_cbb.so"
+      ],
+      "symbol": "PoaDeInit"
+    },
+    {
+      "source_only_providers": [
+        "libpoa_cbb.so"
+      ],
+      "source_providers": [
+        "libpoa_cbb.so"
+      ],
+      "symbol": "PoaInit"
+    },
+    {
+      "source_only_providers": [
+        "libpoa_cbb.so"
+      ],
+      "source_providers": [
+        "libpoa_cbb.so"
+      ],
+      "symbol": "PoaProcess"
+    },
+    {
+      "source_only_providers": [
+        "libpoa_cbb.so"
+      ],
+      "source_providers": [
+        "libpoa_cbb.so"
+      ],
+      "symbol": "PoaReset"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "Pose3DInit"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "ProcessGeneral2DPose"
+    },
+    {
+      "source_only_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "RefineBBox"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "RegisterFacereidDecryptCallback"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libmot_cbb.so"
+      ],
+      "symbol": "RegisterMOTaskInferCallback"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libmot_cbb.so"
+      ],
+      "symbol": "SetITMInfo"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "UpdateFaceBoxesStates"
+    },
+    {
+      "source_only_providers": [
+        "libfacex_cbb.so"
+      ],
+      "source_providers": [
+        "libfacex_cbb.so"
+      ],
+      "symbol": "UpdateMotResults"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "_Z12cbb_log_out_18ml_cbb_log_level_ePKcS1_iS1_z"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "_Z20load_encrypted_file_PKcPPcPFiPhjS3_PjE"
+    },
+    {
+      "source_only_providers": [
+        "libopencv_world.so",
+        "libperfetto_c.so"
+      ],
+      "source_providers": [
+        "libnn_framework.so",
+        "libopencv_world.so",
+        "libperfetto_c.so"
+      ],
+      "symbol": "_ZNSt6__ndk112__next_primeEm"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libduml_frwk.so"
+      ],
+      "symbol": "duss_bb_channel_create_by_json"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libduml_vcodec.so"
+      ],
+      "symbol": "duss_hal_attach_codec_venc"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libduml_vcodec.so"
+      ],
+      "symbol": "duss_hal_detach_codec_venc"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libduml_osal.so"
+      ],
+      "symbol": "duss_osal_timer_create_suspend"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libduml_fastrtps.so"
+      ],
+      "symbol": "duss_ps_multiple_devices_async_receive"
+    },
+    {
+      "source_only_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "source_providers": [
+        "libkpt_tk_cbb.so",
+        "libpoa_cbb.so",
+        "libpose3d_cbb.so"
+      ],
+      "symbol": "g_cbb_log_callback_"
+    },
+    {
+      "source_only_providers": [],
+      "source_providers": [
+        "libfw_util.so"
+      ],
+      "symbol": "plt_fw_verify_load2mem"
+    }
+  ],
+  "source_imports_missing_in_target_count": 48,
+  "source_strong_import_count": 385,
+  "source_unresolved_in_source": [],
+  "target_strong_import_count": 301,
+  "target_unresolved_in_target": []
+}
