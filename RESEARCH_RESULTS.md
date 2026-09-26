@@ -1,6 +1,88 @@
+# Research Results
+
+Updated: 2026-09-26.
+
+## Reproducibility scope
+
+The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) and the full [reproduction guide](REPRODUCE.md) for the safe offline evidence. It is a sanitized research release; camera-side reproduction still requires the exact authorized inputs described in that guide.
+
+- Reproducible from the repository alone: static audits, offline compatibility checks, candidate generators, host-side tests, and the documented analysis of the included source and research records.
+- Requires authorized exact-version inputs and hardware: menu runtime behavior, AF-S and AF-C experiments, stock face/eye detection behavior, and any camera-side validation. The required firmware trees, vendor libraries, compiled QML units, and device access are not distributed here.
+- Intentionally omitted: vendor firmware and binaries, derived QML units, encrypted models, DSP or kernel files, device logs, local build outputs, keys, and installation or root/ADB tooling that could directly reproduce an unauthenticated system-write chain.
+- Readers can audit and extend the research and reproduce its offline evidence. They cannot download this repository and recreate every device-side function or the exact camera state from the repository alone.
+
+## X2D menu extension
+
+- A candidate was implemented that preserves the stock menu, adds a twelfth entry named “耍起功能”, and uses an original SVG icon.
+- During temporary hardware testing, the operator confirmed the stock-style paging, upper-left back action, master switch, and AF-C sub-switch in both directions.
+- The default focus popup is AF-S/MF; after AF-C is enabled it becomes AF-S/AF-C/MF; after it is disabled the two-item list returns.
+- A one-minute watchdog restores the stock GUI and then clears the temporary payload and debug state.
+- A resident build, half-press return to live view, sleep/wake, first-render cost, and cross-reboot acceptance remain incomplete.
+
+## X2D AF-S speed-up
+
+- Two fixed-request Type2 direction-scan branches were located in `_exec_pdaf_afs_process` for version 4.2.0.
+- The offline candidate changes only those two Type2 requests to Type1; the 1,872-byte function changes two instructions and two bytes.
+- In the checked speed model, the request value changes from `0.25B` to `0.5B`; this does not mean that total focus time becomes twice as fast.
+- Four candidate tests pass. The candidate has not been accepted on hardware, and there are no low-light, close-focus, overshoot, thermal, or power measurements.
+
+## X2D AF-C
+
+- The stock 4.2.0 backend was confirmed to contain a continuous-autofocus state machine.
+- A hardware experiment observed a single-focus operation entering continuous-focus state and returning continuous success; releasing the control stopped it and returned to AF-S.
+- Opening `CameraUI.canChangeAfc` alone does not extend the Control Screen. The stock model contains only AF-S/MF and needs three additional model objects plus popup layout changes.
+- A temporary combined candidate passed menu-display and switch-flow checks. Long-term stability, power use, sleep, cross-reboot behavior, and a persistent production design remain incomplete.
+- The X2D II fast-AF stack cannot be copied directly: the two generations use different sensors, ranging hardware, AF ABI, and tuning stack.
+
+## X2D face/eye detection enablement
+
+- The first-generation X2D 4.2.0 stock runtime was confirmed to expose face/eye detection paths, including `FaceInfo`, `E_FaceDetection`, `setFaceDetectionMode`, and `setFaceRoiData`.
+- These stock interfaces are the documented basis for enabling and using the camera's eye-detection function. This is separate from the second-generation Human/Pet/Vehicle object-recognition backend.
+- The public evidence establishes the first-generation face/eye path and its ROI interface; it does not establish stable second-generation object recognition, eye-lock AF, or AF-C coupling.
+- The eye-detection path should remain independent: if an experimental object backend fails, stock face/eye detection and AF-S/AF-C must remain available.
+
+## X2D object recognition
+
+- The X2D II 1.3.16.2 to X2D 4.2.0 model containers, dependencies, symbols, DSP/kernel components, frame structures, and communication interfaces were audited.
+- A compatibility gate rejects packaging second-generation binaries directly as a first-generation candidate.
+- A second-generation Pet model returned `-10` at the first-generation stock verification entry and did not reach inference; a first-generation stock model passed the comparison path.
+- The frame-descriptor component passed host safety checks, an ARM64 build, and an in-camera synthetic-data self-test.
+- An isolated no-initialization link diagnostic for the second-generation stock libraries passed on first-generation hardware, but no model, tracking, or AF function was called.
+- An early CPU single-frame Vehicle detection took about 1.289 seconds and peaked at about 102 MB; the dynamic-box route was retired after stutter/flicker feedback.
+- Thirty-seven offline contract tests pass; seven are skipped because no valid fixed vendor input was provided.
+- Real frames, real-time recognition, stable tracking, AF ROI, and AF-C coupling remain incomplete.
+
+## X2D shutter animation and sound
+
+- A four-stage 400 ms shutter animation and browser preview were produced.
+- Software logs provided complete show/hide and restore samples of 995 ms and 663 ms; these are not optical screen-blackout durations.
+- The old direct-PCM approach interfered with stock notification sounds, so the work moved to the stock audio-client path; the operator confirmed that the revised one-shot preview was audible.
+- Audio assets are not in the repository, and their redistribution license has not been confirmed.
+- Cold boot, shutter-event coupling, and long-term coexistence with stock notification sounds remain to be accepted.
+
+## X2D II
+
+- The current material is regional offline research and checking scripts for 1.3.16.2.
+- First- and second-generation models are kept strictly separate; addresses, images, and validation conclusions are not reused across generations.
+
+## Materials not published
+
+This public candidate does not contain vendor binaries, derived QML units, device logs, personal identifiers, local build outputs, key material, regional license-signing modules, or tools that can directly reproduce an unauthenticated root/ADB/system-write chain. Related conclusions may be described in the repository, but original materials and high-risk proof of concept work require separate authorization, licensing, and coordinated disclosure review.
+
+---
+
 # 研究成果总表
 
 更新日期：2026-09-26。
+
+## 可复现范围
+
+仓库现在包含 [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) 和完整的[复现指南](REPRODUCE.md)，用于复现安全的离线证据。它仍是经过脱敏的研究发布版；相机侧复现需要按指南准备精确且获得授权的输入。
+
+- 仅凭仓库即可复现：静态审计、离线兼容性检查、候选生成器、电脑端测试，以及对仓库内源码和研究记录的分析。
+- 菜单运行时行为、AF-S 与 AF-C 实验、原厂人脸/眼部识别行为以及所有相机侧验证，需要获得授权的对应版本输入和实机。所需固件树、原厂库、编译后的 QML 单元和设备访问权限没有随仓库分发。
+- 有意不公开：厂商固件和二进制、派生 QML 单元、加密模型、DSP 或内核文件、设备日志、本机构建输出、密钥，以及可以直接复现未鉴权系统写入链路的安装器或 root/ADB 工具。
+- 读者可以审计和扩展研究，也可以复现离线证据；但不能只下载这个仓库，就重建全部设备侧功能或恢复相机的完全相同状态。
 
 ## X2D 菜单修改
 
@@ -24,6 +106,13 @@
 - 单独打开 `CameraUI.canChangeAfc` gate 不足以扩展 Control Screen；原厂模型只有 AF-S/MF，需额外的三项模型与弹窗布局。
 - 临时组合候选完成菜单显示和开关流程验收；长期稳定性、功耗、休眠、跨重启及正式持久化方案未完成。
 - X2D II 的快速 AF 栈不能直接复制：两代传感器、测距硬件、AF ABI 和调校栈不同。
+
+## X2D 人脸/眼部识别开启
+
+- 已确认第一代 X2D 4.2.0 原厂运行面保留人脸/眼部检测路径，包括 `FaceInfo`、`E_FaceDetection`、`setFaceDetectionMode` 和 `setFaceRoiData`。
+- 这些原厂接口构成开启和使用相机眼部识别功能的公开研究依据；它与第二代 Human / Pet / Vehicle 对象识别后端是两条不同路线。
+- 当前公开证据确认了第一代人脸/眼部路径及其 ROI 接口，但不等于第二代对象识别、眼部锁定对焦或 AF-C 联动已经稳定实现。
+- 眼部识别路径应保持独立：实验性对象后端失败时，原厂人脸/眼部识别以及 AF-S/AF-C 仍应可用。
 
 ## X2D 对象识别
 

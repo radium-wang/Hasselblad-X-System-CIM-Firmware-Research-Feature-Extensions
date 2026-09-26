@@ -8,10 +8,20 @@ This repository contains only source code, offline tools, tests, and sanitized r
 
 | Project | Public contents | Current status |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, object recognition, shutter animation, and offline firmware tools | Research and candidates; not a complete product |
+| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, object recognition, shutter animation, and offline firmware tools | Research and candidates; not a complete product |
 | [X2D II](x2d2/README.md) | Offline regional research for 1.3.16.2 | Not re-validated on hardware |
 
 See [RESEARCH_RESULTS.md](RESEARCH_RESULTS.md) for the complete status of the research results.
+
+## Reproduction
+
+Run the safe offline suite with:
+
+```sh
+python3 scripts/reproduce_offline.py
+```
+
+The complete reproduction guide, including exact-version inputs for authorized hardware tests, is in [REPRODUCE.md](REPRODUCE.md).
 
 ## Evidence levels
 
@@ -53,10 +63,20 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 | 项目 | 公开内容 | 当前状态 |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | 菜单扩展、AF-S 提速研究、AF-C、对象识别、快门动画与离线固件工具 | 研究与候选；并非完整产品 |
+| [X2D 100C](x2d/README.md) | 菜单扩展、AF-S 提速研究、AF-C、原厂人脸/眼部识别开启、对象识别、快门动画与离线固件工具 | 研究与候选；并非完整产品 |
 | [X2D II](x2d2/README.md) | 1.3.16.2 地区离线研究 | 未重新实机验证 |
 
 完整状态见[研究成果总表](RESEARCH_RESULTS.md)。
+
+## 复现
+
+运行安全离线套件：
+
+```sh
+python3 scripts/reproduce_offline.py
+```
+
+完整复现说明以及授权实机测试所需的精确版本输入见[复现指南](REPRODUCE.md)。
 
 ## 验证层级
 

@@ -2,7 +2,7 @@
 
 The repository has been sanitized locally, but the following human decisions remain before changing a GitHub repository to Public:
 
-- [ ] Choose the public author name in `LICENSE`.
+- [x] Choose the public author name in `LICENSE` (`Radium Wang`).
 - [ ] Configure GitHub private vulnerability reporting or replace the placeholder route in `SECURITY.md` with a private contact.
 - [ ] Replace the general entries in `THIRD_PARTY_NOTICES.md` with exact upstream commits, reused files and required license text.
 - [ ] Review every file in the first Git commit and confirm no vendor material or device evidence was added through Git LFS.
@@ -10,5 +10,4 @@ The repository has been sanitized locally, but the following human decisions rem
 - [ ] Create the GitHub repository as Private first; inspect Actions artifacts and the final tree before making it Public.
 - [ ] Use a research-preview release label and avoid claiming that AF speed, AF-C persistence or object recognition is production-ready.
 
-The local Git repository intentionally has no commit and no remote. Committing and publishing remain explicit user actions.
-
+The repository currently has a private GitHub remote and a `main` branch. Keep it private until the remaining license, security-contact, third-party-notice and final-tree reviews are complete; changing visibility is a separate publication decision.
