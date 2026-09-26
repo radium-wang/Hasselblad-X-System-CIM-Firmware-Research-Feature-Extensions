@@ -1,6 +1,6 @@
 # Reproduce the Research
 
-This guide is the entry point for reproducing the published research. It separates repository-only checks from camera-side experiments that require an authorized, exact-version input set.
+This guide is the entry point for reproducing the published research. Read the [Research Disclaimer](DISCLAIMER.md) first. It separates repository-only checks from camera-side experiments that require an authorized, exact-version input set.
 
 ## 1. Run the complete safe offline suite
 
@@ -48,6 +48,8 @@ Do not treat an offline candidate, a menu that renders, or a successful link dia
 # 复现研究成果
 
 本说明是复现入口。它把仅依赖仓库的检查，与必须使用获得授权的精确版本输入和实机的实验分开说明。
+
+开始前请先阅读[研究免责声明](DISCLAIMER.md)。
 
 ## 1. 运行完整的安全离线套件
 

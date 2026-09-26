@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as follows."
+type: software
+title: "Hasselblad X-System CIM Firmware Research & Feature Extensions"
+version: "research-preview"
+date-released: 2026-09-26
+authors:
+  - family-names: "Wang"
+    given-names: "Radium"
+license: "MIT"
+repository-code: "https://github.com/wanglei75348619-tech/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
+url: "https://github.com/wanglei75348619-tech/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
+keywords:
+  - Hasselblad
+  - X2D 100C
+  - firmware research
+  - autofocus
+  - reverse engineering
+  - CIM
+abstract: >-
+  An independent, sanitized research release covering Hasselblad X-System
+  CIM firmware formats, camera UI behavior, autofocus experiments, feature
+  extensions, and safe offline validation tools. Vendor firmware, extracted
+  proprietary binaries, device logs, and deployable system-write packages are
+  not included.

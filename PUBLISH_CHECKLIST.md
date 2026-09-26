@@ -3,6 +3,8 @@
 The repository has been sanitized locally, but the following human decisions remain before changing a GitHub repository to Public:
 
 - [x] Choose the public author name in `LICENSE` (`Radium Wang`).
+- [x] Add a standalone bilingual research disclaimer and link it from the repository entry points.
+- [x] Add GitHub citation metadata and a citation-only external research index.
 - [ ] Configure GitHub private vulnerability reporting or replace the placeholder route in `SECURITY.md` with a private contact.
 - [ ] Replace the general entries in `THIRD_PARTY_NOTICES.md` with exact upstream commits, reused files and required license text.
 - [ ] Review every file in the first Git commit and confirm no vendor material or device evidence was added through Git LFS.

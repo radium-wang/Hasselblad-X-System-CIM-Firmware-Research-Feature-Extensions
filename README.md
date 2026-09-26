@@ -4,6 +4,8 @@ An independent, non-official research project on Hasselblad X-System camera inte
 
 This repository contains only source code, offline tools, tests, and sanitized research findings that contributors are authorized to publish. Vendor firmware, original shared libraries, models, DSP or kernel files, extracted or modified QML compilation units, device logs, and local build products are not distributed here.
 
+**Research disclaimer:** read [DISCLAIMER.md](DISCLAIMER.md) before using any device-side material. This project is not affiliated with the referenced vendors, and all experiments are performed at the user's own risk and authorization.
+
 ## Contents
 
 | Project | Public contents | Current status |
@@ -12,6 +14,20 @@ This repository contains only source code, offline tools, tests, and sanitized r
 | [X2D II](x2d2/README.md) | Offline regional research for 1.3.16.2 | Not re-validated on hardware |
 
 See [RESEARCH_RESULTS.md](RESEARCH_RESULTS.md) for the complete status of the research results.
+
+## Research references and their contribution
+
+The external projects below helped shape the research questions and analysis
+methods. They are cited as provenance and acknowledgement, not as vendored
+dependencies or proof of the results in this repository.
+
+- [`x2d-cim-notes`](https://github.com/Konamill-bot/x2d-cim-notes) was the direct inspiration for investigating whether the X2D 100C's in-camera firmware retained an AF-C capability or a disabled AF-C path. It helped separate the questions of code-path presence, UI gating, and actual camera behavior.
+- [`hasselblad-cim-firmware-extractor`](https://github.com/YuHaoyua/hasselblad-cim-firmware-extractor) helped establish CIM container and extraction terminology for the offline firmware-format work.
+- [`x2d-pdaf-sim`](https://github.com/Konamill-bot/x2d-pdaf-sim) provided related PDAF decision-policy simulation context for the AF-S speed model; its simulation is not treated as hardware evidence.
+- [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) provided historical reverse-engineering and documentation context while remaining outside the X2D/X2D II implementation scope.
+- [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) provided adjacent factory-diagnostic-channel context; it is not evidence for the AF, face/eye, or object-recognition results here.
+
+See the [external research reference index](x2d/references/EXTERNAL-RESEARCH.md) for citation wording, license boundaries, and the distinction between inspiration and independently verified evidence.
 
 ## Reproduction
 
@@ -50,6 +66,8 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 - Report security issues privately according to [SECURITY.md](SECURITY.md).
 - Original project code is available under the [MIT License](LICENSE). This license does not cover vendor or third-party material that contributors are not authorized to license.
 - See [NOTICE.md](NOTICE.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source and third-party notices.
+- Read the [Research Disclaimer](DISCLAIMER.md) for authorization, device-risk, warranty, privacy, and liability boundaries.
+- GitHub citation metadata is provided in [`CITATION.cff`](CITATION.cff); external research provenance is listed in [X2D references](x2d/references/EXTERNAL-RESEARCH.md).
 
 ---
 
@@ -59,6 +77,8 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 本仓库只收录贡献者有权公开的源码、离线工具、测试和经过脱敏的研究结论。厂商固件、原厂共享库、模型、DSP 或内核文件、从原厂程序提取或修改的 QML 编译单元、设备日志及本机构建产物均不随仓库分发。
 
+**研究免责声明：** 使用任何实机相关材料前，请先阅读[研究免责声明](DISCLAIMER.md)。本项目与被提及的厂商没有关联，所有实验都必须基于用户自己的授权并自行承担风险。
+
 ## 当前内容
 
 | 项目 | 公开内容 | 当前状态 |
@@ -67,6 +87,19 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 | [X2D II](x2d2/README.md) | 1.3.16.2 地区离线研究 | 未重新实机验证 |
 
 完整状态见[研究成果总表](RESEARCH_RESULTS.md)。
+
+## 研究参考资料及其帮助
+
+下面的外部项目帮助确定研究问题和分析方法。它们在此作为来源记录和致谢，
+不是被 vendoring 进来的依赖，也不是本仓库结论的直接证据。
+
+- [`x2d-cim-notes`](https://github.com/Konamill-bot/x2d-cim-notes) 是调查 X2D 100C 机内固件是否保留 AF-C 能力或被关闭 AF-C 路径的直接启发来源。它帮助我们把“代码路径存在”“界面 gate 开放”和“实机行为成立”区分开。
+- [`hasselblad-cim-firmware-extractor`](https://github.com/YuHaoyua/hasselblad-cim-firmware-extractor) 帮助建立离线固件格式研究中的 CIM 容器和解包术语。
+- [`x2d-pdaf-sim`](https://github.com/Konamill-bot/x2d-pdaf-sim) 提供了 PDAF 决策策略仿真的相关背景，用于理解 AF-S 速度模型；其仿真不能替代实机证据。
+- [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) 提供了历史逆向和文档方法背景，但 X1D 不属于当前 X2D/X2D II 实现范围。
+- [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) 提供了旁支的原厂诊断通道背景，但不是本项目 AF、眼部识别或对象识别结论的证据。
+
+详细的引用措辞、许可证边界，以及“研究启发”与“独立验证证据”的区别，见[外部研究参考索引](x2d/references/EXTERNAL-RESEARCH.md)。
 
 ## 复现
 
@@ -105,3 +138,5 @@ python3 scripts/validate_public_repo.py
 - 安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。
 - 项目原创代码使用 [MIT License](LICENSE)；该许可不覆盖贡献者无权许可的厂商或第三方材料。
 - 来源与第三方声明见 [NOTICE.md](NOTICE.md) 和 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+- 关于授权、设备风险、保修、隐私和责任边界，请阅读[研究免责声明](DISCLAIMER.md)。
+- GitHub 引用元数据见 [`CITATION.cff`](CITATION.cff)，外部研究来源见 [X2D 参考资料](x2d/references/EXTERNAL-RESEARCH.md)。

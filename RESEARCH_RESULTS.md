@@ -4,7 +4,7 @@ Updated: 2026-09-26.
 
 ## Reproducibility scope
 
-The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) and the full [reproduction guide](REPRODUCE.md) for the safe offline evidence. It is a sanitized research release; camera-side reproduction still requires the exact authorized inputs described in that guide.
+The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) and the full [reproduction guide](REPRODUCE.md) for the safe offline evidence. Read the [Research Disclaimer](DISCLAIMER.md) before using any device-side material. It is a sanitized research release; camera-side reproduction still requires the exact authorized inputs described in that guide.
 
 - Reproducible from the repository alone: static audits, offline compatibility checks, candidate generators, host-side tests, and the documented analysis of the included source and research records.
 - Requires authorized exact-version inputs and hardware: menu runtime behavior, AF-S and AF-C experiments, stock face/eye detection behavior, and any camera-side validation. The required firmware trees, vendor libraries, compiled QML units, and device access are not distributed here.
@@ -28,6 +28,7 @@ The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_o
 
 ## X2D AF-C
 
+- The investigation was initially motivated by the external [`x2d-cim-notes`](x2d/references/EXTERNAL-RESEARCH.md) research notes. That repository is cited as inspiration and provenance, not as direct evidence or a copied implementation.
 - The stock 4.2.0 backend was confirmed to contain a continuous-autofocus state machine.
 - A hardware experiment observed a single-focus operation entering continuous-focus state and returning continuous success; releasing the control stopped it and returned to AF-S.
 - Opening `CameraUI.canChangeAfc` alone does not extend the Control Screen. The stock model contains only AF-S/MF and needs three additional model objects plus popup layout changes.
@@ -85,7 +86,7 @@ This public candidate does not contain vendor binaries, derived QML units, devic
 
 ## 可复现范围
 
-仓库现在包含 [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) 和完整的[复现指南](REPRODUCE.md)，用于复现安全的离线证据。它仍是经过脱敏的研究发布版；相机侧复现需要按指南准备精确且获得授权的输入。
+仓库现在包含 [`scripts/reproduce_offline.py`](scripts/reproduce_offline.py) 和完整的[复现指南](REPRODUCE.md)，用于复现安全的离线证据。使用任何实机相关材料前，请先阅读[研究免责声明](DISCLAIMER.md)。它仍是经过脱敏的研究发布版；相机侧复现需要按指南准备精确且获得授权的输入。
 
 - 仅凭仓库即可复现：静态审计、离线兼容性检查、候选生成器、电脑端测试，以及对仓库内源码和研究记录的分析。
 - 菜单运行时行为、AF-S 与 AF-C 实验、原厂人脸/眼部识别行为以及所有相机侧验证，需要获得授权的对应版本输入和实机。所需固件树、原厂库、编译后的 QML 单元和设备访问权限没有随仓库分发。
@@ -109,6 +110,7 @@ This public candidate does not contain vendor binaries, derived QML units, devic
 
 ## X2D AF-C
 
+- 本次调查最初受到外部 [`x2d-cim-notes`](x2d/references/EXTERNAL-RESEARCH.md) 研究笔记启发。该仓库在此作为灵感和来源记录引用，不是本项目的直接证据，也没有复制其实现。
 - 证实 4.2.0 原厂后端已包含连续对焦状态机。
 - 真机运行时实验观察到单次对焦进入连续对焦状态并返回连续成功，松开后停止并恢复 AF-S。
 - 单独打开 `CameraUI.canChangeAfc` gate 不足以扩展 Control Screen；原厂模型只有 AF-S/MF，需额外的三项模型与弹窗布局。

@@ -7,3 +7,7 @@ The repository intentionally does not distribute vendor firmware, executables, s
 The repository license applies only to material that contributors are entitled to license. It does not grant rights in third-party firmware, software, documentation, trademarks, models, media, or other protected material.
 
 Use only on hardware and firmware that you own or are expressly authorized to test. A research or educational purpose does not replace any permission required by law, contract, warranty, security policy, or license.
+
+For the complete bilingual authorization, device-risk, warranty, privacy, and liability notice, see [DISCLAIMER.md](DISCLAIMER.md). The disclaimer does not expand any license or permission for third-party material.
+
+关于完整的中英双语授权、设备风险、保修、隐私和责任说明，请参阅[研究免责声明](DISCLAIMER.md)。该免责声明不会扩大任何第三方材料的许可证或使用权限。

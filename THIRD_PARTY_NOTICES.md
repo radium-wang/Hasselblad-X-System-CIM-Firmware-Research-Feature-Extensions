@@ -2,14 +2,21 @@
 
 This file is a release checklist, not a claim that every referenced dependency is redistributed.
 
+The citation-only external research records are maintained in
+[`x2d/references/EXTERNAL-RESEARCH.md`](x2d/references/EXTERNAL-RESEARCH.md).
+They document provenance and acknowledgement; they are not vendored into this
+repository.
+
 ## Public references used by the research
 
 - `WeiCheng97/Hasselblad-X2d-series-5g-unlock` — public X2D protocol reference; upstream repository reports an MIT license. Before release, record the exact commit used and identify any files that contain copied or adapted code.
 - `YuHaoyua/hasselblad-cim-firmware-extractor` — public CIM extraction reference; upstream repository reports an MIT license. Record the exact commit and retained notices before release.
+- `YuHaoyua/hasselblad-x1d-reverse-engineering` — related X1D reverse-engineering reference only; it is outside the current X2D/X2D II implementation scope. Verify its exact license before reuse.
+- `Konamill-bot/x2d-pdaf-sim` — related X2D 100C 4.2.0 PDAF simulation reference; upstream README reports an MIT license. No source or generated output is copied here.
+- `Konamill-bot/x2d-cim-notes` — primary inspiration for the X2D AF-C investigation; documentation reports CC BY-SA 4.0 and diagnostic tools report MIT. No source or documentation is copied here.
 - Qt Declarative 6.4.1 — compiled-QML format and API reference. Qt components may use different commercial, LGPL, GPL or third-party licenses; this repository does not redistribute Qt binaries.
 - PyUSB, pyelftools, Capstone, Unicorn, Pillow, NumPy, SoundFile, dissect.extfs, brotli and pycryptodome may be optional local tools. They are not vendored here; users should review the license of the version they install.
 
 ## Release requirement
 
 Before making the GitHub repository public, replace each general entry above with an exact version/commit, the files that use or adapt it, the nature of the modification and the required copyright/license text. Do not use the project MIT license to overwrite third-party notices.
-

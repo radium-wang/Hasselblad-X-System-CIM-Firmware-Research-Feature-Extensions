@@ -10,5 +10,6 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Shutter animation](CodeTests/shutter-animation-preview/README.md): browser/QML visual candidate, read-only timing analysis and audio source.
 - [Firmware tools](tools/README.md): offline firmware and QML analysis helpers.
 - [Research notes](research/): selected sanitized findings and validation limits.
+- [External research references](references/EXTERNAL-RESEARCH.md): citation-only provenance, including the X2D CIM notes that inspired the AF-C investigation.
 
 The public tree does not include vendor inputs, generated QML units, runtime preload packages, device installation scripts or exploit-ready factory/root tooling.
