@@ -8,8 +8,8 @@ authors:
   - family-names: "Wang"
     given-names: "Radium"
 license: "MIT"
-repository-code: "https://github.com/wanglei75348619-tech/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
-url: "https://github.com/wanglei75348619-tech/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
+repository-code: "https://github.com/radium-wang/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
+url: "https://github.com/radium-wang/Hasselblad-X-System-CIM-Firmware-Research-Feature-Extensions"
 keywords:
   - Hasselblad
   - X2D 100C
