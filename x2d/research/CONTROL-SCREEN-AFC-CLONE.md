@@ -79,7 +79,7 @@ shasum -a 256 x2d_afc_preload_usb.py libx2d_afc_gate.so \
 python3 -B x2d_afc_preload_usb.py self-test
 
 python3 -B x2d_afc_preload_usb.py \
-  --adb-path /opt/homebrew/bin/adb \
+  --adb-path adb \
   --serial YOUR_SERIAL \
   --timeout-ms 5000 \
   enter-factory-afc-runtime
@@ -102,7 +102,7 @@ Focus popover:      3-item layout
 
 ```sh
 python3 -B x2d_afc_preload_usb.py \
-  --adb-path /opt/homebrew/bin/adb \
+  --adb-path adb \
   --serial YOUR_SERIAL \
   --timeout-ms 5000 \
   restore-factory-afc-runtime

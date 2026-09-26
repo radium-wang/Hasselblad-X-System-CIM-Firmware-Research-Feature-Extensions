@@ -34,6 +34,14 @@ The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_o
 - A temporary combined candidate passed menu-display and switch-flow checks. Long-term stability, power use, sleep, cross-reboot behavior, and a persistent production design remain incomplete.
 - The X2D II fast-AF stack cannot be copied directly: the two generations use different sensors, ranging hardware, AF ABI, and tuning stack.
 
+## X2D factory debug UI
+
+- Static analysis identified `SystemProperties::isAdbLocked()` in the stock 4.2.0 GUI. It reads `sys.usb.config`; the presence of `adb` selects the unlocked maintenance branch at GUI startup.
+- Restarting the unmodified stock GUI while that USB configuration is active exposes the factory maintenance surface, including `Debug Mode`, related developer entries, and the white OSD clock. `system.debug_mode` is a visible state value, not the unlock trigger.
+- The public [`factory_debug_ui.py`](x2d/CodeTests/factory-debug-ui/factory_debug_ui.py) tool reads a fixed state surface, checks the exact stock GUI hash and process context, can explicitly restart the stock GUI through an already-authorized ADB endpoint, and verifies the production-locked recovery values.
+- The detailed evidence record is [`FACTORY-DEBUG-UI-FINDINGS.md`](x2d/research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md).
+- Factory-USB ADB enablement, arbitrary shell execution, `/system` remounting, file upload, process-memory writes, persistence, and payload installation remain intentionally unpublished. This finding is separate from AF-C, face/eye detection, and object recognition and does not prove a complete deployable feature.
+
 ## X2D face/eye detection enablement
 
 - The first-generation X2D 4.2.0 stock runtime was confirmed to expose face/eye detection paths, including `FaceInfo`, `E_FaceDetection`, `setFaceDetectionMode`, and `setFaceRoiData`.
@@ -106,6 +114,14 @@ This public candidate does not contain vendor binaries, derived QML units, devic
 - 单独打开 `CameraUI.canChangeAfc` gate 不足以扩展 Control Screen；原厂模型只有 AF-S/MF，需额外的三项模型与弹窗布局。
 - 临时组合候选完成菜单显示和开关流程验收；长期稳定性、功耗、休眠、跨重启及正式持久化方案未完成。
 - X2D II 的快速 AF 栈不能直接复制：两代传感器、测距硬件、AF ABI 和调校栈不同。
+
+## X2D 原厂调试界面
+
+- 静态分析定位到 4.2.0 原厂 GUI 的 `SystemProperties::isAdbLocked()`。它读取 `sys.usb.config`；含有 `adb` 时，GUI 启动阶段进入未锁定的原厂维护分支。
+- 在该 USB 配置下重新启动未修改的原厂 GUI，会出现原厂维护界面，包括 `Debug Mode`、相关开发项目和白色 OSD 时钟。`system.debug_mode` 是可见状态值，不是解锁触发器。
+- 公开的 [`factory_debug_ui.py`](x2d/CodeTests/factory-debug-ui/factory_debug_ui.py) 读取固定状态面，检查原厂 GUI 精确哈希和进程上下文，可以通过已经授权的 ADB 端点显式重启原厂 GUI，并检查恢复到量产锁定所需的状态值。
+- 详细证据记录见 [`FACTORY-DEBUG-UI-FINDINGS.md`](x2d/research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md)。
+- factory USB 开启 ADB、任意 shell、`/system` 重挂、文件上传、进程内存写入、持久化和载荷安装仍有意不公开。该发现独立于 AF-C、人脸/眼部识别和对象识别，也不等于完整可部署功能。
 
 ## X2D 人脸/眼部识别开启
 
