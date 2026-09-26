@@ -72,6 +72,11 @@ def main() -> int:
 
     run([PYTHON, "scripts/validate_public_repo.py"], ROOT, env)
     run(
+        [PYTHON, "x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/check_loader_component.py"],
+        ROOT,
+        env,
+    )
+    run(
         [PYTHON, "-m", "unittest", "test_candidate.py"],
         ROOT / "x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate",
         env,

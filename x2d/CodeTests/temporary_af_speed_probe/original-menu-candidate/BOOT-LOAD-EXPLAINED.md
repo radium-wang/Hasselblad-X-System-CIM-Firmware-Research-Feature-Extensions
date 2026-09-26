@@ -4,6 +4,11 @@
 
 开机常驻方案**会修改系统分区中的文件**，但不替换原厂 `/system/bin/camera-gui`。
 
+本次公开源码已补入 [`X2dNativeMenuLoader.qml`](X2dNativeMenuLoader.qml)。它说明
+如何把 [`Bootstrap.qml`](Bootstrap.qml) 作为原厂 `MainScreen` 的子项创建，并把
+`MainScreen` 与 `ControlDrawer` 显式传入。生成后的原厂 MainScreen 编译单元、
+preload 库和安装事务仍不随仓库发布。
+
 它把独立 preload 库、QML 和 SVG 写入 `/system`，再修改 init 服务配置，使原厂 GUI 每次启动时加载扩展库。扩展库只在该次 `camera-gui` 进程内改写四个运行时字段：三个缓存 QML 单元指针和一个 AF-C gate。关掉进程后这些内存修改消失；之所以重启后还能再次出现，是 init 在下一次启动时又重新加载扩展库并重新完成挂接。
 
 ## 开机链路

@@ -13,6 +13,9 @@ python3 scripts/reproduce_offline.py
 
 The runner executes the publication safety check, the AF-S candidate tests, the object-recognition offline contract tests, the shutter timing tests, and the factory-debug-UI state/guard tests. It never connects to a camera, writes firmware, installs a payload, or starts a device experiment.
 
+It also checks the public twelfth-entry Loader source and SVG asset. The Loader
+check is source-only; it does not compile or install an original vendor QML unit.
+
 To include tests that inspect user-supplied firmware extraction roots, provide all four read-only roots:
 
 ```sh
@@ -61,6 +64,9 @@ python3 scripts/reproduce_offline.py
 ```
 
 该入口会依次运行公开发布安全检查、AF-S 候选测试、对象识别离线契约测试、快门时序测试以及原厂调试界面的状态/门禁测试。它不会连接相机、写入固件、安装载荷，也不会启动实机实验。
+
+它还会检查公开的第十二格 Loader 源码和 SVG 图标。该 Loader 检查只读源码，
+不会编译或安装原厂 QML 单元。
 
 如果要加入读取使用者固件提取目录的测试，请一次性提供四个只读目录：
 

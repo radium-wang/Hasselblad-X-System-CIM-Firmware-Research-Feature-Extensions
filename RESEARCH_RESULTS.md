@@ -14,6 +14,7 @@ The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_o
 ## X2D menu extension
 
 - A candidate was implemented that preserves the stock menu, adds a twelfth entry named “耍起功能”, and uses an original SVG icon.
+- The public source now includes the explicit `X2dNativeMenuLoader.qml` loading component, `Bootstrap.qml` attach logic, and the project-owned SVG asset; generated vendor QML units and installation packages remain excluded.
 - During temporary hardware testing, the operator confirmed the stock-style paging, upper-left back action, master switch, and AF-C sub-switch in both directions.
 - The default focus popup is AF-S/MF; after AF-C is enabled it becomes AF-S/AF-C/MF; after it is disabled the two-item list returns.
 - A one-minute watchdog restores the stock GUI and then clears the temporary payload and debug state.
@@ -96,6 +97,7 @@ This public candidate does not contain vendor binaries, derived QML units, devic
 ## X2D 菜单修改
 
 - 已实现保留原厂菜单、在第十二格加入“耍起功能”入口和自有 SVG 图标的候选。
+- 公开源码现已包含明确的 `X2dNativeMenuLoader.qml` 加载组件、`Bootstrap.qml` 接入逻辑和项目自有 SVG 素材；生成后的原厂 QML 单元与安装包仍不随仓库发布。
 - 临时实机测试中，用户确认原厂风格滚动页、左上角返回、总开关与 AF-C 子开关的正反向流程正常。
 - 默认对焦弹窗为 AF-S/MF；启用 AF-C 后为 AF-S/AF-C/MF；关闭后恢复两项。
 - 一分钟 watchdog 自动恢复原厂 GUI，随后临时载荷和调试状态完成清理。

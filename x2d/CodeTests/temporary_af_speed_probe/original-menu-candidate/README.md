@@ -2,7 +2,7 @@
 
 ## Scope
 
-This directory contains the original source QML, project-owned SVG icon and desktop/offline checks for a twelfth X2D menu entry named “耍起功能”. It also contains a direct-GUI structural experiment for a master switch and an AF-C child switch.
+This directory contains the original source QML, the explicit `X2dNativeMenuLoader.qml` integration component, project-owned SVG icon and desktop/offline checks for a twelfth X2D menu entry named “耍起功能”. It also contains a direct-GUI structural experiment for a master switch and an AF-C child switch. See [LOADER-AND-ICON.md](LOADER-AND-ICON.md) for the public loading point and asset mapping.
 
 Generated compiled QML units, vendor libraries, preload binaries, device installation scripts and persistent startup configuration are intentionally absent.
 
@@ -23,4 +23,3 @@ In a temporary one-minute device session, the user confirmed:
 The current source is not a reviewed persistent installation package. Half-press return, sleep/wake, first-render cost, memory use, cold boot and continuous-focus performance remain incomplete.
 
 The desktop checks use local Qt/PySide input and stock resources supplied by the user. Passing them does not prove on-device performance or compatibility with another firmware.
-

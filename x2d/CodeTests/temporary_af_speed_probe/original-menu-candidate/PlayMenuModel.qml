@@ -10,8 +10,8 @@ DelegateModel {
     property bool supportedLayout: true
     property bool extensionEnabled: true
     property string playLabel: "耍起功能"
-    // 原厂 SVG provider 接受不带 .svg 后缀的 file URL。
-    property string playIcon: "file:///system/etc/X2dPlayIcon"
+    // 与公开 sidecar 的文件名保持一致，避免加载器依赖后缀推断。
+    property string playIcon: "file:///system/etc/X2dPlayIcon.svg"
     readonly property string extensionName: "x2dPlayUi"
     property bool reconciling: false
     property bool ready: false

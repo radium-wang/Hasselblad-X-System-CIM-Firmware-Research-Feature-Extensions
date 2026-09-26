@@ -63,8 +63,8 @@ def transform(name, source, blackbox_probe=False):
             "        pageActive: root.showing\n"
             "        featureController: root.featureController")
     if blackbox_probe:
-        source = source.replace("file:///system/etc/X2dPlayIcon",
-                                "file://" + PROBE_ROOT + "/X2dPlayIcon")
+        source = source.replace("file:///system/etc/X2dPlayIcon.svg",
+                                "file://" + PROBE_ROOT + "/X2dPlayIcon.svg")
     pattern = r"\b(" + "|".join(NAMES) + r")\b"
     return re.sub(pattern, lambda match: NAMES[match.group(0)], source)
 

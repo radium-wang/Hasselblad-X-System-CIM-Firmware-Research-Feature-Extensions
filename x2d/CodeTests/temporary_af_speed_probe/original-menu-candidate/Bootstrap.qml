@@ -81,7 +81,7 @@ Item {
         id: adapter
         supportedLayout: root.screen !== null && !root.screen.viewModel.sparseFavoritesGrid
         playLabel: "耍起功能"
-        playIcon: "file:///system/etc/X2dPlayIcon"
+        playIcon: "file:///system/etc/X2dPlayIcon.svg"
         onExtensionPresentChanged: Qt.callLater(root.refreshPlayButton)
     }
     // 未解析的扩展项没有源模型 index。原厂 onPressed 使用该值会恢复旧高亮；

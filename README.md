@@ -27,6 +27,8 @@ dependencies or proof of the results in this repository.
 - [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) provided historical reverse-engineering and documentation context while remaining outside the X2D/X2D II implementation scope.
 - [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) provided adjacent factory-diagnostic-channel context; it is not evidence for the AF, face/eye, or object-recognition results here.
 
+The public menu candidate includes the source-level [`X2dNativeMenuLoader.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/X2dNativeMenuLoader.qml), the [`Bootstrap.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/Bootstrap.qml) attach logic, and the [`twelfth-entry SVG icon`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/assets/ic_main_menu_play.svg). The generated vendor QML unit and device installation package remain intentionally excluded.
+
 See the [external research reference index](x2d/references/EXTERNAL-RESEARCH.md) for citation wording, license boundaries, and the distinction between inspiration and independently verified evidence.
 
 ## Reproduction
@@ -98,6 +100,8 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 - [`x2d-pdaf-sim`](https://github.com/Konamill-bot/x2d-pdaf-sim) 提供了 PDAF 决策策略仿真的相关背景，用于理解 AF-S 速度模型；其仿真不能替代实机证据。
 - [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) 提供了历史逆向和文档方法背景，但 X1D 不属于当前 X2D/X2D II 实现范围。
 - [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) 提供了旁支的原厂诊断通道背景，但不是本项目 AF、眼部识别或对象识别结论的证据。
+
+公开的菜单候选现在包含[源码级 `X2dNativeMenuLoader.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/X2dNativeMenuLoader.qml)、[`Bootstrap.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/Bootstrap.qml) 接入逻辑，以及[第十二格 SVG 图标](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/assets/ic_main_menu_play.svg)。生成后的原厂 QML 编译单元和设备安装包仍有意不随仓库发布。
 
 详细的引用措辞、许可证边界，以及“研究启发”与“独立验证证据”的区别，见[外部研究参考索引](x2d/references/EXTERNAL-RESEARCH.md)。
 
