@@ -41,6 +41,8 @@ python3 scripts/reproduce_offline.py
 
 The complete reproduction guide, including exact-version inputs for authorized hardware tests, is in [REPRODUCE.md](REPRODUCE.md).
 
+The factory-debug result has an explicit [from-zero reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md): the public inspector begins after an authorized ADB endpoint exists; it does not publish the factory-USB ADB bootstrap or an installation payload.
+
 ## Evidence levels
 
 - `Static analysis`: source code, firmware formats, symbols, or instructions inspected without device access.
@@ -114,6 +116,8 @@ python3 scripts/reproduce_offline.py
 ```
 
 完整复现说明以及授权实机测试所需的精确版本输入见[复现指南](REPRODUCE.md)。
+
+原厂工程界面的发现另有[从零复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)：公开检查器从已经授权的 ADB 端点开始，不发布 factory USB 开启 ADB 的引导或安装载荷。
 
 ## 验证层级
 

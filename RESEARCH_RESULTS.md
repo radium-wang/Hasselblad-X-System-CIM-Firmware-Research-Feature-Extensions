@@ -43,6 +43,7 @@ The repository now includes [`scripts/reproduce_offline.py`](scripts/reproduce_o
 - The public [`factory_debug_ui.py`](x2d/CodeTests/factory-debug-ui/factory_debug_ui.py) tool reads a fixed state surface, checks the exact stock GUI hash and process context, can explicitly restart the stock GUI through an already-authorized ADB endpoint, and verifies the production-locked recovery values.
 - The detailed evidence record is [`FACTORY-DEBUG-UI-FINDINGS.md`](x2d/research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md).
 - Factory-USB ADB enablement, arbitrary shell execution, `/system` remounting, file upload, process-memory writes, persistence, and payload installation remain intentionally unpublished. This finding is separate from AF-C, face/eye detection, and object recognition and does not prove a complete deployable feature.
+- The [reproduction-boundary note](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) is the hand-off point for a clean clone: it records the read-only preflight, the already-authorized ADB prerequisite, and why the archival live-device runners are not copy-and-paste public commands.
 
 ## X2D face/eye detection enablement
 
@@ -126,6 +127,7 @@ This public candidate does not contain vendor binaries, derived QML units, devic
 - 公开的 [`factory_debug_ui.py`](x2d/CodeTests/factory-debug-ui/factory_debug_ui.py) 读取固定状态面，检查原厂 GUI 精确哈希和进程上下文，可以通过已经授权的 ADB 端点显式重启原厂 GUI，并检查恢复到量产锁定所需的状态值。
 - 详细证据记录见 [`FACTORY-DEBUG-UI-FINDINGS.md`](x2d/research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md)。
 - factory USB 开启 ADB、任意 shell、`/system` 重挂、文件上传、进程内存写入、持久化和载荷安装仍有意不公开。该发现独立于 AF-C、人脸/眼部识别和对象识别，也不等于完整可部署功能。
+- [原厂工程界面复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)是干净副本的交接点：其中写明只读前置检查、已授权 ADB 前提，以及历史实机运行器为什么不是可以复制粘贴的公开命令。
 
 ## X2D 人脸/眼部识别开启
 

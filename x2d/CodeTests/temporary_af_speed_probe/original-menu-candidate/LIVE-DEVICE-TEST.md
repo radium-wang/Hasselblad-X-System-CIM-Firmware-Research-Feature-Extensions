@@ -1,5 +1,19 @@
 # X2D 100C 4.2.0 临时实机菜单测试
 
+> **Archive notice / 历史记录提示：** This file records a completed,
+> operator-authorized device experiment. It is not a self-contained public
+> installation guide. Several commands below refer to private/generated
+> runners and device payloads that are intentionally absent from this
+> repository; a clean clone cannot run them. For the public, bounded factory
+> debug-UI path, read [`FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md`](../../../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)
+> and [`factory-debug-ui/README.md`](../../factory-debug-ui/README.md).
+>
+> **归档提示：** 本文件记录的是一次已完成、由操作者明确授权的实机实验，
+> 不是自包含的公开安装指南。下方部分命令引用了有意不随仓库发布的私有/生成
+> 运行器和机内载荷；干净副本不能直接运行。公开且受限的原厂工程界面路径请先
+> 阅读[复现边界说明](../../../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)
+> 和[原厂调试界面说明](../../factory-debug-ui/README.md)。
+
 > 2026-09-25 复测已完成并完整恢复。临时 GUI 的三个缓存 QML 单元指针、AF-C gate、预载环境和 `/system` 只读状态通过实机回读；用户确认三项对焦弹窗、第十二格图标/名称、自建页面及三种退出方式。AF-C 选中后的后端连续对焦效果未测。测试后七个载荷和暂存目录已删除，ADB 已关闭，原厂 GUI 正常运行。
 > 首次测试曾因旧版脚本把标记缺失误判为失败而触发 SIGTERM；本次修正避免了该误杀。
 

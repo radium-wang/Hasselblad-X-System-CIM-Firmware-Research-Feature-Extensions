@@ -1,5 +1,15 @@
 # X2D Factory Debug UI Finding
 
+> **Reproduction boundary / 复现边界:** this public tool starts only after a
+> lawful, already-authorized ADB endpoint exists. It does not turn an ordinary
+> USB connection into ADB or publish the factory-USB bootstrap. See the
+> [full boundary note](../../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)
+> before treating the commands below as a from-zero procedure.
+>
+> **公开工具的前置条件：** 必须先有合法且已经授权的 ADB 端点。本工具不会把
+> 普通 USB 连接变成 ADB，也不公开 factory USB 引导命令。不要把下面的命令
+> 误读成从零开启工程模式的完整流程；先阅读[复现边界说明](../../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)。
+
 ## Finding
 
 For the stock X2D 100C 4.2.0 GUI, the locked/unlocked decision is made during GUI startup. In the production branch, `SystemProperties::isAdbLocked()` reads `sys.usb.config` and returns unlocked when the current USB configuration contains `adb`. Restarting the stock `camera-gui` while that configuration is active exposes the factory maintenance surface, including the `Debug Mode` entry and related developer items. The `system.debug_mode` property is a visible state value, not the trigger that unlocks the GUI.
@@ -20,8 +30,18 @@ The public tool does not enable ADB, open the factory USB shell, execute arbitra
 Inspect the state:
 
 ```sh
-python3 -B x2d/CodeTests/factory-debug-ui/factory_debug_ui.py inspect
+adb devices -l
+python3 -B x2d/CodeTests/factory-debug-ui/factory_debug_ui.py \
+  --serial <authorized-device-id> inspect
 ```
+
+`adb devices -l` must show the authorized endpoint as `device`. If it reports
+`unauthorized`, `offline`, or no device, stop there: this repository does not
+provide an ADB-enablement or authorization-bypass step.
+
+`adb devices -l` 必须将已授权端点显示为 `device`。如果显示 `unauthorized`、
+`offline` 或完全没有设备，请在这里停止；本仓库不提供开启 ADB 或绕过授权的
+步骤。
 
 After confirming that live view may be interrupted briefly and that `sys.usb.config` already contains `adb`, restart the stock GUI:
 
@@ -44,6 +64,11 @@ The restore check expects no `adb` in either USB property, `debug_mode=false`, `
 ## Evidence and limits
 
 The discovery is a stock GUI behavior, not an AF-C gate and not proof that every hidden maintenance item is safe or useful. It does not by itself enable AF-C, eye detection, object recognition, or persistent firmware changes. A reboot with the production USB configuration remains the final recovery boundary.
+
+The historical [live-device log](../temporary_af_speed_probe/original-menu-candidate/LIVE-DEVICE-TEST.md)
+contains references to private/generated runtime runners that are not part of
+this public tool. Those examples are evidence notes, not copy-and-paste
+installation commands.
 
 ---
 
@@ -69,7 +94,9 @@ The discovery is a stock GUI behavior, not an AF-C gate and not proof that every
 读取当前状态：
 
 ```sh
-python3 -B x2d/CodeTests/factory-debug-ui/factory_debug_ui.py inspect
+adb devices -l
+python3 -B x2d/CodeTests/factory-debug-ui/factory_debug_ui.py \
+  --serial <authorized-device-id> inspect
 ```
 
 确认可以短暂中断取景，且 `sys.usb.config` 已经包含 `adb` 后，再重启原厂 GUI：
@@ -93,3 +120,7 @@ python3 -B x2d/CodeTests/factory-debug-ui/factory_debug_ui.py \
 ## 证据与限制
 
 这是原厂 GUI 行为发现，不是 AF-C gate，也不能证明每个隐藏维护项目都安全或有用。它本身不会开启 AF-C、眼部识别、对象识别或持久化固件修改。恢复到量产 USB 配置后正常重启仍是最终恢复边界。
+
+历史[实机记录](../temporary_af_speed_probe/original-menu-candidate/LIVE-DEVICE-TEST.md)
+中提到的部分运行器属于私有或生成的实验包，不在公开工具中；那些示例是证据
+记录，不是可以复制粘贴的安装命令。

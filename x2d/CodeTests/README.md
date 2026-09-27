@@ -9,4 +9,4 @@ This public subset contains only selected source and offline tests:
 - `factory-debug-ui/`: bounded ADB state inspector for the stock GUI's factory debug-UI finding.
 - `shutter-animation-preview/`: browser/QML animation, read-only timing analysis and offline tests.
 
-Device installation, arbitrary shell, ADB enablement, process-memory modification and system-partition tooling are intentionally absent. The factory-debug-ui tool assumes an already-authorized ADB endpoint and only reads fixed state or explicitly restarts the stock GUI.
+Device installation, arbitrary shell, ADB enablement, process-memory modification and system-partition tooling are intentionally absent. The factory-debug-ui tool assumes an already-authorized ADB endpoint and only reads fixed state or explicitly restarts the stock GUI. See the [factory-debug reproduction boundary](../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) for the exact hand-off point and the reason archival runtime commands are not runnable from a clean clone.

@@ -1,5 +1,14 @@
 # X2D 4.2.0 Factory Debug UI Finding
 
+> **Read first / 请先阅读:** the [factory-debug reproduction boundary](FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)
+> explains why a clean clone cannot bootstrap ADB or enable this interface from
+> an ordinary USB connection. The public implementation begins with an already
+> authorized endpoint.
+>
+> [原厂工程界面复现边界说明](FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)解释了为什么
+> 干净副本不能从普通 USB 连接开始引导 ADB 或开启该界面；公开实现以已经授权的
+> ADB 端点为起点。
+
 ## English
 
 ### Result
@@ -45,6 +54,10 @@ upload, process-memory writes, persistence, or a payload installer. The tool
 assumes that the operator already has a lawful, authorized ADB endpoint and
 only performs the fixed readback and stock-GUI lifecycle operation described
 above.
+
+This means the finding is not reproducible from a clean clone alone. The
+historical live-device log may mention private or generated runners; those
+names are not public entry points and are not expected to exist in a clone.
 
 ### Recovery boundary
 
@@ -99,6 +112,9 @@ version, hardware batch, or camera family.
 `/system` 重挂、文件上传、进程内存写入、持久化或载荷安装器。该工具假设
 操作者已经拥有合法且获得授权的 ADB 端点，只执行上面说明的固定状态读回和
 原厂 GUI 生命周期操作。
+
+因此，该发现不能仅从干净副本复现。历史实机记录可能提到私有或生成的运行器；
+这些名称不是公开入口，在副本中不存在是预期行为。
 
 ### 恢复边界
 
