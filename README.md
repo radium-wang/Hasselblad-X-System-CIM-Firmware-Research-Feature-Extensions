@@ -1,5 +1,24 @@
 # Hasselblad X-System CIM Firmware Research & Feature Extensions
 
+## 一键工具包 · 下载 / One-click toolkit
+
+**[下载 Windows / macOS 一键工具包 →](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit/releases/latest)**
+
+[![Download toolkit](https://img.shields.io/badge/Download-Windows%20%2F%20macOS-0969da?style=for-the-badge)](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit/releases/latest)
+
+安装、更新和恢复说明：[一键工具包项目主页 / Toolkit & instructions](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit)。使用前请核对该项目支持的机型、固件版本与验证范围。
+
+## 赞助开发 / Support development
+
+**[PayPal 赞助 →](https://paypal.me/RadiumWang) · [支付宝收款码 →](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit#support-development)**
+
+[![Support via PayPal](https://img.shields.io/badge/Support-PayPal-0070ba?style=for-the-badge)](https://paypal.me/RadiumWang)
+
+赞助完全自愿，用于支持持续研究、工具开发和维护；获取工具与使用功能不以付款为条件。 Donations are voluntary and support ongoing research, development and maintenance.
+
+---
+
+
 An independent, non-official research project on Hasselblad X-System camera interoperability, user interfaces, autofocus behavior, feature extensions, and firmware formats.
 
 This repository contains only source code, offline tools, tests, and sanitized research findings that contributors are authorized to publish. Vendor firmware, original shared libraries, models, DSP or kernel files, extracted or modified QML compilation units, device logs, and local build products are not distributed here.
