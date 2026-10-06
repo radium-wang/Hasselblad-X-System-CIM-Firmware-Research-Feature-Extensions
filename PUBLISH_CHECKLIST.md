@@ -12,4 +12,4 @@ The repository has been sanitized locally, but the following human decisions rem
 - [ ] Create the GitHub repository as Private first; inspect Actions artifacts and the final tree before making it Public.
 - [ ] Use a research-preview release label and avoid claiming that AF speed, AF-C persistence or object recognition is production-ready.
 
-The repository currently has a private GitHub remote and a `main` branch. Keep it private until the remaining license, security-contact, third-party-notice and final-tree reviews are complete; changing visibility is a separate publication decision.
+As checked on 2026-10-06, the configured GitHub repository is already Public and uses `main`. The checklist above is the historical initial-release checklist, not a claim that every item is complete. The 2026-10-06 research update passed the public-tree validator and existing offline reproduction suite; excluded vendor inputs and original hardware evidence remain local. Repository visibility was not changed by this update.
