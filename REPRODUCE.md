@@ -11,7 +11,7 @@ python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_hand
 python3 scripts/reproduce_offline.py
 ```
 
-The runner also runs the standard-library UI trace analysis tests (synthetic inputs only). Qt overlay checks and native engine builds are optional and described in the [Shimeji module](x2d/shimeji-overlay/README.md).
+The runner also runs the standard-library UI trace analysis and Doom USB framing tests (synthetic inputs only). Qt overlay checks and native engine builds are optional and described in the [Shimeji module](x2d/shimeji-overlay/README.md).
 
 The runner executes the publication safety check, the AF-S candidate tests, the object-recognition offline contract tests, the shutter timing tests, and the factory-debug-UI state/guard tests. It never connects to a camera, writes firmware, installs a payload, or starts a device experiment.
 
@@ -40,12 +40,13 @@ The roots must come from firmware and devices that the operator is authorized to
 | Face/eye detection | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | First-generation face/eye interfaces and ROI contracts; the stock model and camera-side behavior must be supplied by the operator |
 | Object recognition | `x2d/object-recognition/README.md` | Compatibility audit, frame adapter, model-container checks, and offline contract tests |
 | Factory debug UI | `x2d/CodeTests/factory-debug-ui/README.md` and [reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | Stock GUI lock-state finding, fixed ADB state readback, and an explicitly confirmed stock-GUI restart after ADB is already authorized |
+| Doom | [module](x2d/doom/README.md), [evidence](x2d/research/4.2.0/DOOM-FEASIBILITY.md) | Native engine/audio builds, real Qt input/PCM checks, exact-version temporary runner source; no vendor inputs or WAD |
 | Shimeji / UI response | [module](x2d/shimeji-overlay/README.md), [report](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | Offline native build, transparent QML demo, synthetic trace tests; hardware injection and failed UI candidates are not supplied |
 | Shutter animation | `x2d/CodeTests/shutter-animation-preview/README.md` | Browser/QML preview, timing analysis, and audio-client experiment notes |
 
 ## 3. Camera-side reproduction
 
-Camera-side results depend on the exact X2D 4.2.0 or X2D II 1.3.16.2 environment recorded by each experiment. Read the experiment README before running anything. The public repository intentionally does not contain vendor firmware, compiled QML units, encrypted models, DSP or kernel files, runtime writers, installers, or device logs. A reader can reproduce the bounded procedure after supplying lawful inputs and explicit device authorization; the repository alone cannot recreate those proprietary inputs or the original camera state. The factory-debug-ui implementation starts only after ADB is already authorized and does not include the factory USB command that enables ADB. The historical live-device menu log is archival and references private/generated runners that are not present in a clean clone. See [the factory-debug reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) for the exact hand-off point.
+Camera-side results depend on the exact X2D 4.2.0 or X2D II 1.3.16.2 environment recorded by each experiment. Read the experiment README before running anything. The public repository intentionally does not contain vendor firmware, compiled QML units, encrypted models, DSP or kernel files, compiled runtime packages or device logs. The Doom module is a source-only exception for an exact-version temporary runner: local inputs and checks produce a payload; only `--apply` accesses the camera, briefly enables ADB and changes trial RAM. Other historical writers/installers remain excluded. A reader can reproduce the bounded procedure after supplying lawful inputs and explicit device authorization; the repository alone cannot recreate those proprietary inputs or the original camera state. The factory-debug-ui implementation starts only after ADB is already authorized and does not include the factory USB command that enables ADB. The historical live-device menu log is archival and references private/generated runners that are not present in a clean clone. See [the factory-debug reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) for the exact hand-off point.
 
 Do not treat an offline candidate, a menu that renders, or a successful link diagnostic as a complete deployed feature. The experiment documents state the required acceptance checks, recovery path, and remaining limits.
 
@@ -66,7 +67,7 @@ python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_hand
 python3 scripts/reproduce_offline.py
 ```
 
-新增 UI 轨迹标准库测试已纳入入口，使用完全合成输入。可选 Qt 覆盖层测试与原生引擎构建见 [Shimeji 模块](x2d/shimeji-overlay/README.md)，不由默认套件下载依赖或自动运行。
+新增 UI 轨迹及 Doom USB 传输标准库测试已纳入入口，使用完全合成输入。Doom 的可选原生/Qt/音频检查和实机步骤见 [Doom 模块](x2d/doom/README.md)。可选 Qt 覆盖层测试与原生引擎构建见 [Shimeji 模块](x2d/shimeji-overlay/README.md)，不由默认套件下载依赖或自动运行。
 
 该入口会依次运行公开发布安全检查、AF-S 候选测试、对象识别离线契约测试、快门时序测试以及原厂调试界面的状态/门禁测试。它不会连接相机、写入固件、安装载荷，也不会启动实机实验。
 
@@ -95,11 +96,12 @@ python3 scripts/reproduce_offline.py \
 | 人脸/眼部识别 | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | 第一代人脸/眼部接口和 ROI 契约；原厂模型及相机侧行为需要操作者自行提供 |
 | 对象识别 | `x2d/object-recognition/README.md` | 兼容性审计、帧适配、模型容器检查和离线契约测试 |
 | 原厂调试界面 | `x2d/CodeTests/factory-debug-ui/README.md` 和[复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | 原厂 GUI 锁定状态发现、固定 ADB 状态读回，以及 ADB 已授权后的明确确认重启 |
+| Doom | [模块](x2d/doom/README.md)、[报告](x2d/research/4.2.0/DOOM-FEASIBILITY.md) | 原生引擎/音频构建、Qt 输入/PCM 检查、精确版本短时运行器源码；不含原厂输入或 WAD |
 | Shimeji / UI 响应 | [模块](x2d/shimeji-overlay/README.md)、[报告](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | 原生构建、透明 QML 演示、合成轨迹测试；不含机内注入或已失败的 UI 候选 |
 | 快门动画 | `x2d/CodeTests/shutter-animation-preview/README.md` | 浏览器/QML 预览、时序分析和音频客户端实验记录 |
 
 ## 3. 实机复现
 
-实机结果依赖各实验记录的精确环境：X2D 4.2.0 或 X2D II 1.3.16.2。运行任何内容前先阅读对应实验 README。公开仓库有意不包含厂商固件、编译后的 QML 单元、加密模型、DSP 或内核文件、运行时写入器、安装器和设备日志。原厂调试界面实现从已经授权的 ADB 端点开始，不包含通过 factory USB 开启 ADB 的命令。历史实机菜单记录是归档资料，引用的私有/生成运行器不会出现在干净副本中。读者在提供合法输入并取得明确设备授权后，可以复现公开的受限检查；但仓库本身不能从普通 USB 连接开始重新生成这些原厂输入或原相机状态。具体交接点见[原厂工程界面复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)。
+实机结果依赖各实验记录的精确环境：X2D 4.2.0 或 X2D II 1.3.16.2。运行任何内容前先阅读对应实验 README。公开仓库有意不包含厂商固件、编译后的 QML 单元、加密模型、DSP 或内核文件、编译后的运行包和设备日志。Doom 模块新增精确版本的短时运行器源码：使用者自行提供输入并完成离线检查后生成包，显式 `--apply` 才访问相机、临时开启 ADB 和改变试验 RAM；其他历史写入器/安装器仍未收录。原厂调试界面实现从已经授权的 ADB 端点开始，不包含通过 factory USB 开启 ADB 的命令。历史实机菜单记录是归档资料，引用的私有/生成运行器不会出现在干净副本中。读者在提供合法输入并取得明确设备授权后，可以复现公开的受限检查；但仓库本身不能从普通 USB 连接开始重新生成这些原厂输入或原相机状态。具体交接点见[原厂工程界面复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)。
 
 离线候选、能够显示的菜单或通过的链接诊断都不能直接视为完整部署功能。各实验文档列出了所需验收、恢复路径和剩余限制。

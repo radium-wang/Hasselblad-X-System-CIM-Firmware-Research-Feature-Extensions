@@ -1,0 +1,3 @@
+pyelftools==0.32
+capstone==5.0.6
+PyUSB==1.3.1

@@ -8,6 +8,7 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Object recognition](object-recognition/README.md): compatibility audit, frame adapter and offline contract tests; not a deployable port.
 - [Factory debug UI](CodeTests/factory-debug-ui/README.md): [research finding](research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md), stock GUI lock-state evidence, and a bounded ADB state inspector; it does not enable ADB or install a payload.
 - [Shutter animation](CodeTests/shutter-animation-preview/README.md): browser/QML visual candidate, read-only timing analysis and audio source.
+- [Doom](doom/README.md)：第一代 4.2.0 的真实引擎、快门开火、音效与滑动；独立 GPL-2.0-or-later，含默认无设备的短时运行器。
 - [Shimeji 透明宠物](shimeji-overlay/README.md)：引擎适配、QML 点击穿透和桌面验证；临时实机用户确认，公开版不含安装链。
 - [菜单响应诊断与三轮试验](research/4.2.0/UI-RESPONSIVENESS.md)：原厂 57–58 FPS 但拖动落后；未确认改善，已恢复原厂。
 - [Firmware tools](tools/README.md): offline firmware and QML analysis helpers.
@@ -17,7 +18,7 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Research notes](research/): selected sanitized findings and validation limits.
 - [External research references](references/EXTERNAL-RESEARCH.md): citation-only provenance, including the X2D CIM notes that inspired the AF-C investigation.
 
-The public tree does not include vendor inputs, generated QML units, runtime preload packages, device installation scripts or exploit-ready factory/root tooling.
+The public tree does not include vendor inputs, generated QML units or compiled runtime packages. The Doom module includes its own exact-version temporary runner source and USB dependency, with device access gated by `--apply`; other historical installation chains remain outside this tree.
 
 ## 最新研究汇总（更新至 2026-10-07）
 

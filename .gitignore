@@ -123,3 +123,8 @@ __pycache__/
 !/x2d/shimeji-overlay/CodeTests/overlay/README.md
 !/x2d/CodeTests/ui-response/README.md
 !/x2d/research/4.2.0/UI-RESPONSIVENESS.md
+
+# Doom source module; WAD data is always local.
+*.wad
+!/x2d/doom/README.md
+!/x2d/research/4.2.0/DOOM-FEASIBILITY.md

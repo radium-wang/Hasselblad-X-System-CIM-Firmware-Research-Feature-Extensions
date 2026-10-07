@@ -29,10 +29,10 @@ This repository contains only source code, offline tools, tests, and sanitized r
 
 | Project | Public contents | Current status |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, factory debug UI finding, object recognition, shutter animation, transparent Shimeji overlay, UI responsiveness trials, and offline firmware tools | Research and candidates; not a complete product |
+| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, factory debug UI finding, object recognition, shutter animation, transparent Shimeji overlay, Doom with shutter fire/sound/swipe, UI responsiveness trials, and offline firmware tools | Research and candidates; not a complete product |
 | [X2D II](x2d2/README.md) | Offline regional research for 1.3.16.2 | Not re-validated on hardware |
 
-新增：[透明 Shimeji 宠物源码与桌面演示](x2d/shimeji-overlay/README.md) · [整机 UI 延迟诊断与三轮试验](x2d/research/4.2.0/UI-RESPONSIVENESS.md)。宠物临时实机交互得到确认；整机优化尚未确认改善。
+新增：[X2D 运行 Doom：快门开火、音效、滑动转向](x2d/doom/README.md) · [透明 Shimeji 宠物源码与桌面演示](x2d/shimeji-overlay/README.md) · [整机 UI 延迟诊断与三轮试验](x2d/research/4.2.0/UI-RESPONSIVENESS.md)。宠物临时实机交互得到确认；整机优化尚未确认改善。
 
 See [RESEARCH_RESULTS.md](RESEARCH_RESULTS.md) for the complete status of the research results.
 
@@ -64,6 +64,8 @@ The complete reproduction guide, including exact-version inputs for authorized h
 
 The factory-debug result has an explicit [from-zero reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md): the public inspector begins after an authorized ADB endpoint exists; it does not publish the factory-USB ADB bootstrap or an installation payload.
 
+The [Doom module](x2d/doom/README.md) separately publishes a source-only, exact-version temporary runner. It defaults to a no-device plan and requires explicit `--apply` for USB/ADB and process RAM changes; no generated payload or vendor inputs are distributed.
+
 ## Evidence levels
 
 - `Static analysis`: source code, firmware formats, symbols, or instructions inspected without device access.
@@ -89,7 +91,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 ## Security and licensing
 
 - Report security issues privately according to [SECURITY.md](SECURITY.md).
-- Original project code is available under the [MIT License](LICENSE), except the [Shimeji overlay module](x2d/shimeji-overlay/README.md), which is GPL-3.0-or-later. This license does not cover vendor or third-party material that contributors are not authorized to license.
+- Original project code is available under the [MIT License](LICENSE), except the [Shimeji overlay module](x2d/shimeji-overlay/README.md), which is GPL-3.0-or-later, and the [Doom module](x2d/doom/README.md), which is GPL-2.0-or-later. This license does not cover vendor or third-party material that contributors are not authorized to license.
 - See [NOTICE.md](NOTICE.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source and third-party notices.
 - Read the [Research Disclaimer](DISCLAIMER.md) for authorization, device-risk, warranty, privacy, and liability boundaries.
 - GitHub citation metadata is provided in [`CITATION.cff`](CITATION.cff); external research provenance is listed in [X2D references](x2d/references/EXTERNAL-RESEARCH.md).
@@ -108,7 +110,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 | 项目 | 公开内容 | 当前状态 |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | 菜单扩展、AF-S 提速研究、AF-C、原厂人脸/眼部识别开启、原厂 Debug 界面发现、对象识别、快门动画与离线固件工具 | 研究与候选；并非完整产品 |
+| [X2D 100C](x2d/README.md) | 菜单扩展、AF-S 提速研究、AF-C、原厂人脸/眼部识别开启、原厂 Debug 界面发现、对象识别、Doom 快门/音效/滑动、快门动画与离线固件工具 | 研究与候选；并非完整产品 |
 | [X2D II](x2d2/README.md) | 1.3.16.2 地区离线研究 | 未重新实机验证 |
 
 完整状态见[研究成果总表](RESEARCH_RESULTS.md)。
@@ -140,6 +142,8 @@ python3 scripts/reproduce_offline.py
 
 原厂工程界面的发现另有[从零复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)：公开检查器从已经授权的 ADB 端点开始，不发布 factory USB 开启 ADB 的引导或安装载荷。
 
+[Doom 模块](x2d/doom/README.md)单独公开精确版本的短时运行器源码，默认无设备计划；显式 `--apply` 才进行 USB/ADB 与进程 RAM 操作。生成载荷和原厂输入不随源码分发。
+
 ## 验证层级
 
 - `静态分析`：只检查源码、固件格式、符号或指令，不访问设备。
@@ -165,7 +169,7 @@ python3 scripts/validate_public_repo.py
 ## 安全与许可证
 
 - 安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。
-- 项目原创代码使用 [MIT License](LICENSE)；该许可不覆盖贡献者无权许可的厂商或第三方材料。
+- 项目原创代码使用 [MIT License](LICENSE)，[Shimeji](x2d/shimeji-overlay/README.md) 为 GPL-3.0-or-later，[Doom](x2d/doom/README.md) 为 GPL-2.0-or-later；该许可不覆盖贡献者无权许可的厂商或第三方材料。
 - 来源与第三方声明见 [NOTICE.md](NOTICE.md) 和 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 - 关于授权、设备风险、保修、隐私和责任边界，请阅读[研究免责声明](DISCLAIMER.md)。
 - GitHub 引用元数据见 [`CITATION.cff`](CITATION.cff)，外部研究来源见 [X2D 参考资料](x2d/references/EXTERNAL-RESEARCH.md)。

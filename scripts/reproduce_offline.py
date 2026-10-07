@@ -103,6 +103,11 @@ def main() -> int:
          "x2d/CodeTests/ui-response", "-p", "test_*.py"],
         ROOT, env,
     )
+    run(
+        [PYTHON, "-B", "-m", "unittest", "discover", "-s",
+         "x2d/doom/CodeTests", "-p", "test_trial_usb.py"],
+        ROOT, env,
+    )
     print("\nOFFLINE REPRODUCTION PASSED")
     return 0
 

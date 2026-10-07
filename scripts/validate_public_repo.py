@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FORBIDDEN_SUFFIXES = {
     ".a", ".bin", ".cim", ".dat", ".elf", ".enc", ".img", ".model",
-    ".o", ".ota", ".p12", ".pem", ".pyc", ".so", ".zip",
+    ".o", ".ota", ".p12", ".pem", ".pyc", ".so", ".wad", ".zip",
 }
 IGNORED_PARTS = {".git", "__pycache__"}
 TEXT_SUFFIXES = {
