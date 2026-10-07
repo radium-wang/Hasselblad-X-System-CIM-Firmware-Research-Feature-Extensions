@@ -15,3 +15,5 @@ USB 页面脚本：[inspect_usb_ui_4_2_0.py](inspect_usb_ui_4_2_0.py)。运行 `
 后续 X2D 专属分析脚本放在本目录，并明确绑定固件版本及输入哈希。本次未迁移共享 Python 工具：根目录 `tools/` 的脚本被既有客户端工作流、测试和其他分析脚本引用，部分固定从根目录 `.research-cache/` 读取并向 `research/` 输出。
 
 共享工具与依赖详见 共享项索引（外部输入或历史产物，未随迁移提供）。本轮已保存的纯内存回读模拟位于 [CodeTests](../CodeTests/README.md)，不具备设备传输能力。不要为整理目录启动旧脚本中的下载、构建或硬件入口。
+
+UI 轨迹摘要：[analyze_ui_trace.py](analyze_ui_trace.py)。只读显式保存的 getevent/proc/GPU/Weston 文本，输出聚合 JSON；USER_HZ 必须显式提供才计算单核百分比，不把帧率当延迟。见[测试说明](../CodeTests/ui-response/README.md)。

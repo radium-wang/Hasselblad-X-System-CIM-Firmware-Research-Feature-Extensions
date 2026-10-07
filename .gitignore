@@ -118,3 +118,8 @@ __pycache__/
 !/x2d/tools/README.md
 !/x2d2/README.md
 !/x2d2/research/1.3.16.2/REGION.md
+
+!/x2d/shimeji-overlay/README.md
+!/x2d/shimeji-overlay/CodeTests/overlay/README.md
+!/x2d/CodeTests/ui-response/README.md
+!/x2d/research/4.2.0/UI-RESPONSIVENESS.md

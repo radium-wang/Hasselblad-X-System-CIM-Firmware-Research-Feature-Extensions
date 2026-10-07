@@ -16,7 +16,7 @@ FORBIDDEN_SUFFIXES = {
 }
 IGNORED_PARTS = {".git", "__pycache__"}
 TEXT_SUFFIXES = {
-    "", ".c", ".cjs", ".cpp", ".cs", ".h", ".hpp", ".html", ".js",
+    "", ".c", ".cc", ".cjs", ".cpp", ".cs", ".h", ".hpp", ".html", ".js",
     ".json", ".md", ".ps1", ".py", ".qml", ".s", ".sh", ".svg", ".txt",
 }
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")

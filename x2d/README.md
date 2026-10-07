@@ -8,6 +8,8 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Object recognition](object-recognition/README.md): compatibility audit, frame adapter and offline contract tests; not a deployable port.
 - [Factory debug UI](CodeTests/factory-debug-ui/README.md): [research finding](research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md), stock GUI lock-state evidence, and a bounded ADB state inspector; it does not enable ADB or install a payload.
 - [Shutter animation](CodeTests/shutter-animation-preview/README.md): browser/QML visual candidate, read-only timing analysis and audio source.
+- [Shimeji 透明宠物](shimeji-overlay/README.md)：引擎适配、QML 点击穿透和桌面验证；临时实机用户确认，公开版不含安装链。
+- [菜单响应诊断与三轮试验](research/4.2.0/UI-RESPONSIVENESS.md)：原厂 57–58 FPS 但拖动落后；未确认改善，已恢复原厂。
 - [Firmware tools](tools/README.md): offline firmware and QML analysis helpers.
 - [静态开机 Logo 位置调查](research/4.2.0/STARTUP-LOGO-LOCATION.md)：主屏原图已离线还原；肩屏资源路径已找到，图像数据仍待提取。
 - [开机 Logo 替换实验](research/4.2.0/STARTUP-LOGO-REPLACEMENT.md)：主屏原厂灰度图与用户提供的 250×250 彩色图均已完成短时 RAM 显示和回退验证；肩屏待解析。
@@ -17,7 +19,7 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 
 The public tree does not include vendor inputs, generated QML units, runtime preload packages, device installation scripts or exploit-ready factory/root tooling.
 
-## 2026-10-06 最新研究汇总
+## 最新研究汇总（更新至 2026-10-07）
 
 最新验收状态以[成果总表](../RESEARCH_RESULTS.md)及分主题报告为准，早期“尚未验证”文字保留其历史范围。
 

@@ -27,3 +27,5 @@ jobs:
       - name: Shutter timing analysis tests
         run: python -m unittest discover -s x2d/CodeTests/shutter-animation-preview -p 'test_analyze_blackout.py'
 
+      - name: UI trace analysis tests
+        run: python -m unittest discover -s x2d/CodeTests/ui-response -p 'test_*.py'

@@ -29,8 +29,10 @@ This repository contains only source code, offline tools, tests, and sanitized r
 
 | Project | Public contents | Current status |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, factory debug UI finding, object recognition, shutter animation, and offline firmware tools | Research and candidates; not a complete product |
+| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, factory debug UI finding, object recognition, shutter animation, transparent Shimeji overlay, UI responsiveness trials, and offline firmware tools | Research and candidates; not a complete product |
 | [X2D II](x2d2/README.md) | Offline regional research for 1.3.16.2 | Not re-validated on hardware |
+
+新增：[透明 Shimeji 宠物源码与桌面演示](x2d/shimeji-overlay/README.md) · [整机 UI 延迟诊断与三轮试验](x2d/research/4.2.0/UI-RESPONSIVENESS.md)。宠物临时实机交互得到确认；整机优化尚未确认改善。
 
 See [RESEARCH_RESULTS.md](RESEARCH_RESULTS.md) for the complete status of the research results.
 
@@ -87,7 +89,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 ## Security and licensing
 
 - Report security issues privately according to [SECURITY.md](SECURITY.md).
-- Original project code is available under the [MIT License](LICENSE). This license does not cover vendor or third-party material that contributors are not authorized to license.
+- Original project code is available under the [MIT License](LICENSE), except the [Shimeji overlay module](x2d/shimeji-overlay/README.md), which is GPL-3.0-or-later. This license does not cover vendor or third-party material that contributors are not authorized to license.
 - See [NOTICE.md](NOTICE.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source and third-party notices.
 - Read the [Research Disclaimer](DISCLAIMER.md) for authorization, device-risk, warranty, privacy, and liability boundaries.
 - GitHub citation metadata is provided in [`CITATION.cff`](CITATION.cff); external research provenance is listed in [X2D references](x2d/references/EXTERNAL-RESEARCH.md).

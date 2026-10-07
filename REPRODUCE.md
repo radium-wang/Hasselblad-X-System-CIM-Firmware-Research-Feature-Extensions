@@ -11,6 +11,8 @@ python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_hand
 python3 scripts/reproduce_offline.py
 ```
 
+The runner also runs the standard-library UI trace analysis tests (synthetic inputs only). Qt overlay checks and native engine builds are optional and described in the [Shimeji module](x2d/shimeji-overlay/README.md).
+
 The runner executes the publication safety check, the AF-S candidate tests, the object-recognition offline contract tests, the shutter timing tests, and the factory-debug-UI state/guard tests. It never connects to a camera, writes firmware, installs a payload, or starts a device experiment.
 
 It also checks the public twelfth-entry Loader source and SVG asset. The Loader
@@ -38,6 +40,7 @@ The roots must come from firmware and devices that the operator is authorized to
 | Face/eye detection | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | First-generation face/eye interfaces and ROI contracts; the stock model and camera-side behavior must be supplied by the operator |
 | Object recognition | `x2d/object-recognition/README.md` | Compatibility audit, frame adapter, model-container checks, and offline contract tests |
 | Factory debug UI | `x2d/CodeTests/factory-debug-ui/README.md` and [reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | Stock GUI lock-state finding, fixed ADB state readback, and an explicitly confirmed stock-GUI restart after ADB is already authorized |
+| Shimeji / UI response | [module](x2d/shimeji-overlay/README.md), [report](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | Offline native build, transparent QML demo, synthetic trace tests; hardware injection and failed UI candidates are not supplied |
 | Shutter animation | `x2d/CodeTests/shutter-animation-preview/README.md` | Browser/QML preview, timing analysis, and audio-client experiment notes |
 
 ## 3. Camera-side reproduction
@@ -62,6 +65,8 @@ Do not treat an offline candidate, a menu that renders, or a successful link dia
 python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_handoff/requirements.txt
 python3 scripts/reproduce_offline.py
 ```
+
+新增 UI 轨迹标准库测试已纳入入口，使用完全合成输入。可选 Qt 覆盖层测试与原生引擎构建见 [Shimeji 模块](x2d/shimeji-overlay/README.md)，不由默认套件下载依赖或自动运行。
 
 该入口会依次运行公开发布安全检查、AF-S 候选测试、对象识别离线契约测试、快门时序测试以及原厂调试界面的状态/门禁测试。它不会连接相机、写入固件、安装载荷，也不会启动实机实验。
 
@@ -90,6 +95,7 @@ python3 scripts/reproduce_offline.py \
 | 人脸/眼部识别 | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | 第一代人脸/眼部接口和 ROI 契约；原厂模型及相机侧行为需要操作者自行提供 |
 | 对象识别 | `x2d/object-recognition/README.md` | 兼容性审计、帧适配、模型容器检查和离线契约测试 |
 | 原厂调试界面 | `x2d/CodeTests/factory-debug-ui/README.md` 和[复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | 原厂 GUI 锁定状态发现、固定 ADB 状态读回，以及 ADB 已授权后的明确确认重启 |
+| Shimeji / UI 响应 | [模块](x2d/shimeji-overlay/README.md)、[报告](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | 原生构建、透明 QML 演示、合成轨迹测试；不含机内注入或已失败的 UI 候选 |
 | 快门动画 | `x2d/CodeTests/shutter-animation-preview/README.md` | 浏览器/QML 预览、时序分析和音频客户端实验记录 |
 
 ## 3. 实机复现

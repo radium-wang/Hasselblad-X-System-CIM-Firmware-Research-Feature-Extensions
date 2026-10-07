@@ -11,3 +11,5 @@ Use only on hardware and firmware that you own or are expressly authorized to te
 For the complete bilingual authorization, device-risk, warranty, privacy, and liability notice, see [DISCLAIMER.md](DISCLAIMER.md). The disclaimer does not expand any license or permission for third-party material.
 
 关于完整的中英双语授权、设备风险、保修、隐私和责任说明，请参阅[研究免责声明](DISCLAIMER.md)。该免责声明不会扩大任何第三方材料的许可证或使用权限。
+
+The [Shimeji overlay module](x2d/shimeji-overlay/README.md) uses its own GPL-3.0-or-later license. The repository MIT license does not apply to that module or its separately licensed character assets.
