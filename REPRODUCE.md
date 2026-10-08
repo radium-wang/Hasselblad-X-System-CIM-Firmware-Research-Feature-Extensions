@@ -1,107 +1,46 @@
-# Reproduce the Research
+# Reproduce the Offline Research / 离线研究复现
 
-This guide is the entry point for reproducing the published research. Read the [Research Disclaimer](DISCLAIMER.md) first. It separates repository-only checks from camera-side experiments that require an authorized, exact-version input set.
+Read [DISCLAIMER.md](DISCLAIMER.md) first. The public tree supplies offline analysis, interface source and desktop tests. Camera configuration writers, device deployment/recovery commands and diagnostic-channel instructions are excluded. Historical device observations remain evidence summaries rather than executable procedures.
 
-## 1. Run the complete safe offline suite
+## Run repository-contained checks
 
-Use Python 3.9 or newer from the repository root:
+Use Python 3.9 or later from the repository root:
 
 ```sh
 python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_handoff/requirements.txt
-python3 scripts/reproduce_offline.py
+python3 -B scripts/reproduce_offline.py
 ```
 
-The runner also runs the standard-library UI trace analysis and Doom USB framing tests (synthetic inputs only). Qt overlay checks and native engine builds are optional and described in the [Shimeji module](x2d/shimeji-overlay/README.md).
+The runner checks publication boundaries, the menu Loader source/icon, AF-S candidates, object-recognition contracts, shutter timing and synthetic UI traces. It does not connect to a camera. Optional Qt/native desktop checks are documented in the [Doom](x2d/doom/README.md) and [Shimeji](x2d/shimeji-overlay/README.md) modules.
 
-The runner executes the publication safety check, the AF-S candidate tests, the object-recognition offline contract tests, the shutter timing tests, and the factory-debug-UI state/guard tests. It never connects to a camera, writes firmware, installs a payload, or starts a device experiment.
-
-It also checks the public twelfth-entry Loader source and SVG asset. The Loader
-check is source-only; it does not compile or install an original vendor QML unit.
-
-To include tests that inspect user-supplied firmware extraction roots, provide all four read-only roots:
+For tests using operator-supplied firmware extraction roots, provide all four read-only directories:
 
 ```sh
-python3 scripts/reproduce_offline.py \
+python3 -B scripts/reproduce_offline.py \
   --source-system-root /path/to/x2d2-system-root \
   --source-vendor-root /path/to/x2d2-vendor-root \
   --target-system-root /path/to/x2d-system-root \
   --target-vendor-root /path/to/x2d-vendor-root
 ```
 
-The roots must come from firmware and devices that the operator is authorized to use. They are never copied into the repository.
+The directories are read-only inputs and are never copied into this repository. They must come from firmware the operator is authorized to use. Vendor firmware, libraries, models and generated compilation units are not distributed.
 
-## 2. Reproduce each research area
+## Research entry points
 
-| Area | Entry point | What can be reproduced |
+| Area | Entry | Reproduction scope |
 | --- | --- | --- |
-| Menu extension | `x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md` | QML source structure, SVG asset, desktop checks, and the documented temporary runtime result |
-| AF-S speed candidate | `x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md` | Exact-version hash gate, Type2-to-Type1 candidate generation, byte-diff checks, and offline benchmark calculation |
-| AF-C | `x2d/CodeTests/x2d-afc-research/README.md` | Exact-hash offline gate patching and the model/layout reasoning; a complete persistent feature is not supplied |
-| Face/eye detection | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | First-generation face/eye interfaces and ROI contracts; the stock model and camera-side behavior must be supplied by the operator |
-| Object recognition | `x2d/object-recognition/README.md` | Compatibility audit, frame adapter, model-container checks, and offline contract tests |
-| Factory debug UI | `x2d/CodeTests/factory-debug-ui/README.md` and [reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | Stock GUI lock-state finding, fixed ADB state readback, and an explicitly confirmed stock-GUI restart after ADB is already authorized |
-| Doom | [module](x2d/doom/README.md), [evidence](x2d/research/4.2.0/DOOM-FEASIBILITY.md) | Native engine/audio builds, real Qt input/PCM checks, exact-version temporary runner source; no vendor inputs or WAD |
-| Shimeji / UI response | [module](x2d/shimeji-overlay/README.md), [report](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | Offline native build, transparent QML demo, synthetic trace tests; hardware injection and failed UI candidates are not supplied |
-| Shutter animation | `x2d/CodeTests/shutter-animation-preview/README.md` | Browser/QML preview, timing analysis, and audio-client experiment notes |
+| Menu | [source and tests](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md) | Source QML, SVG and desktop checks |
+| AF-S | [candidate](x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md) | Exact-version offline hash gates and byte-diff checks |
+| AF-C | [research](x2d/CodeTests/x2d-afc-research/README.md) | Offline model/layout and gate analysis |
+| Recognition | [contracts and audit](x2d/object-recognition/README.md) | Firmware compatibility and synthetic frame contracts |
+| Doom | [module](x2d/doom/README.md) | Engine/audio builds and desktop input checks |
+| Shimeji | [module](x2d/shimeji-overlay/README.md) | Native desktop engine, transparent QML and synthetic traces |
+| Shutter | [preview](x2d/CodeTests/shutter-animation-preview/README.md) | Browser/QML preview and timing analysis |
 
-## 3. Camera-side reproduction
+## 中文说明
 
-Camera-side results depend on the exact X2D 4.2.0 or X2D II 1.3.16.2 environment recorded by each experiment. Read the experiment README before running anything. The public repository intentionally does not contain vendor firmware, compiled QML units, encrypted models, DSP or kernel files, compiled runtime packages or device logs. The Doom module is a source-only exception for an exact-version temporary runner: local inputs and checks produce a payload; only `--apply` accesses the camera, briefly enables ADB and changes trial RAM. Other historical writers/installers remain excluded. A reader can reproduce the bounded procedure after supplying lawful inputs and explicit device authorization; the repository alone cannot recreate those proprietary inputs or the original camera state. The factory-debug-ui implementation starts only after ADB is already authorized and does not include the factory USB command that enables ADB. The historical live-device menu log is archival and references private/generated runners that are not present in a clean clone. See [the factory-debug reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) for the exact hand-off point.
+本公开树只提供离线分析、界面源码和桌面检查，不包含相机配置写入、设备部署／恢复命令或调试通道操作步骤。历史实机报告保留其机型、固件及验证限制，不能视作可执行的部署说明。
 
-Do not treat an offline candidate, a menu that renders, or a successful link diagnostic as a complete deployed feature. The experiment documents state the required acceptance checks, recovery path, and remaining limits.
+在仓库根目录运行上面的离线套件。默认不提供固件输入时，依赖外部输入的用例会跳过；需要时显式指定四个只读固件目录。Qt／原生桌面检查按对应模块说明执行，不自动下载依赖。
 
----
-
-# 复现研究成果
-
-本说明是复现入口。它把仅依赖仓库的检查，与必须使用获得授权的精确版本输入和实机的实验分开说明。
-
-开始前请先阅读[研究免责声明](DISCLAIMER.md)。
-
-## 1. 运行完整的安全离线套件
-
-在仓库根目录使用 Python 3.9 或更高版本：
-
-```sh
-python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_handoff/requirements.txt
-python3 scripts/reproduce_offline.py
-```
-
-新增 UI 轨迹及 Doom USB 传输标准库测试已纳入入口，使用完全合成输入。Doom 的可选原生/Qt/音频检查和实机步骤见 [Doom 模块](x2d/doom/README.md)。可选 Qt 覆盖层测试与原生引擎构建见 [Shimeji 模块](x2d/shimeji-overlay/README.md)，不由默认套件下载依赖或自动运行。
-
-该入口会依次运行公开发布安全检查、AF-S 候选测试、对象识别离线契约测试、快门时序测试以及原厂调试界面的状态/门禁测试。它不会连接相机、写入固件、安装载荷，也不会启动实机实验。
-
-它还会检查公开的第十二格 Loader 源码和 SVG 图标。该 Loader 检查只读源码，
-不会编译或安装原厂 QML 单元。
-
-如果要加入读取使用者固件提取目录的测试，请一次性提供四个只读目录：
-
-```sh
-python3 scripts/reproduce_offline.py \
-  --source-system-root /path/to/x2d2-system-root \
-  --source-vendor-root /path/to/x2d2-vendor-root \
-  --target-system-root /path/to/x2d-system-root \
-  --target-vendor-root /path/to/x2d-vendor-root
-```
-
-这些目录必须来自操作者有权使用的固件和设备，且不会复制到仓库中。
-
-## 2. 分主题复现
-
-| 主题 | 入口 | 可以复现的内容 |
-| --- | --- | --- |
-| 菜单扩展 | `x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md` | QML 源码结构、SVG 资源、电脑端检查和已记录的临时实机结果 |
-| AF-S 提速候选 | `x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md` | 精确版本哈希门禁、Type2→Type1 候选生成、字节差异检查和离线基准计算 |
-| AF-C | `x2d/CodeTests/x2d-afc-research/README.md` | 精确哈希离线 gate 修改和模型/布局分析；没有提供完整持久化功能 |
-| 人脸/眼部识别 | `x2d/object-recognition/research/X2D2-TO-X2D-PORT.md` | 第一代人脸/眼部接口和 ROI 契约；原厂模型及相机侧行为需要操作者自行提供 |
-| 对象识别 | `x2d/object-recognition/README.md` | 兼容性审计、帧适配、模型容器检查和离线契约测试 |
-| 原厂调试界面 | `x2d/CodeTests/factory-debug-ui/README.md` 和[复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md) | 原厂 GUI 锁定状态发现、固定 ADB 状态读回，以及 ADB 已授权后的明确确认重启 |
-| Doom | [模块](x2d/doom/README.md)、[报告](x2d/research/4.2.0/DOOM-FEASIBILITY.md) | 原生引擎/音频构建、Qt 输入/PCM 检查、精确版本短时运行器源码；不含原厂输入或 WAD |
-| Shimeji / UI 响应 | [模块](x2d/shimeji-overlay/README.md)、[报告](x2d/research/4.2.0/UI-RESPONSIVENESS.md) | 原生构建、透明 QML 演示、合成轨迹测试；不含机内注入或已失败的 UI 候选 |
-| 快门动画 | `x2d/CodeTests/shutter-animation-preview/README.md` | 浏览器/QML 预览、时序分析和音频客户端实验记录 |
-
-## 3. 实机复现
-
-实机结果依赖各实验记录的精确环境：X2D 4.2.0 或 X2D II 1.3.16.2。运行任何内容前先阅读对应实验 README。公开仓库有意不包含厂商固件、编译后的 QML 单元、加密模型、DSP 或内核文件、编译后的运行包和设备日志。Doom 模块新增精确版本的短时运行器源码：使用者自行提供输入并完成离线检查后生成包，显式 `--apply` 才访问相机、临时开启 ADB 和改变试验 RAM；其他历史写入器/安装器仍未收录。原厂调试界面实现从已经授权的 ADB 端点开始，不包含通过 factory USB 开启 ADB 的命令。历史实机菜单记录是归档资料，引用的私有/生成运行器不会出现在干净副本中。读者在提供合法输入并取得明确设备授权后，可以复现公开的受限检查；但仓库本身不能从普通 USB 连接开始重新生成这些原厂输入或原相机状态。具体交接点见[原厂工程界面复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)。
-
-离线候选、能够显示的菜单或通过的链接诊断都不能直接视为完整部署功能。各实验文档列出了所需验收、恢复路径和剩余限制。
+离线候选、能够显示的菜单或接口契约通过，不代表相机性能、稳定性或跨机型兼容性已通过验收。

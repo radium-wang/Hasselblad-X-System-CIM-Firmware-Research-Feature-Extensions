@@ -6,8 +6,6 @@
 
 主屏开机图离线替换：[replace_main_startup_logo.py](firmware-analysis/replace_main_startup_logo.py)。从仓库根目录运行 `python3 x2d/tools/firmware-analysis/replace_main_startup_logo.py <原厂-eagle-backend.so> <162x128目标PNG> <本地候选.so.NOT_FOR_DEVICE> --preview <预览PNG>`；若输入 RGB 含少量彩色像素，须显式加 `--convert-to-gray`。工具校验原厂 ELF 哈希，只改标准版 Logo 的 20,736 个索引字节范围，预览按原厂 17 级灰度表量化；不改引导程序、exMCU 或相机，也不生成签名升级包。输出只供离线分析。
 
-USB 页面脚本：[inspect_usb_ui_4_2_0.py](inspect_usb_ui_4_2_0.py)。运行 `py -3.11 -B x2d/tools/inspect_usb_ui_4_2_0.py`，复核 USB 测试消息到终端输入、原厂确认页/图片页、ABI 与显示基础；只读本地固件、向 stdout 输出 JSON，不构造设备请求。结果见 usb-ui-checks.json（外部输入或历史产物，未随迁移提供）。
-
 页面研究脚本：inspect_gui_entry_4_2_0.py（外部输入或历史产物，未随迁移提供）。运行 `py -3.11 -B x2d/tools/inspect_gui_entry_4_2_0.py`，只读固定固件并向 stdout 输出 JSON，复核 QRC 页面、Wayland 启动和窗口分类/焦点指令；不启动 GUI 或连接设备。结果见 gui-entry-checks.json（外部输入或历史产物，未随迁移提供）。
 
 当前脚本：inspect_counter_entry_4_2_0.py（外部输入或历史产物，未随迁移提供），复核官方 X2D 4.2.0 的镜头通道、文件传输及程序执行代码。运行 `py -3.11 -B x2d/tools/inspect_counter_entry_4_2_0.py`，只读本地固定固件，向 stdout 输出 JSON；不打开相机、不执行固件、不产生设备请求。结果见 counter-entry-checks.json（外部输入或历史产物，未随迁移提供）。

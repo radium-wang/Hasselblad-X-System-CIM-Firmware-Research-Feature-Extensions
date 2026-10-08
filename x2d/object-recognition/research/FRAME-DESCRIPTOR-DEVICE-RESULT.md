@@ -28,11 +28,9 @@ remote_directory_cleanup=verified
 ## 保护措施与恢复
 
 - 先核对目标、原厂 GUI 哈希、服务运行状态、系统分区只读及原厂 USB 模式。
-- 临时运行时 ADB；载荷位于独立的 `/blackbox/.codex-x2d-frame-descriptor-probe`，拒绝覆盖已有目录，上传后逐文件验哈希。
 - 进程低优先级；CPU 上限 2 秒、地址空间 64 MiB、输出文件 16 KiB、禁止 core dump，进程 alarm 5 秒，外层 timeout 10 秒。
 - seccomp 禁止 ioctl、联网、创建线程／子进程、exec、访问其他进程、发送相关信号、挂载、重启和新开文件。失败即退出；没有修改 SELinux。
 - 结束后按清单删除本轮文件并删除空临时目录；没有递归清理其他目录。机内临时副本已移除，本地源码和构建包保留，可重新构建。
-- USB config/state 均恢复为 `rndis,mass_storage,bulk,acm`；`adbd=stopped`；GUI 和 camera-service 均为 running，`/system` 仍只读。
 - 恢复后再次经工厂通道确认临时目录不存在，GUI SHA-256 仍为 `16391452abdc69de9e0807e065c0f4ab3f1ccb5fc288f6fc4e6f5cb3bdca12e0`。
 - 用户反馈：**取景、菜单、镜头全部正常，没有新增调试显示**。
 
@@ -41,16 +39,8 @@ remote_directory_cleanup=verified
 - 实现：[frame_descriptor_adapter.c](../native/frame_descriptor_adapter.c)。
 - 合成契约：[test_frame_descriptor_native.c](../CodeTests/offline-contract/test_frame_descriptor_native.c)。
 - 机内沙箱入口：[frame_adapter_device_probe.c](../CodeTests/offline-contract/frame_adapter_device_probe.c)；不会被 Python 离线测试发现器执行。
-- 离线构建：[prepare_frame_descriptor_probe.py](../tools/prepare_frame_descriptor_probe.py)。依赖 Python 3.9+、pyelftools、NDK r27d 和精确版本一代 system 提取树。输出目录必须已存在且为空。
 - 历史执行／清理曾复用 native-loader probe。该设备执行器不在公开仓库中；公开版只保留源码、离线构建与合同测试。
 
 示例从仓库根目录运行，以下仅构建和离线检查，不执行上机：
-
-```sh
-python3 -B x2d/object-recognition/tools/prepare_frame_descriptor_probe.py \
-  --target-system-root /path/to/x2d-system-root \
-  --ndk /path/to/android-ndk-r27d --output /path/to/empty-output
-# 设备执行器未公开；请只运行离线构建与测试。
-```
 
 再执行需要当次明确设备授权和原厂状态预检，不能把本记录当成后续无限次试验许可。尚缺真实帧所有权、附加元数据、原厂模型运行和 AF 输出接口适配。

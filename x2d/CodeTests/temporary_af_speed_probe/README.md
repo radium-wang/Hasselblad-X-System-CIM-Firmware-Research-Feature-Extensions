@@ -10,4 +10,3 @@ This public subset contains:
 - selected research notes and offline tests at this directory level.
 
 Generated function blobs, vendor libraries, runtime memory writers, installers and device logs are intentionally absent. Historical device observations are retained only as sanitized summaries and must not be interpreted as permission to repeat an experiment.
-

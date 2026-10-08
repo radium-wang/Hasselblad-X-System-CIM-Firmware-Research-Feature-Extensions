@@ -2,7 +2,7 @@
 
 ## Scope
 
-This directory contains the original source QML, the explicit `X2dNativeMenuLoader.qml` integration component, project-owned SVG icon and desktop/offline checks for a twelfth X2D menu entry named “耍起功能”. It also contains a direct-GUI structural experiment for a master switch and an AF-C child switch. See [LOADER-AND-ICON.md](LOADER-AND-ICON.md) for the public loading point and asset mapping.
+This directory contains the original source QML, the explicit `X2dNativeMenuLoader.qml` integration component, project-owned SVG icon and desktop/offline checks for a twelfth X2D menu entry named “耍起功能”. See [LOADER-AND-ICON.md](LOADER-AND-ICON.md) for the public loading point and asset mapping.
 
 Generated compiled QML units, vendor libraries, preload binaries, device installation scripts and persistent startup configuration are intentionally absent.
 

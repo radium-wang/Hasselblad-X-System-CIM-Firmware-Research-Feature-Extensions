@@ -6,9 +6,8 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Menu extension](CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md): source QML, icon and offline checks for the twelfth menu entry.
 - [AF-C research](CodeTests/x2d-afc-research/README.md): public summary and exact-version offline gate patcher.
 - [Object recognition](object-recognition/README.md): compatibility audit, frame adapter and offline contract tests; not a deployable port.
-- [Factory debug UI](CodeTests/factory-debug-ui/README.md): [research finding](research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md), stock GUI lock-state evidence, and a bounded ADB state inspector; it does not enable ADB or install a payload.
 - [Shutter animation](CodeTests/shutter-animation-preview/README.md): browser/QML visual candidate, read-only timing analysis and audio source.
-- [Doom](doom/README.md)：第一代 4.2.0 的真实引擎、快门开火、音效与滑动；独立 GPL-2.0-or-later，含默认无设备的短时运行器。
+- [Doom](doom/README.md)：第一代 4.2.0 的真实引擎、快门开火、音效与滑动；独立 GPL-2.0-or-later，保留引擎、界面及桌面检查；设备运行器未公开。
 - [Shimeji 透明宠物](shimeji-overlay/README.md)：引擎适配、QML 点击穿透和桌面验证；临时实机用户确认，公开版不含安装链。
 - [菜单响应诊断与三轮试验](research/4.2.0/UI-RESPONSIVENESS.md)：原厂 57–58 FPS 但拖动落后；未确认改善，已恢复原厂。
 - [Firmware tools](tools/README.md): offline firmware and QML analysis helpers.
@@ -18,7 +17,7 @@ The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 - [Research notes](research/): selected sanitized findings and validation limits.
 - [External research references](references/EXTERNAL-RESEARCH.md): citation-only provenance, including the X2D CIM notes that inspired the AF-C investigation.
 
-The public tree does not include vendor inputs, generated QML units or compiled runtime packages. The Doom module includes its own exact-version temporary runner source and USB dependency, with device access gated by `--apply`; other historical installation chains remain outside this tree.
+The public tree contains offline analysis, source UI and desktop tests. Vendor inputs, generated units, camera deployment tools and operating instructions are not included.
 
 ## 最新研究汇总（更新至 2026-10-07）
 
@@ -26,7 +25,6 @@ The public tree does not include vendor inputs, generated QML units or compiled 
 
 - [原厂对焦参数与实验](research/4.2.0/AF-NATIVE-PARAMETERS-AND-TRIALS.md)
 - [AFT 人脸区域与主框](research/4.2.0/AFT-FACE-TRACKING-RESULTS.md)
-- [GUI 与工具更新](research/4.2.0/UI-AND-TOOLKIT-UPDATE.md)
 - [无线与恢复更新](research/4.2.0/WIRELESS-AND-RECOVERY-UPDATE.md)
 - [固件与模型容器](research/4.2.0/FIRMWARE-CONTAINERS-UPDATE.md)
 - [像素位移、低噪与视频](research/4.2.0/IMAGING-AND-VIDEO-UPDATE.md)

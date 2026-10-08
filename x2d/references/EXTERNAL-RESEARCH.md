@@ -63,9 +63,6 @@ generated output is copied into this repository.
 
 ### Factory-diagnostic-channel reference
 
-**WeiCheng97.** *Hasselblad X2D-series 5G unlock*.
-GitHub. <https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock>
-
 This is an adjacent reference for observations involving the camera's factory
 diagnostic channel and local device communication. It is not evidence for the
 AF-S, AF-C, face/eye, or object-recognition conclusions in this project. The
@@ -132,9 +129,6 @@ simulation》。GitHub：<https://github.com/Konamill-bot/x2d-pdaf-sim>
 标注项目使用 MIT 许可证。本项目没有复制其源码或生成结果。
 
 ### 原厂诊断通道参考
-
-**WeiCheng97。**《Hasselblad X2D-series 5G unlock》。
-GitHub：<https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock>
 
 这是关于相机原厂诊断通道和本地设备通信观察的旁支参考，不是本项目 AF-S、AF-C、
 人脸/眼部识别或对象识别结论的证据。上游仓库说明其代码使用 MIT 许可证，并有

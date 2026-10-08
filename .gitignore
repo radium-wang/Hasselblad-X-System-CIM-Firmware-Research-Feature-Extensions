@@ -56,7 +56,6 @@ __pycache__/
 !/SECURITY.md
 !/THIRD_PARTY_NOTICES.md
 !/x2d/CodeTests/README.md
-!/x2d/CodeTests/factory-debug-ui/README.md
 !/x2d/CodeTests/pdaf-only-shadow/DEVICE-RESULT-2026-09-25.md
 !/x2d/CodeTests/pdaf-only-shadow/README.md
 !/x2d/CodeTests/shutter-animation-preview/README.md
@@ -66,8 +65,6 @@ __pycache__/
 !/x2d/CodeTests/temporary_af_speed_probe/PDAF_EARLY_SLOWDOWN.md
 !/x2d/CodeTests/temporary_af_speed_probe/README.md
 !/x2d/CodeTests/temporary_af_speed_probe/X2D_AF_STANDALONE_HANDOFF.md
-!/x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/BOOT-LOAD-EXPLAINED.md
-!/x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/DEVICE-RESULT.md
 !/x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/LIVE-DEVICE-TEST.md
 !/x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/LOADER-AND-ICON.md
 !/x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/NATIVE-TWELFTH-ENTRY-FEASIBILITY.md
@@ -94,20 +91,15 @@ __pycache__/
 !/x2d/research/4.2.0/AF-NATIVE-PARAMETERS-AND-TRIALS.md
 !/x2d/research/4.2.0/AFT-FACE-TRACKING-RESULTS.md
 !/x2d/research/4.2.0/EXMCU-BOOT-AND-RECOVERY.md
-!/x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md
-!/x2d/research/4.2.0/FACTORY-DEBUG-UI-FINDINGS.md
 !/x2d/research/4.2.0/FIRMWARE-CONTAINERS-UPDATE.md
-!/x2d/research/4.2.0/GUI-RECOVERY-AUDIT.md
 !/x2d/research/4.2.0/IMAGING-AND-VIDEO-UPDATE.md
 !/x2d/research/4.2.0/STARTUP-LOGO-LOCATION.md
 !/x2d/research/4.2.0/STARTUP-LOGO-REPLACEMENT.md
 !/x2d/research/4.2.0/TEMPORARY_WIFI_BUTTON_TRIAL.md
-!/x2d/research/4.2.0/UI-AND-TOOLKIT-UPDATE.md
 !/x2d/research/4.2.0/WIRELESS-AND-RECOVERY-UPDATE.md
 !/x2d/research/4.2.0/X2D2-AF-TRACKING-PORT.md
 !/x2d/research/AFC-MENU-RUNTIME-RESULT.md
 !/x2d/research/CONTROL-SCREEN-AFC-CLONE.md
-!/x2d/research/FLASHING-PLAN.md
 !/x2d/research/X2D-LENS-SPEED-FINDINGS.md
 !/x2d/research/local-research-4.2.0/AF-SPEED.md
 !/x2d/research/local-research-4.2.0/LEGACY-LENS-SPEED.md
@@ -116,8 +108,6 @@ __pycache__/
 !/x2d/research/local-research-4.2.0/README.md
 !/x2d/research/local-research-4.2.0/STOCK-MENU-ROUTING.md
 !/x2d/tools/README.md
-!/x2d2/README.md
-!/x2d2/research/1.3.16.2/REGION.md
 
 !/x2d/shimeji-overlay/README.md
 !/x2d/shimeji-overlay/CodeTests/overlay/README.md

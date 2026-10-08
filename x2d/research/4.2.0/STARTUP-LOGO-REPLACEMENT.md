@@ -30,7 +30,6 @@
 | --- | --- |
 | 前置核对 | 设备 `ro.product.device=eagle2_ec1706_native`、构建号 `24849`；本次启动槽 `ro.boot.slot_suffix=2`；运行中 `/system/lib64/weston/eagle-backend.so` 的 SHA-256 与本地 4.2.0 原厂文件一致。此前记录的启动槽是 1；本次只记录现状，不推断槽变更原因。 |
 | 内存定位 | Weston 进程映射该原厂 ELF；读取对齐后的 Logo 区块（文件偏移 `0x163D00` 至 `0x168F00`，20,992 字节），SHA-256 为 `dfd277d4ef91d98e14bcd4287da47ce06c7ed3ea7f68bec0d9f4bfafa530d384`，与本地原厂区块一致。 |
-| 临时替换 | 将原厂及 Nikon 对齐区块通过现有工厂 USB 入口暂存于设备 `/tmp` 的 tmpfs；逐个校验哈希。只向运行中 Weston 进程的对应私有内存映射写入 Nikon 区块，回读 SHA-256 为 `3d1078d038f5fe558aebb25e876546275e803791d43ce573f5f18b5045443459`，与本地候选一致。设置独立的 18 秒 GUI／内存恢复看门狗。 |
 | 显示观察 | 暂停 `camera-gui` 约 4 秒，使 Weston 在无 GUI surface 时绘制 Logo；用户看到主屏显示 Nikon Logo。随后恢复 GUI。此项是用户现场观察，没有保存屏幕截图或视频。 |
 | 回退核查 | 写回原厂区块后，Weston 内存 SHA-256 恢复为 `dfd277d4...a530d384`；看门狗结束后独立复核 `weston` 与 `camera-gui` 均为 `running`，原厂 ELF 磁盘哈希不变，`/system` 保持 `ro`，专用 `/tmp` 暂存目录不存在，USB 模式回到原先的 `rndis,mass_storage,bulk,acm`。 |
 
@@ -53,5 +52,3 @@
 3. 运行前确认本机仍为 `eagle2_ec1706_native`、构建号 `24849`、原厂后端 SHA-256 `a0ac02a5...b7f6217`；Weston 和 GUI 正常。将原厂代码和专版图片区域从 Weston 内存备份到 `/tmp` tmpfs，并逐块核对；候选载荷也暂存于 tmpfs，设置独立看门狗，在测试结束后恢复 GUI、原厂代码和数据。
 4. 首次实机显示大小正确，但用户反馈黄色变蓝／青色、黑字仍黑。查明是红蓝通道的字节顺序与 framebuffer 相反；仅交换 256 项调色板中红蓝字节，代码和索引保持不变。修正后再试，并按用户请求重放一次，停留约 12 秒；用户确认 **250×250 大小正确、黄色背景及黑色 Nikon 字样正确，并已拍到照片**。本仓库没有保存该实机照片。
 5. 最终独立只读复核：原厂代码区块和图片数据区块的 Weston 内存哈希均恢复，磁盘上的 `eagle-backend.so` 哈希仍为原厂值，`weston` 与 `camera-gui` 均为 `running`，`/system` 保持 `ro`，专用 `/tmp` 暂存目录不存在，USB 模式仍为 `rndis,mass_storage,bulk,acm`。全程未写系统分区、未刷机、未修改 exMCU。
-
-此结果验证当前固件的主屏 **运行内存短时显示路径** 可绘制用户提供的 250×250 彩色图，且可回退原厂状态。它不证明完整冷启动时会显示此图，也不代表已有可持续安装的方案。彩色预览与离线候选留在被 Git 忽略的 `x2d/outputs/startup-logo-4.2.0/`；没有把设备端工厂 USB 命令或部署脚本放入公开仓库。

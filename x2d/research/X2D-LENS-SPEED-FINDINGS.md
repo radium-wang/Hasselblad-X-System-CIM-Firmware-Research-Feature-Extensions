@@ -78,9 +78,6 @@ X2D 的 `/etc/lens_config.json` 只包含焦距、光圈、镜头名称等元数
 
 ## 下一步（只读优先）
 
-1. 安装待测试的 XCD 镜头，重启相机并进入实时取景。
-2. 通过已授权的 USB ADB 或工厂 Wi-Fi 运行：
-
    ```bash
    python3 collect_x2d_af_wifi.py lens-diagnostics \
      --output x2d-lens-diagnostics.md
@@ -90,15 +87,10 @@ X2D 的 `/etc/lens_config.json` 只包含焦距、光圈、镜头名称等元数
    值。只有拿到当前镜头的真实上限后，才考虑以小步长（约 5%）启用命令 11，并在每
    轮结束后立即发送关闭命令。
 
-直接工厂 USB 目前只验证了参数 27/28（机身报告 `v4.2.0` 和运行标志），这条通道
-本身尚未证明可以承载 RCam 命令 11；它不能代替 USB ADB 或 Wi-Fi 工厂 shell。
-
 另外，`phocus` 的 `ReadParameter::getValue()` 和 `updateFocusModeChanged()` 已把
 参数 ID `2` 对应到对焦模式，转换值为 `0=MF`、`1=AF-S`、`2=AF-C`、`3=AFT`。本地
 USB 工具现在提供 `read-focus-mode`，仍然是单次只读请求；它不会写入 `2`，也不会
 因此让菜单出现 AF-C。
-
-## 直接工厂 USB 的受限对焦模式实验
 
 静态核对 `phocus` 的 `WriteParameter::OnPhocusMessage()` 后，确认写入载荷是两字节小端
 参数 ID 加上 `sCameraParameter` 文本标量；参数 2 的 AF-C 请求使用 `i2`，消息类型为

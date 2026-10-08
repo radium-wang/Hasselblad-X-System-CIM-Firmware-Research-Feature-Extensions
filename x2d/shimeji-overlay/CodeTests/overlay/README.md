@@ -1,7 +1,5 @@
 # 透明覆盖层离线检查
 
-范围：X2D 100C 4.2.0 移植组件的源码 QML，电脑端 Qt 6.4.1；不调用 ADB，不使用原厂 QML、角色包或设备截图。
-
 从仓库根目录执行 `python3 x2d/shimeji-overlay/CodeTests/overlay/check_overlay.py`。依赖 Python 3.9–3.11、PySide6 Essentials 6.4.1。脚本设 offscreen 和自身 QML 文件 XHR 开关，在临时目录生成不对称白色块与透明边缘 PNG、状态 JSON 和行区间掩码，结束后删除临时目录。
 
 断言背景点击、透明边缘点击、镜像后透明像素点击均到达底层；拖动事件直接改变角色视觉坐标；松手保持该位置直到引擎序号确认；抓取自有覆盖层检查背景 alpha=0；Exit 发出标记并保留宿主窗口；退出后底层继续可点，且没有自动截图文件。

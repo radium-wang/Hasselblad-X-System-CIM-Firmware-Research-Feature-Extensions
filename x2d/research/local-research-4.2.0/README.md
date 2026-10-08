@@ -7,4 +7,3 @@
 - [Stock menu routing](STOCK-MENU-ROUTING.md)
 
 These notes preserve static and offline findings. Vendor inputs, runtime packages and device logs are not included.
-

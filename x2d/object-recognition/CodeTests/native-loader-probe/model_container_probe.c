@@ -26,7 +26,7 @@
 #else
 #define MODEL_SIZE 4206912U
 #endif
-#define DONOR_CA_PATH "/blackbox/.codex-x2d-model-container-probe/libfw_util_ca.so"
+#define DONOR_CA_PATH "./libfw_util_ca.so"
 #define DENY(n) BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_##n, 0, 1), \
                 BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ERRNO | EPERM)
 

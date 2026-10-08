@@ -71,5 +71,3 @@ python3 x2d/shimeji-overlay/tools/build_engine.py \
 引擎读取 `input`：`sequence x y dragging behavior dragLeft dragTop`；QML 读取原子替换的 `state.json`，以 `input` 序号判断松手确认。坐标使用 720×540 的逻辑画布，输出帧锚点负责图片定位，镜像掩码负责透明像素穿透。该通道只应用于单用户、独占、可信角色目录；角色 XML 的脚本并非沙箱隔离的任意第三方代码。
 
 Exit 只写 `controlRoot/exit.request` 并发出 `exitRequested()`，停止覆盖层输入和显示；宿主需自行销毁覆盖层并通知它拥有的引擎退出。**不得在原厂相机进程内调用 Qt.quit()**。最初独立宠物页面这样退出导致原厂界面结束，屏幕停留在哈苏 Logo；当时通过独立恢复路径重新启动原厂 GUI，用户确认恢复。后续临时部署改为退出标记、独立监督者与十分钟超时。标记和恢复流程已验证，但修正后的物理 Exit 点击及完整十分钟超时未分别完成全部实机验收。
-
-公开源码不提供原厂 QML 编译单元注入、任意内存写入、factory/root 引导或设备部署监督者。从普通 USB 连接到相机运行并不能仅靠此模块复现，接入边界见[原厂工程界面说明](../research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)。此前临时文件和 RAM 修改不是刷写固件、修改系统分区或自动开机部署。本次整理没有操作设备。

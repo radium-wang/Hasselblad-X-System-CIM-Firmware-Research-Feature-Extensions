@@ -20,7 +20,7 @@ Item {
         var game = component.createObject(host, {
             width: Qt.binding(function() { return host.width }),
             height: Qt.binding(function() { return host.height }),
-            ipcRoot: "file:///blackbox/.x2d-doom-trial-stage/ram/",
+            ipcRoot: "file:///tmp/x2d-doom-trial/ram/",
             returnFocusItem: previous, z: 10000
         })
         if (!game) return false

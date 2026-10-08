@@ -149,8 +149,4 @@
 
 ### 首次机内单帧结果（实机验证）
 
-用户在机旁确认取景与菜单正常后，临时启用运行时 USB ADB，将候选和公开测试素材放入全新的 `/blackbox/.codex-x2d-object-smoke`。候选限制为低优先级、约 300 MB 虚拟内存与 30 秒硬超时；没有改写 GUI、`camera-service`、AF 或系统分区。单帧公开样图来自 [Darknet 官方测试图](https://github.com/pjreddie/darknet/blob/master/data/dog.jpg)，模型为 [官方 YOLOv3-tiny 配置](https://github.com/pjreddie/darknet/blob/master/cfg/yolov3-tiny.cfg)与[权重](https://pjreddie.com/darknet/yolo/)；推理调用第一代自带 OpenCV 3.4.5。该模型不是 X2D II 加密模型。
-
-首版只使用单一 YOLO 输出层：`image=768x576`、`load_ms=250`、`total_ms=1289`、`maxrss_kb=102072`、`candidate_exit=0`，输出一个 Vehicle 候选框（置信度 0.585，矩形 `530,94,99,67`，公开测试图右上确有车辆）。这证明第一代可以在不接雷达、不换 ML/DSP 栈的情况下完成**一次** CPU 对象检测；不证明连续帧速度、Pet/Human 识别准确率或 AF 跟踪。上传文件哈希均核对，候选目录清理得到 `verified`，USB 实际读回 `rndis,mass_storage,bulk,acm` 且 `adbd` 未运行；用户报告取景、菜单和镜头均正常。
-
 首版的单输出限制来自原厂 OpenCV 库与新 NDK 的 `std::vector` ABI 不同。已按 OpenCV 3.4.5 Darknet 导入器的 `yolo_%d` 命名规则修改候选，改为分别调用该配置的 `yolo_16` 与 `yolo_23` 输出层；新版本已本地编译，尚未实机运行，不能把前述单输出结果归给它。

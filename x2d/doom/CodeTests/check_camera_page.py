@@ -21,7 +21,7 @@ def main():
         (d/'qmldir').write_text(f'module com.hasselblad.{module}\nsingleton {typ} 1.0 {typ}.qml\n')
         (d/(typ+'.qml')).write_text('pragma Singleton\nimport QtQml\nQtObject {'+body+'}\n')
     for n in ['DoomPage.qml','DoomCameraPage.qml']:(out/n).write_bytes((ROOT/n).read_bytes())
-    boot=(ROOT/'Bootstrap.qml').read_text().replace('file:///tmp/x2d-doom-trial/DoomCameraPage.qml',QUrl.fromLocalFile(str(out/'DoomCameraPage.qml')).toString()).replace('file:///blackbox/.x2d-doom-trial-stage/ram/',QUrl.fromLocalFile(str(out)+'/').toString())
+    boot=(ROOT/'Bootstrap.qml').read_text().replace('file:///tmp/x2d-doom-trial/DoomCameraPage.qml',QUrl.fromLocalFile(str(out/'DoomCameraPage.qml')).toString()).replace('file:///tmp/x2d-doom-trial/ram/',QUrl.fromLocalFile(str(out)+'/').toString())
     (out/'Bootstrap.qml').write_text(boot)
     app=QGuiApplication([]);engine=QQmlApplicationEngine();engine.addImportPath(str(out/'imports'));errors=[]
     engine.warnings.connect(lambda es:errors.extend(e.toString() for e in es))

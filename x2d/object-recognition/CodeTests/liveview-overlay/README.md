@@ -20,7 +20,6 @@
 - `dynamic_probe.py`：显式 `--execute` 才访问相机；暂存模型、限时捕获及推理、取诊断记录、清理并恢复 USB。
 - `test_dynamic_contract.cjs`：用 Node 执行实际 QML 中的数据验证函数；不等于完整 Qt/QML 渲染测试。
 - `make_boxes_svg.py`：历史单帧结果转换工具，不再是动态显示输入。
-- 依赖：NDK、OpenCV 3.4.5 头文件、第一代原厂库、Darknet 模型、adb、PyUSB、pyelftools。固件、模型、构建产物和个人画面不随仓库分发。
 
 构建命令见 `build_overlay.py --help` 和相邻 [检测器说明](../native-cpu-detector/README.md)。离线验证：
 
@@ -29,8 +28,6 @@ node x2d/object-recognition/CodeTests/liveview-overlay/test_dynamic_contract.cjs
 ```
 
 ## 副作用与恢复
-
-只有实机入口才临时启用 ADB，向 `/blackbox/.codex-x2d-object-overlay` 写入测试输入及画面；临时添加三个新 `/system` 文件，随后保持系统只读。测试 GUI 临时替代原厂 GUI 进程，可能中断取景；不修改原厂 GUI 文件、init、AF 或镜头驱动。捕获限时 48 秒且最多 200 帧、推理外部硬超时 50 秒，GUI 60 秒计时恢复；主机最后核验并删除精确测试文件、恢复生产 USB。正常重启不等于删除持久分区的临时文件。
 
 ## 二代证据与当前适配的区别
 
@@ -55,5 +52,3 @@ X2D II 1.3.16.2 `dji_ml` 的动态符号确认 `CreateDetectionSubGraph`、`Crea
 设备计时器确认恢复原厂 GUI、删除系统载荷；主机重复恢复命令报错，随后只读核验原厂 GUI 哈希及无实验预载、按哈希清理暂存文件，并再次核实 `/system` 只读、生产 USB、测试目录消失。自动恢复脚本本身不能宣称全流程无故障。
 
 用户随后指出仍有时钟。读回 `system.debug_mode=false`、`system.debug_options=None`，但 `gui.osd_clock=Top`：时钟是独立残留开关，此前只核验 GUI/USB 的“完全恢复”表述不准确。已单独写 `E_OSDClock_Off` 并读回 Off，没有重启服务或重置其他设置。DebugMode 菜单入口存在不等于该属性开启。
-
-用户继续指出扩展维护项仍在。最终采用已有 `restore_production_gui_runtime`：先验证 USB config/state 均不含 ADB，再清零 `hbl.sutest_gui`、`persist.hbl.testmode`，关闭 debug mode/options/clock，明确观察 GUI 停止且 PID 消失后，由 init 启动新原厂 GUI。新 PID 与旧 PID 不同，原厂可执行文件和 init 配置哈希匹配、菜单 AF-C gate 为零、时钟 Off、调试 False/None、测试属性均为零。此前先启动 GUI 再关闭 ADB 的恢复顺序会保留 GUI 启动时的解锁维护菜单状态；只删载荷或只关时钟不是完整界面恢复。恢复代码执行成功，维护菜单的最终外观仍须用户观察确认。

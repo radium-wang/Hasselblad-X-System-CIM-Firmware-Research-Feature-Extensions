@@ -1,13 +1,5 @@
 # Hasselblad X-System CIM Firmware Research & Feature Extensions
 
-## 一键工具包 · 下载 / One-click toolkit
-
-**[下载 Windows / macOS 一键工具包 →](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit/releases/latest)**
-
-[![Download toolkit](https://img.shields.io/badge/Download-Windows%20%2F%20macOS-0969da?style=for-the-badge)](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit/releases/latest)
-
-安装、更新和恢复说明：[一键工具包项目主页 / Toolkit & instructions](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit)。使用前请核对该项目支持的机型、固件版本与验证范围。
-
 ## 赞助开发 / Support development
 
 **[PayPal 赞助 →](https://paypal.me/RadiumWang) · [支付宝收款码 →](https://github.com/radium-wang/x2d-907-one-click-extension-toolkit#support-development)**
@@ -29,8 +21,7 @@ This repository contains only source code, offline tools, tests, and sanitized r
 
 | Project | Public contents | Current status |
 | --- | --- | --- |
-| [X2D 100C](x2d/README.md) | Menu extensions, AF-S speed research, AF-C, stock face/eye detection enablement, factory debug UI finding, object recognition, shutter animation, transparent Shimeji overlay, Doom with shutter fire/sound/swipe, UI responsiveness trials, and offline firmware tools | Research and candidates; not a complete product |
-| [X2D II](x2d2/README.md) | Offline regional research for 1.3.16.2 | Not re-validated on hardware |
+| [X2D 100C](x2d/README.md) | Offline firmware and QML analysis, menu sources, autofocus research, object-recognition contracts, Doom/Shimeji desktop sources and shutter timing | Research candidates; no device deployment instructions |
 
 新增：[X2D 运行 Doom：快门开火、音效、滑动转向](x2d/doom/README.md) · [透明 Shimeji 宠物源码与桌面演示](x2d/shimeji-overlay/README.md) · [整机 UI 延迟诊断与三轮试验](x2d/research/4.2.0/UI-RESPONSIVENESS.md)。宠物临时实机交互得到确认；整机优化尚未确认改善。
 
@@ -46,7 +37,6 @@ dependencies or proof of the results in this repository.
 - [`hasselblad-cim-firmware-extractor`](https://github.com/YuHaoyua/hasselblad-cim-firmware-extractor) helped establish CIM container and extraction terminology for the offline firmware-format work.
 - [`x2d-pdaf-sim`](https://github.com/Konamill-bot/x2d-pdaf-sim) provided related PDAF decision-policy simulation context for the AF-S speed model; its simulation is not treated as hardware evidence.
 - [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) provided historical reverse-engineering and documentation context while remaining outside the X2D/X2D II implementation scope.
-- [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) provided adjacent factory-diagnostic-channel context; it is not evidence for the AF, face/eye, or object-recognition results here.
 
 The public menu candidate includes the source-level [`X2dNativeMenuLoader.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/X2dNativeMenuLoader.qml), the [`Bootstrap.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/Bootstrap.qml) attach logic, and the [`twelfth-entry SVG icon`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/assets/ic_main_menu_play.svg). The generated vendor QML unit and device installation package remain intentionally excluded.
 
@@ -61,10 +51,6 @@ python3 scripts/reproduce_offline.py
 ```
 
 The complete reproduction guide, including exact-version inputs for authorized hardware tests, is in [REPRODUCE.md](REPRODUCE.md).
-
-The factory-debug result has an explicit [from-zero reproduction boundary](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md): the public inspector begins after an authorized ADB endpoint exists; it does not publish the factory-USB ADB bootstrap or an installation payload.
-
-The [Doom module](x2d/doom/README.md) separately publishes a source-only, exact-version temporary runner. It defaults to a no-device plan and requires explicit `--apply` for USB/ADB and process RAM changes; no generated payload or vendor inputs are distributed.
 
 ## Evidence levels
 
@@ -111,7 +97,6 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 | 项目 | 公开内容 | 当前状态 |
 | --- | --- | --- |
 | [X2D 100C](x2d/README.md) | 菜单扩展、AF-S 提速研究、AF-C、原厂人脸/眼部识别开启、原厂 Debug 界面发现、对象识别、Doom 快门/音效/滑动、快门动画与离线固件工具 | 研究与候选；并非完整产品 |
-| [X2D II](x2d2/README.md) | 1.3.16.2 地区离线研究 | 未重新实机验证 |
 
 完整状态见[研究成果总表](RESEARCH_RESULTS.md)。
 
@@ -124,7 +109,6 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 - [`hasselblad-cim-firmware-extractor`](https://github.com/YuHaoyua/hasselblad-cim-firmware-extractor) 帮助建立离线固件格式研究中的 CIM 容器和解包术语。
 - [`x2d-pdaf-sim`](https://github.com/Konamill-bot/x2d-pdaf-sim) 提供了 PDAF 决策策略仿真的相关背景，用于理解 AF-S 速度模型；其仿真不能替代实机证据。
 - [`hasselblad-x1d-reverse-engineering`](https://github.com/YuHaoyua/hasselblad-x1d-reverse-engineering) 提供了历史逆向和文档方法背景，但 X1D 不属于当前 X2D/X2D II 实现范围。
-- [`Hasselblad-X2d-series-5g-unlock`](https://github.com/WeiCheng97/Hasselblad-X2d-series-5g-unlock) 提供了旁支的原厂诊断通道背景，但不是本项目 AF、眼部识别或对象识别结论的证据。
 
 公开的菜单候选现在包含[源码级 `X2dNativeMenuLoader.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/X2dNativeMenuLoader.qml)、[`Bootstrap.qml`](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/Bootstrap.qml) 接入逻辑，以及[第十二格 SVG 图标](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/assets/ic_main_menu_play.svg)。生成后的原厂 QML 编译单元和设备安装包仍有意不随仓库发布。
 
@@ -139,10 +123,6 @@ python3 scripts/reproduce_offline.py
 ```
 
 完整复现说明以及授权实机测试所需的精确版本输入见[复现指南](REPRODUCE.md)。
-
-原厂工程界面的发现另有[从零复现边界说明](x2d/research/4.2.0/FACTORY-DEBUG-REPRODUCTION-BOUNDARY.md)：公开检查器从已经授权的 ADB 端点开始，不发布 factory USB 开启 ADB 的引导或安装载荷。
-
-[Doom 模块](x2d/doom/README.md)单独公开精确版本的短时运行器源码，默认无设备计划；显式 `--apply` 才进行 USB/ADB 与进程 RAM 操作。生成载荷和原厂输入不随源码分发。
 
 ## 验证层级
 

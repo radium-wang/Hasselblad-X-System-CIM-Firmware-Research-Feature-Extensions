@@ -50,8 +50,6 @@ python3 -B verify_loader_boundary.py /path/to/x2d-4.2.0
 
 离线反汇编还表明 `0x90640` 调用的 `0x92ba8` 只有在当前镜头位置处于预测峰值与选中安全界之间时返回 1；返回 0 的原厂路径本来就会转到过滤绝对位置命令。默认候选仅改变返回 1 且为拍照模式时的方向扫描路径，并非首帧无条件直达。第三次日志的首次位置/峰值/安全界 `204/52/169` 不满足这一条件，后一帧 `174/125/242` 满足；日志本身不能证明后一帧进入候选所改的具体基本块。
 
-获得明确的实机操作授权并接入机身后，先用 `python3 -B verify_device_preflight.py` 做只读工厂 USB 预检；它不要求 GUI 磁盘哈希仍为原厂值，但会锁定机型、4.2.0、AF 库哈希及 `camera-service` 映射。`--transport adb` 仅供 ADB 域确实能读取 `/system` 和目标进程的环境；在 2026-09-25 的实机上，临时 ADB 的 `u:r:su:s0` 域做不到这一点，不应以 ADB 预检失败推断相机服务崩溃。见[首次预检记录](DEVICE-RESULT-2026-09-25.md)。
-
 此前“菜单修改”任务中成功的运行记录是原厂 GUI 进程内的 `LD_PRELOAD`/QML 内容替换；整份 `camera-gui` 可执行文件替换仍停留在离线原型。这能证明 GUI 层的某种替换入口，但不是 AF 后端已经能热替换。
 
 本版固件的静态 ELF 加载链是 `camera-service → libdcam_frwk.so → libduml_hal_cam.so → librcam.so → libaaa.so`；`pdaf_lib_run` 在 `0x921b4` 经 `libaaa.so` 的 PLT `0x2f250` 调用导出的 `_exec_pdaf_afs_process`，其 `.rela.plt` 项指向 GOT `0x1de390`。该函数为 `STB_GLOBAL`、`STV_DEFAULT`，且库未设置 `DT_SYMBOLIC`/`DF_SYMBOLIC`。这些条件由 `verify_loader_boundary.py` 独立检查。它们提示预加载符号拦截**可能**有独立于 GUI 缓存替换的入口，但还需验证实际动态链接顺序、调用 ABI、服务启动环境、SELinux 和故障回退；当前生成器没有实现拦截器或对原函数内存打补丁，更未在设备上验证此路径。

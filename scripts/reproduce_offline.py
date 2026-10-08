@@ -94,18 +94,8 @@ def main() -> int:
         env,
     )
     run(
-        [PYTHON, "-m", "unittest", "x2d/CodeTests/factory-debug-ui/test_factory_debug_ui.py"],
-        ROOT,
-        env,
-    )
-    run(
         [PYTHON, "-m", "unittest", "discover", "-s",
          "x2d/CodeTests/ui-response", "-p", "test_*.py"],
-        ROOT, env,
-    )
-    run(
-        [PYTHON, "-B", "-m", "unittest", "discover", "-s",
-         "x2d/doom/CodeTests", "-p", "test_trial_usb.py"],
         ROOT, env,
     )
     print("\nOFFLINE REPRODUCTION PASSED")

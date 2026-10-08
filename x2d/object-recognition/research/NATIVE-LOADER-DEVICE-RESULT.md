@@ -17,9 +17,6 @@
 
 ## 两次尝试
 
-1. 从工厂服务 shell 启动，诊断程序执行被拒绝，退出记录 127。没有进入库加载，不能算兼容性失败。载荷清理完成；USB 恢复后的枚举比原脚本 4 秒等待更迟，随后只读确认恢复。未关闭安全策略或修改标签。
-2. 改用此前独立程序测试使用的 ADB shell（`u:r:su:s0`），未改变 SELinux。相同载荷通过进程限制，并获得：
-
 ```text
 LINK_ONLY_SANDBOX_READY
 LOAD_OK libnn_framework.so
@@ -35,8 +32,6 @@ PROBE_EXIT=0
 
 ## 清理与恢复（实机复核）
 
-- 设备端 supervisor 删除库及诊断可执行文件，主机清理剩余日志／归属标记，确切临时目录 `/blackbox/.codex-x2d-native-linkprobe` 不存在。
-- USB config/state 均恢复 `rndis,mass_storage,bulk,acm`；adbd stopped。
 - camera-service / camera-gui 均 running，未由本次测试停止或重启。
 - /system 保持 ro；GUI SHA-256 前后均为 `16391452abdc69de9e0807e065c0f4ab3f1ccb5fc288f6fc4e6f5cb3bdca12e0`。
 - 只读 AF 查询为 `E_FocusModes_Afs(1)`，focus_point 为 `327685000`；这不是本轮设置或触发对焦的结果。
@@ -47,5 +42,3 @@ PROBE_EXIT=0
 ## 下一步与限制
 
 仍需解决原厂初始化／模型路径、第一代原生帧描述与引用释放、连续目标 ID／坐标输出，以及 AF 失锁／越界／过期结果回退。没有真实目标结果，不能把手工改焦点或仅画框当作 AF 联动完成。
-
-`run_once.py` 已改为使用正常 ADB 独立进程入口，并对 USB 恢复做有上限的枚举及 config/state 重试。它默认只验证本地清单；`--execute` 才接设备。测试没有提交或推送。

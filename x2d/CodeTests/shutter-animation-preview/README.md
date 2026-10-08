@@ -15,4 +15,3 @@ The visual candidate closes, holds, opens and completes the star motion in four 
 An early direct-PCM audio approach interfered with stock notification audio. The later design used the stock audio-client path, and the user confirmed a one-shot preview was audible. Cold-start behavior, capture-event integration and long-term coexistence with stock sounds remain incomplete.
 
 The referenced audio material is not distributed because redistribution permission has not been established.
-
