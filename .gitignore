@@ -138,6 +138,10 @@ __pycache__/
 !/x2d/tools/model-structure/README.md
 !/x2d2/README.md
 !/x2d2/research/1.3.16.2/MODEL-AND-PDAF-STATUS.md
+!/x2d2/digital-zoom/README.md
+!/x2d2/digital-zoom/CodeTests/offline-contract/README.md
+!/x2d2/digital-zoom/research/CROP.md
+!/x2d2/digital-zoom/research/CFEXPRESS-PHOCUS-GATE.md
 
 # Reviewed 2026-10-13 JSR desktop comparison and research figures.
 !/x2d/research/4.2.0/JSR-METAL-COMPARISON.md

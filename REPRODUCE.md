@@ -11,7 +11,7 @@ python3 -m pip install -r x2d/CodeTests/temporary_af_speed_probe/standalone_hand
 python3 -B scripts/reproduce_offline.py
 ```
 
-The runner checks publication boundaries, the menu Loader source/icon, AF-S candidates, object-recognition contracts, shutter timing and synthetic UI traces. It does not connect to a camera. Optional Qt/native desktop checks are documented in the [Doom](x2d/doom/README.md) and [Shimeji](x2d/shimeji-overlay/README.md) modules.
+The runner checks publication boundaries, the menu Loader source/icon, AF-S candidates, object-recognition contracts, shutter timing, synthetic UI traces and the X2D II digital-crop contracts. It does not connect to a camera. Optional Qt/native desktop checks are documented in the [Doom](x2d/doom/README.md) and [Shimeji](x2d/shimeji-overlay/README.md) modules.
 
 For tests using operator-supplied firmware extraction roots, provide all four read-only directories:
 
@@ -41,6 +41,7 @@ The directories are read-only inputs and are never copied into this repository. 
 | PDAF record processing | [record template and tools](x2d/CodeTests/pdaf-only-shadow/PDAF425-RECORDING.md) | Local anonymization and offline trajectory analysis of operator-provided records; no device access |
 | Pixel shift | [offline library](x2d/pixel-shift/README.md) | Host C build, miniature output and synthetic sparse RAW fixtures; no capture |
 | Model structure | [schema checks](x2d/tools/model-structure/README.md) | Operator-provided TFLite schema/index inspection; no decryption/inference |
+| X2D II digital crop | [offline candidate](x2d2/digital-zoom/README.md) | Aspect-relative geometry, temporary host C build, controller/QML contracts and a fail-closed install-readiness gate; no camera backend or package |
 
 ## 中文说明
 

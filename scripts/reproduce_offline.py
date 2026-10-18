@@ -118,6 +118,11 @@ def main() -> int:
          "x2d/CodeTests/monochrome-frame-contracts/tests", "-p", "test_*.py"],
         ROOT, env,
     )
+    run(
+        [PYTHON, "-B", "-m", "unittest", "discover", "-s",
+         "x2d2/digital-zoom/CodeTests/offline-contract", "-p", "test_*.py"],
+        ROOT, env,
+    )
     print("\nOFFLINE REPRODUCTION PASSED")
     return 0
 

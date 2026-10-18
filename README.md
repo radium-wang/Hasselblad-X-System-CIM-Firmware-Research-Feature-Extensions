@@ -11,7 +11,7 @@ Discussion, research findings and feedback are welcome. Please use [Issues](http
 
 An independent, non-official research project on Hasselblad X-System camera interoperability, user interfaces, autofocus behavior, feature extensions, and firmware formats.
 
-**研究更新至 2026-10-13：** [AFT／眼部共存与三档速度](x2d/research/4.2.0/AF-EYE-AND-SPEED-UPDATE.md) · [4／6／16 张实拍与电脑四亿 DNG](x2d/research/4.2.0/PIXEL-SHIFT-CAPTURE-RESULTS.md) · [JSR 蓝鸟腹部与文字的解析力三方对比](x2d/research/4.2.0/JSR-METAL-COMPARISON.md) · [Startup Studio](x2d/research/4.2.0/STARTUP-STUDIO-UPDATE.md) · [一代模型解密与独立 CPU 测试](x2d/research/4.2.0/MODEL-DECRYPTION-AND-CPU-RESULTS.md) · [完整成果表](RESEARCH_RESULTS.md)。新增 [PDAF／光谱只读工具](x2d/tools/firmware-analysis/focus-and-spectral/README.md)、[像素位移离线处理库](x2d/pixel-shift/README.md) 和 [TFLite 结构检查](x2d/tools/model-structure/README.md)。历史实机、离线检查及待验证内容分别标注，不提供设备部署后端。
+**研究更新至 2026-10-16：** [X2D II 数字裁切离线候选](x2d2/digital-zoom/README.md) · [AFT／眼部共存与三档速度](x2d/research/4.2.0/AF-EYE-AND-SPEED-UPDATE.md) · [4／6／16 张实拍与电脑四亿 DNG](x2d/research/4.2.0/PIXEL-SHIFT-CAPTURE-RESULTS.md) · [JSR 蓝鸟腹部与文字的解析力三方对比](x2d/research/4.2.0/JSR-METAL-COMPARISON.md) · [Startup Studio](x2d/research/4.2.0/STARTUP-STUDIO-UPDATE.md) · [一代模型解密与独立 CPU 测试](x2d/research/4.2.0/MODEL-DECRYPTION-AND-CPU-RESULTS.md) · [完整成果表](RESEARCH_RESULTS.md)。新增 [PDAF／光谱只读工具](x2d/tools/firmware-analysis/focus-and-spectral/README.md)、[像素位移离线处理库](x2d/pixel-shift/README.md) 和 [TFLite 结构检查](x2d/tools/model-structure/README.md)。历史实机、离线检查及待验证内容分别标注，不提供设备部署后端。
 
 **2026-10-16 归档补充：** [425 区域实验源码、快照契约与历史实机观察](x2d/CodeTests/pdaf-only-shadow/PDAF425.md) · [PDAF 实验记录模板、脱敏与离线回放](x2d/CodeTests/pdaf-only-shadow/PDAF425-RECORDING.md) · [自动亮度与 Windows 产品修正摘要](x2d/research/4.2.0/TOOLKIT-BRIGHTNESS-AND-WINDOWS.md)。425 候选只完成离线核心和历史原厂观察摘要，不是已安装的相位点升级；二代完整策略尚未移植。
 
@@ -24,7 +24,7 @@ This repository contains only source code, offline tools, tests, and sanitized r
 | Project | Public contents | Current status |
 | --- | --- | --- |
 | [X2D 100C](x2d/README.md) | Offline firmware and QML analysis, menu sources, autofocus research, object-recognition contracts, Doom/Shimeji desktop sources and shutter timing | Research candidates; no device deployment instructions |
-| [X2D II](x2d2/README.md) | Version-specific offline model and PDAF comparisons | No second-generation hardware validation; models remain encrypted |
+| [X2D II](x2d2/README.md) | Version-specific model/PDAF comparisons and an offline crop-window planner | Geometry/controller/native/QML contracts only; no pixel crop, camera backend, signed package or second-generation hardware validation |
 
 新增：[X2D 运行 Doom：快门开火、音效、滑动转向](x2d/doom/README.md) · [透明 Shimeji 宠物源码与桌面演示](x2d/shimeji-overlay/README.md) · [整机 UI 延迟诊断与三轮试验](x2d/research/4.2.0/UI-RESPONSIVENESS.md)。宠物临时实机交互得到确认；整机优化尚未确认改善。
 
@@ -103,7 +103,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 | 项目 | 公开内容 | 当前状态 |
 | --- | --- | --- |
 | [X2D 100C](x2d/README.md) | 对焦、AFT／眼部、三档速度、像素位移采集与离线处理、开机画面、模型结构、Doom／Shimeji 及离线固件工具 | 研究与候选；验证范围见成果表 |
-| [X2D II](x2d2/README.md) | 1.3.16.2 模型及 PDAF 静态对照 | 未解密二代模型，无本轮二代实机验收 |
+| [X2D II](x2d2/README.md) | 1.3.16.2 模型／PDAF 静态对照与数字裁切窗口离线规划器 | 只有几何、控制器、C/QML 契约；无像素裁切、相机后端、签名包或本轮二代实机验收 |
 
 完整状态见[研究成果总表](RESEARCH_RESULTS.md)。
 

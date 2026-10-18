@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "target": {
+    "model": "X2D II 100C",
+    "firmware": "1.3.16.2",
+    "platform": "10.00.09.77"
+  },
+  "geometry": {
+    "status": "offline-validated",
+    "sensor_dimensions_source": "public-100mp-figure",
+    "coordinate_space_verified": false
+  },
+  "backend": {
+    "interface_identified": false,
+    "runtime_adapter_present": false,
+    "preview_verified": false,
+    "capture_verified": false,
+    "raw_effect_verified": false
+  },
+  "distribution": {
+    "channel": "cfexpress-phocus",
+    "installable": false,
+    "vendor_signature_available": false,
+    "normal_updater_acceptance_verified": false
+  },
+  "recovery": {
+    "cold_boot_recovery_verified": false
+  },
+  "deferred": {
+    "crop_metadata": true,
+    "gps": true
+  }
+}
