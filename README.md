@@ -2,9 +2,7 @@
 
 ## Support the research
 
-Donations are voluntary and help support continued research and maintenance. [Support via PayPal](https://paypal.me/RadiumWang), or scan the Alipay QR code below. Access to the research does not depend on payment.
-
-<img src=".github/images/alipay-donation.png" alt="Alipay voluntary donation QR code" width="220">
+[View support options](SUPPORT.md)
 
 ## Discussion and contributions
 
@@ -130,9 +128,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 ## 支持研究
 
-赞助完全自愿，用于支持后续研究与维护。[通过 PayPal 赞助](https://paypal.me/RadiumWang)，或扫描下方支付宝收款码。获取研究资料不以付款为条件。
-
-<img src=".github/images/alipay-donation.png" alt="支付宝自愿赞助收款码" width="220">
+[查看赞助方式](SUPPORT.md)
 
 ## 欢迎交流
 
