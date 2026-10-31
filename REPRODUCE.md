@@ -27,8 +27,17 @@ The directories are read-only inputs and are never copied into this repository. 
 
 ## Research entry points
 
+X2D II八向摇杆的独立离线入口（需要支持ASan/UBSan的C11编译器）：
+
+```sh
+python3 x2d2/joystick-eight-way/tools/check_offline.py
+```
+
+该入口不依赖厂商输入，不连接相机；运行实际状态机/运行时与Linux适配代码的系统调用替身，并回放归一化方向样本。
+
 | Area | Entry | Reproduction scope |
 | --- | --- | --- |
+| X2D II eight-way joystick | [source, tests and hardware summary](x2d2/joystick-eight-way/README.md) | C11 state machine/runtime, fake Linux calls and relative-time replay; no deployment backend |
 | Menu | [source and tests](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md) | Source QML, SVG and desktop checks |
 | AF-S | [candidate](x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md) | Exact-version offline hash gates and byte-diff checks |
 | AF-C | [research](x2d/CodeTests/x2d-afc-research/README.md) | Offline model/layout and gate analysis |

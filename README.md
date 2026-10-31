@@ -24,6 +24,7 @@ The table groups the research currently documented in this repository by topic. 
 
 | Camera | Research | Current progress and limits |
 | --- | --- | --- |
+| X2D II | [八向摇杆 / Eight-way joystick](x2d2/joystick-eight-way/README.md) | 1.3.18.1 native input synthesis, evdev/uinput adapter and offline tests; all four diagonals, hold and release confirmed in one 45-second camera test. No persistent installation or long-term validation. |
 | X2D II | [LiDAR and autofocus](x2d2/research/1.3.16.2/LIDAR-PIPELINE.md) | ADS6401 depth and AF-S/AF-C decision paths mapped offline; no second-generation camera validation. |
 | X2D II | [Startup resources and variants](x2d2/research/1.3.16.2/STARTUP-LOGO-VARIANTS.md) | Six hardware-stage identifiers and Logo resources inspected; cold-start selection remains unverified. |
 | X2D II | [Display and low-gray mura](x2d2/research/1.3.16.2/DISPLAY-MURA.md) | Brightness mapping and RGB LUTs inspected; no panel-specific spatial correction validated. |
@@ -150,6 +151,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 | 机型 | 研究主题 | 当前进展与限制 |
 | --- | --- | --- |
+| X2D II | [八向摇杆实现](x2d2/joystick-eight-way/README.md) | 1.3.18.1 输入状态机、原生适配及离线测试；45秒实体测试确认四斜向、长按、松手正常。未做常驻安装或长期验收。 |
 | X2D II | [LiDAR 测距与自动对焦](x2d2/research/1.3.16.2/LIDAR-PIPELINE.md) | 离线梳理 ADS6401 深度数据及 AF-S／AF-C 决策链；未做二代实机验收。 |
 | X2D II | [启动资源与版本差异](x2d2/research/1.3.16.2/STARTUP-LOGO-VARIANTS.md) | 核对六个硬件阶段标识与 Logo 资源；冷启动选择链未验证。 |
 | X2D II | [显示与低灰 mura](x2d2/research/1.3.16.2/DISPLAY-MURA.md) | 梳理亮度映射与 RGB LUT；尚无个体屏幕空间补偿验证。 |

@@ -1,0 +1,60 @@
+{
+  "model": "X2D II 100C",
+  "firmware": "1.3.18.1",
+  "files": [
+    {
+      "path": "native/j8_core.c",
+      "sha256": "28e7abc542e775eb2c1051fd5ffa1550f9429613ad9c8d01e22a0fc805e35f7f",
+      "source_basename": "j8_core.c",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "native/j8_core.h",
+      "sha256": "00d281f5221c1b259daefc1de90b8f98ea8480e1d3c33020539ea58b2dfb9268",
+      "source_basename": "j8_core.h",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "native/j8_runtime.c",
+      "sha256": "6c82b1290a8cdf25fcbb696627408d9a308da401beb3e5cf1c7925f9d94b0845",
+      "source_basename": "j8_runtime.c",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "native/j8_runtime.h",
+      "sha256": "e12c053274e8b6b60d9c42746a51c7d4c3680254748cb7b834d7610be5ccc821",
+      "source_basename": "j8_runtime.h",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "native/j8_linux.c",
+      "sha256": "8b5565cdd81411080fee7e91ecfcbd1797c996a99b233337cbefebe3873b4134",
+      "source_basename": "j8_linux.c",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "CodeTests/input-synthesis/test_j8.c",
+      "sha256": "f330e8d6a06b3caec33405477aeb33c1ed71706c1f1a1c5aeba73ad9d699cf0d",
+      "source_basename": "test_j8.c",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "CodeTests/input-synthesis/test_linux.c",
+      "sha256": "6d447a8611b60691928153aa10f66f3909533f25378842b00ab3f9c8c1e4b3d1",
+      "source_basename": "test_linux.c",
+      "byte_identical_to_tested_source": true
+    },
+    {
+      "path": "CodeTests/input-synthesis/fake_linux_api.h",
+      "sha256": "4e37abcdb4085350038d23094c6e87d179537048961721a6d6211fb26a0607a9",
+      "source_basename": "fake_linux_api.h",
+      "byte_identical_to_tested_source": true
+    }
+  ],
+  "fixture": {
+    "path": "CodeTests/input-synthesis/Fixtures/input-relative.csv",
+    "sha256": "04907de86ad3ae090a891add1dec7e66822aedf3fc15e4168a89b3e3e20bf088",
+    "events": 92,
+    "normalization": "Only relative microsecond timing and directional EV_KEY/SYN_REPORT events retained; original timestamps removed."
+  }
+}
