@@ -136,6 +136,22 @@ with tempfile.TemporaryDirectory(prefix="x2d-gvid-offline-") as temp:
     assert copied_header["_end_marker_verified"]
     assert [f["payload"] for f in copied_frames] == [f["payload"] for f in frames]
     assert [f["metadata"] for f in copied_frames] == expected
+    fractional_command = command.copy()
+    fractional_command[5] = "27/10"
+    fractional_command[-1] = str(root / "fractional.gvid")
+    fractional_pts = [i * 10_000_000_000 // 27 for i in range(3)]
+    manifest.write_text(
+        "\n".join(f"{i}.raw\t{i}.json\t{pts}" for i, pts in enumerate(fractional_pts))
+        + "\n"
+    )
+    subprocess.run(fractional_command, capture_output=True, check=True)
+    with (root / "fractional.gvid").open("rb") as file:
+        fractional_header = stock_video.read_header(file)
+        fractional_frames = list(stock_video.records(file, fractional_header))
+    assert (fractional_header["fps_num"], fractional_header["fps_den"]) == (27, 10)
+    assert [f["pts_ns"] for f in fractional_frames] == fractional_pts
+    assert fractional_header["_end_marker_verified"]
+    manifest.write_text("\n".join(lines) + "\n")
     decoded = extract(
         target,
         root / "decoded",

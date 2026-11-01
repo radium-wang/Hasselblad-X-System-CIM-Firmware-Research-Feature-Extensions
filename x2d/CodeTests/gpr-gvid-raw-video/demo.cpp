@@ -52,15 +52,21 @@ int main(int argc,char **argv) {
     try {
         if(argc!=8 && argc!=9)throw std::runtime_error("usage: gvid_raw_demo width height bits quality fps manifest.tsv output.gvid [callback_stride_bytes]");
         const bool callback_copy = argc==9;
-        uint64_t values[5];for(unsigned i=0;i<5;++i) {
+        uint64_t values[4];for(unsigned i=0;i<4;++i) {
             values[i]=number(argv[i+1]);
             if(values[i]>UINT32_MAX)throw std::runtime_error("configuration exceeds uint32");
         }
+        const std::string fps_text=argv[5];
+        const auto fps_slash=fps_text.find('/');
+        const uint64_t fps_num=number(fps_text.substr(0,fps_slash));
+        const uint64_t fps_den=fps_slash==std::string::npos ? 1:number(fps_text.substr(fps_slash+1));
+        if(!fps_num || !fps_den || fps_num>UINT32_MAX || fps_den>UINT32_MAX)
+            throw std::runtime_error("invalid frame-rate fraction");
         if(!values[0] || !values[1] || values[0]>GPR_GVID_MAX_DIMENSION ||
            values[1]>GPR_GVID_MAX_DIMENSION || values[0]*values[1]>GPR_GVID_MAX_PIXELS)
             throw std::runtime_error("geometry exceeds GVID v3 limits");
         gpr_capture_config cfg={};
-        cfg.video={uint32_t(values[0]),uint32_t(values[1]),uint32_t(values[4]),1,
+        cfg.video={uint32_t(values[0]),uint32_t(values[1]),uint32_t(fps_num),uint32_t(fps_den),
                    uint32_t(values[3]),uint32_t(values[2]),{'R','G','G','B'}};
         cfg.stride_bytes=cfg.video.width*2;cfg.max_inflight=1;cfg.workspace_bytes=1024*1024;
         if(callback_copy) {

@@ -1,7 +1,7 @@
-"""Prepare operator-supplied X2D FFF or calibrated Bayer DNG for the offline demo.
+"""Prepare operator-supplied X2D FFF/3FR or calibrated Bayer DNG for the offline demo.
 
 Optional host dependencies: rawpy, numpy, tifffile. No demosaicing or CNN is
-used here. FFF requires a same-model reference DNG/GPR for camera color tags;
+used here. FFF/3FR requires a same-model reference DNG/GPR for camera color tags;
 FFF supplies per-shot WB, black/white, crop and orientation. Manufacturer lens
 correction/opcode processing is not reconstructed by that FFF adapter.
 """
@@ -67,17 +67,19 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
     manifest = []
     for index, name in enumerate(inputs):
         path = Path(name)
-        is_fff = path.suffix.lower() == ".fff"
+        is_fff = path.suffix.lower() in (".fff", ".3fr")
         if is_fff:
             if reference_meta is None:
-                raise ValueError("FFF requires --reference from the same camera model")
+                raise ValueError(
+                    "FFF/3FR requires --reference from the same camera model"
+                )
             tags = {t["code"]: t for t in reference_meta["image"]}
             if b"X2D 100C" not in media.unpack_record(tags[272]):
                 raise ValueError("reference must identify X2D 100C")
             with tifffile.TiffFile(path) as file:
                 parent = file.pages[0]
                 if parent.tags["Model"].value != "X2D 100C":
-                    raise ValueError("FFF adapter is verified only for X2D 100C")
+                    raise ValueError("RAW adapter is verified only for X2D 100C")
                 sensor = next(
                     page for page in parent.pages if page.photometric == 32803
                 )
@@ -85,8 +87,9 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
                     numeric(sensor.tags[50714]),
                     numeric(sensor.tags[50717]),
                     numeric(parent.tags[50728]),
-                    numeric(parent.tags[50727]),
                 ]
+                if 50727 in parent.tags:
+                    calibration.append(numeric(parent.tags[50727]))
                 crop_origin = tuple(sensor.tags[50719].value)
                 crop_size = tuple(sensor.tags[50720].value)
                 orientation = int(parent.tags[274].value)
@@ -97,7 +100,11 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
                 )
             meta = media.extract(path, 16)
         else:
-            raise ValueError("input must be X2D FFF or calibrated Bayer DNG")
+            raise ValueError("input must be X2D FFF/3FR or calibrated Bayer DNG")
+        if not is_fff:
+            model = next((tag for tag in meta["image"] if tag["code"] == 272), None)
+            if model is None or media.unpack_record(model).rstrip(b"\0") != b"X2D 100C":
+                raise ValueError("DNG adapter requires first-generation X2D 100C")
         with rawpy.imread(str(path)) as raw:
             if is_fff:
                 pixels = raw.raw_image_visible
@@ -152,10 +159,10 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
             )
         frame = dict(
             raw_metadata=meta,
-            source_kind="libraw_fff_sensor_samples"
+            source_kind="libraw_hasselblad_sensor_samples"
             if is_fff
             else "libraw_dng_sensor_samples",
-            calibration_source="reference color matrices plus per-shot FFF tags"
+            calibration_source="reference color matrices plus per-shot RAW tags"
             if is_fff
             else "source_dng",
             calibration_limits="manufacturer lens/opcode processing not reproduced"
@@ -177,6 +184,12 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
                 raw_sha256=hashlib.sha256(raw_path.read_bytes()).hexdigest(),
             )
         )
+        if (index + 1) % 10 == 0:
+            print(
+                f"Prepared {index + 1} of {len(inputs)} source photos",
+                file=sys.stderr,
+                flush=True,
+            )
     if len({(r["width"], r["height"]) for r in rows}) != 1:
         raise ValueError("sequence dimensions differ")
     (output / "frames.tsv").write_text("\n".join(manifest) + "\n")
