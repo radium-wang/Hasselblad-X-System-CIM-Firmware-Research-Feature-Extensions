@@ -1,0 +1,77 @@
+{
+  "schema": "x2d.gpr_gvid.offline_evidence.v1",
+  "date": "2026-11-01",
+  "host": {
+    "cpu": "Apple M5 Max",
+    "cpu_cores": 18,
+    "ram_gib": 128,
+    "os": "macOS 26.7.1",
+    "rawpy": "0.27.0",
+    "numpy": "2.4.6",
+    "pillow": "12.2.0"
+  },
+  "dependency": {
+    "repository": "https://github.com/dcliftreaves/gpr",
+    "commit": "0a194995f481d09f347e99252d41558de3d97c77",
+    "archive_sha256": "3f41df424d7b6ffca9e4c6a15c3fabae3e59e5b6290ddc98b74f4f74ab688ab4"
+  },
+  "cnn": false,
+  "camera_tested": false,
+  "varied": {
+    "frames": 8,
+    "width": 11664,
+    "height": 8744,
+    "sample_bits": 16,
+    "quality": 3,
+    "encode_mean_ms": 47.2292,
+    "encode_min_ms": 28.204,
+    "encode_max_ms": 73.485,
+    "peak_rss_bytes": 355647488,
+    "payload_bytes": 149457612,
+    "payload_min_bytes": 5919704,
+    "payload_max_bytes": 41028888,
+    "raw_word_bytes": 1631840256,
+    "source_kind": "distinct real X2D FFF images decoded by LibRaw",
+    "psnr_full_16bit_range_db": [
+      46.210795956572696,
+      54.64121470473887
+    ]
+  },
+  "sequence": {
+    "frames": 77,
+    "width": 11664,
+    "height": 8744,
+    "sample_bits": 16,
+    "quality": 3,
+    "encode_mean_ms": 49.9801,
+    "encode_min_ms": 36.0789,
+    "encode_max_ms": 63.7493,
+    "peak_rss_bytes": 321126400,
+    "payload_bytes": 1296091260,
+    "payload_min_bytes": 9897024,
+    "payload_max_bytes": 23574084,
+    "raw_word_bytes": 15706462464,
+    "source_kind": "coherent real photo sequence; not verified interval timelapse or continuous sensor video",
+    "native_decoded_frames": 77,
+    "typed_calibration_verified_frames": 77,
+    "distinct_payloads": 77,
+    "viewing_mp4": {
+      "codec": "H.264",
+      "width": 1280,
+      "height": 960,
+      "frames": 77,
+      "nominal_fps": 24,
+      "duration_seconds": 3.208008,
+      "exposure_ev": 1,
+      "all_frames_ffmpeg_decoded": true
+    }
+  },
+  "calibration": "Same-model operator-supplied color matrices, FFF per-shot WB/black/white/crop/orientation. Manufacturer lens/opcode processing not reproduced.",
+  "limits": [
+    "Encoding timers exclude source RAW decoding/file reads and rendering; not sustainable camera frame rates.",
+    "RSS is process resident memory, not total live malloc capacity or camera DMA budget.",
+    "16-bit input is reduced through the stock 12-bit log-domain transform and lossy preset.",
+    "Private sources, timestamps, device identifiers, photos, movies and individual image hashes are excluded.",
+    "Published evidence is an aggregate of private operator inputs; reproduce mechanics with synthetic test or supply independently authorized images."
+  ]
+}

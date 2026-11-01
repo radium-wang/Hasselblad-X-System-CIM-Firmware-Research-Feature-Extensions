@@ -2,6 +2,8 @@
 
 The X2D tree covers firmware 4.2.0 unless a document states otherwise.
 
+- [GPR / GVID 非 CNN RAW 视频](CodeTests/gpr-gvid-raw-video/README.md)：固定外部 GPR 依赖的约 100 MP 离线编码、标定提取与桌面播放实验；不是机内录像解锁。
+
 - [AF-S Type1 scan candidate](CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md): exact-version offline patch generator and benchmark rules; not device-tested.
 - [Menu extension](CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md): source QML, icon and offline checks for the twelfth menu entry.
 - [AF-C research](CodeTests/x2d-afc-research/README.md): public summary and exact-version offline gate patcher.

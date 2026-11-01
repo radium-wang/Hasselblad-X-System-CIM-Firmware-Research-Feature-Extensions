@@ -43,6 +43,7 @@ __pycache__/
 
 # Markdown is opt-in: only reviewed public documents are allowlisted.
 *.md
+!/x2d/CodeTests/gpr-gvid-raw-video/README.md
 !/AGENTS.md
 !/CONTRIBUTING.md
 !/DIRECTORY_LAYOUT.md
