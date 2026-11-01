@@ -107,6 +107,35 @@ with tempfile.TemporaryDirectory(prefix="x2d-gvid-offline-") as temp:
     assert [f["pts_ns"] for f in frames] == [0, 40000000, 80000000]
     assert all(f["payload"].startswith(b"VC-5") for f in frames)
     assert len({hashlib.sha256(f["payload"]).digest() for f in frames}) == 3
+    # Odd row pitch puts alternate rows at unaligned addresses. Padding must
+    # never enter the image. The native demo overwrites the borrowed source
+    # immediately after submit, before waiting for the encoder.
+    padded_lines = []
+    for i in range(3):
+        packed = (root / f"{i}.raw").read_bytes()
+        padded = b"".join(
+            packed[y * 256 : (y + 1) * 256] + bytes([255]) * 17 for y in range(96)
+        )
+        (root / f"{i}-padded.raw").write_bytes(padded)
+        padded_lines.append(f"{i}-padded.raw\t{i}.json\t{i * 40000000}")
+    padded_manifest = root / "padded.tsv"
+    padded_manifest.write_text("\n".join(padded_lines) + "\n")
+    callback_command = command.copy()
+    callback_command[-2:] = [str(padded_manifest), str(root / "callback.gvid")]
+    callback_command.append("273")
+    callback_run = subprocess.run(
+        callback_command, capture_output=True, text=True, check=True
+    )
+    assert (
+        json.loads(callback_run.stdout.splitlines()[-1])["input_mode"]
+        == "copied_callback"
+    )
+    with (root / "callback.gvid").open("rb") as file:
+        copied_header = stock_video.read_header(file)
+        copied_frames = list(stock_video.records(file, copied_header))
+    assert copied_header["_end_marker_verified"]
+    assert [f["payload"] for f in copied_frames] == [f["payload"] for f in frames]
+    assert [f["metadata"] for f in copied_frames] == expected
     decoded = extract(
         target,
         root / "decoded",
@@ -144,7 +173,9 @@ with tempfile.TemporaryDirectory(prefix="x2d-gvid-offline-") as temp:
         rejected = subprocess.run(invalid_domain, capture_output=True, text=True)
         assert rejected.returncode != 0
         assert "sample exceeds declared count domain" in rejected.stderr
-    manifest.write_text("\n".join([lines[0], lines[1].rsplit("\t", 1)[0] + "\t0"]) + "\n")
+    manifest.write_text(
+        "\n".join([lines[0], lines[1].rsplit("\t", 1)[0] + "\t0"]) + "\n"
+    )
     invalid_pts = command[:-1] + [str(root / "invalid-pts.gvid")]
     assert subprocess.run(invalid_pts, capture_output=True).returncode != 0
     manifest.write_text("\n".join(lines) + "\n")

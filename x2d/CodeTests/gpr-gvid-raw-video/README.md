@@ -40,6 +40,10 @@ RSS 是进程驻留内存，不是 malloc 总容量、相机 DMA 预算或最坏
 
 - `CMakeLists.txt`：固定外部源码版本、构建目标与 CTest。
 - `demo.cpp`：逐帧离线输入、单 RAW 缓冲区租借、GVID 写入及计时。
+- `mapped_input.h/.cpp`：显式格式的已映射 Bayer 回调输入；复制有效行后立即归还源。
+- `test_mapped_input.cpp`：阻塞写入时的有界背压、拒绝/重试与输入格式检查。
+- `inspect_firmware.py`：固定哈希的第一代固件配置、HAL 与传感器模式离线核对。
+- `firmware_evidence.json`：固件候选模式与对应尺寸的电脑测试汇总。
 - `decode_frame.cpp`：调用依赖的原生 VC-5 解码 API。
 - `prepare.py`：可选的 X2D FFF / Bayer DNG 像素与标定准备。
 - `extract.py`：验证完整 GVID，原生解码并核对 GPR / DNG 标定。
@@ -66,7 +70,7 @@ GPR 保留其 Apache-2.0 / MIT 许可；本目录适配器按仓库 MIT 许可�
 
 ```sh
 cmake -S . -B outputs/build -DCMAKE_BUILD_TYPE=Release
-cmake --build outputs/build --target gvid_raw_demo gvid_decode_frame -j 4
+cmake --build outputs/build -j 4
 ctest --test-dir outputs/build --output-on-failure
 ```
 
@@ -75,6 +79,11 @@ ctest --test-dir outputs/build --output-on-failure
 合成检查会生成 3 个不同的 128×96 RGGB16 帧，验证原生解码、GPR/DNG 类型化
 标定、PTS、CRC、END3，并检查拒绝覆盖、截断文件和错误 RAW 长度。测试只在
 临时目录写文件，结束后清除；不会访问设备或照片库。
+
+新增回调检查使用 273 字节的奇数行距，让交替行处于非对齐地址，并用非零数据
+填充 padding。提交后、等待编码前立即覆盖源缓冲区，结果仍须与紧密排列输入
+逐字节相同。另一个原生检查阻塞 writer，验证队列上限为 1、返回 `BUSY` 后
+不消耗帧索引、可重试同一索引，以及拒绝未知格式、短缓冲区和越界计数。
 
 ## 准备真实输入
 
@@ -141,3 +150,97 @@ VC-5 使用原有 12-bit log-domain 变换与有损质量预设；接收 16-bit 
 可结合现有[第一代成像与视频研究](../../research/4.2.0/IMAGING-AND-VIDEO-UPDATE.md)
 讨论后续接口。桌面测量只说明该编解码链能处理实际约 100 MP 帧，不能把
 名义 24 fps 查看输出或 M5 编码性能直接外推成相机录像能力。
+
+## 第一代固件的 RAW 视频候选：新增静态证据
+
+从官方 X2D 100C 4.2.0 包只读提取配置与 ELF，交叉核对配置中的 RAW 输出、
+编译 HAL 的模式指针及传感器驱动名称；不是只根据配置名推断。
+复核输入的 SHA-256、16 条消费指令与结果见
+[firmware_evidence.json](firmware_evidence.json)。原厂文件、完整配置和反汇编不公开。
+
+| 候选 RAW 输出 | 名义速率 | 驱动模式 | 配置端口 | 当前验证级别 |
+| --- | ---: | --- | --- | --- |
+| 3840×2160 | 30 fps | 35，12-bit | BOUT0 | 配置 + 编译 HAL + 驱动表静态对应 |
+| 8192×3428 | 24 fps | 33，11-bit | BOUT0 | 配置 + 编译 HAL + 驱动表静态对应 |
+| 3840×1296 | 60 fps | 38，12-bit | BOUT0 | 对应 1080p YUV 模式，RAW 尺寸不同 |
+
+第一代完整尺寸 14-bit 模式也在编译表中名义标为 6 fps。12K 名义 10 fps
+候选的驱动名写 11-bit，而 HAL 位深字段为 12；不能静默当作同一含义。
+RAW/传感器边界尺寸、最终 YUV 尺寸与 ADC 位深必须分别记录。
+
+这些 `raw_dump` 流在模板中标记为 repeating + on-demand，声明存在不表示已经
+激活。高层录像开始/停止仍有未实现路径。原来的 H.264/ProResRAW 模板另带较大
+编码器预留，不应直接把整条模板当作低内存 GVID 实现。
+
+只读复核命令（输入为自行准备的对应版本 system 根，输出放在输入树外）：
+
+```sh
+python3 inspect_firmware.py --system-root /path/to/x2d-system-root \\
+  --output outputs/firmware-audit.json
+```
+
+该工具复用仓库现有 `pdaf-only-shadow/native_afs_parameters.py` 的标准库 ELF/APS2
+读取器，不运行厂商代码。哈希不同即拒绝；没有自动解包、设备连接或模式切换。
+X2D II 1.3.18.1 的配置/ELF 已另外本地检查，但本工具和上述地址只适用于第一代。
+二代使用 IMX861 命名和不同流图，不能直接套用第一代模式或缓冲区 ABI。
+
+## 已映射输入桥与候选尺寸测试
+
+`gvid_submit_mapped` 是应用侧 C 契约，**不是对厂商 `cam_frame_buffer` 的 ABI 声明**。
+只有调用方明确确认 `RGGB_U16_LE_COUNTS`、12/14/16-bit 计数域、尺寸与实际行距
+后才接受。`RAW16_OPAQUE` 名称不足以证明线性排列、右对齐、Bayer 相位或光学
+黑边布局。11-bit 传感器数据也不能直接假定为 GPR 的 12-bit 输入域；应先确认
+映射计数与配套黑白电平。
+
+调用方负责在回调有效期内完成 DMA 映射及 CPU 缓存同步。桥以零等待时间提交，
+GPR 同步复制有效像素行和元数据后返回；此后源可立即解除映射/复用。它不保留
+相机对象指针，不替调用方增减厂商引用计数。队列满返回 `BUSY`；调用方决定丢帧
+或重试，成功帧索引须连续，PTS 保留实际间隔。停止采集回调后再 finish/destroy。
+当前桥需复制一份 RAW；它是生命周期明确的候选，并非零复制或实机性能保证。
+
+文件入口增加可选的第 8 个参数 `callback_stride_bytes`，用于离线回放已明确格式
+的带 padding 输入，并在每次提交后模拟立刻覆盖源缓冲区：
+
+```sh
+outputs/build/gvid_raw_demo 3840 2160 12 3 24 \\
+  outputs/mapped/frames.tsv outputs/mapped.gvid 7680
+```
+
+该回放仍逐帧 flush；真实生产者可在可用队列中继续提交，但不能在相机回调中
+等待编码完成。元数据/标定的完整性要求与前文相同。
+
+M5 上 Q3、各 8 张不同实际照片的左上裁切/量化输入，经过该复制桥实测：
+
+| 输入尺寸 | 编码平均 / 最慢 | 读文件到 GVID 的短批次速率 | 峰值进程 RSS |
+| --- | ---: | ---: | ---: |
+| 3840×2160，12-bit 计数 | 3.53 / 5.62 ms | 84.58 fps | 62.84 MiB |
+| 8192×3424，11-bit 计数放入 12-bit 容器 | 11.73 / 18.50 ms | 32.90 fps | 202.72 MiB |
+| 11664×1248，12-bit 计数 | 6.12 / 9.63 ms | 61.77 fps | 108.78 MiB |
+
+8192×3428 候选为了编码对齐再裁底部 4 行。测试输入只是计算负载样本，
+**不模拟真实跳行/binning 的空间响应或噪声，不证明厂家模式的 RAW 格式**。
+数据刚在本地生成，可能命中缓存；短批次速率不代表长时间存储、热稳定或相机
+性能。4K / 8K 两组均原生解码并核对了支持的类型化标定，所有帧完成 END3 检查。
+
+## ARM64 Android 9 编译检查
+
+使用本地 Android NDK 28.2.13676358，API 28 / arm64-v8a，Release 构建
+`gvid_raw_demo`、`gvid_decode_frame` 和 `gvid_mapped_input` 静态库通过。
+生成 ARM64 ELF、解释器为 `/system/bin/linker64`；没有在相机或模拟器执行，
+不能把交叉编译当成厂商 ABI、CPU 性能或硬件功能验收。使用自己的 NDK 路径：
+
+```sh
+cmake -S . -B outputs/android28 \\
+  -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" \\
+  -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-28 \\
+  -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
+cmake --build outputs/android28 --target gvid_raw_demo gvid_decode_frame -j 4
+```
+
+两个 ELF 所需的强外部符号名称，在第一代原厂 `libc/libm/libdl/libz` 导出中均可
+找到；没有额外的 `libc++_shared.so` 依赖。此项仅核对符号名称，不代替符号版本、
+加载器及运行时行为验证。
+
+下一项实机前提是取得一帧匹配模式的 RAW、实际 plane/stride/时间戳描述与已核实
+的生命周期/缓存契约，再将模式特定的标定传入本桥。当前代码没有自动绑定厂商
+回调、切换传感器模式或提供设备部署步骤。

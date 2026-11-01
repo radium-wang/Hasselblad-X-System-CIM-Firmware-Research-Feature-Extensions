@@ -1,0 +1,241 @@
+{
+  "schema": "x2d.gvid.video_mode_evidence.v1",
+  "date": "2026-11-01",
+  "firmware": {
+    "model": "X2D 100C",
+    "firmware": "4.2.0",
+    "verification": "static_offline",
+    "camera_tested": false,
+    "input_sha256": {
+      "etc/imx461bqr_ec1706.conf": "e9eeb3630b1eef7a486957c0c2b7fc4e33f2288fd5955a09d2aa0866d9cfd700",
+      "etc/imx461bqr_ec1706.sp": "a75a3195e21600c4e42d17c331f6add445dbbecb72dd2cd12aa1ad46d0034acb",
+      "lib64/camera/plugins/hal/libdcam_cam_info_e2_ec1706_native.so": "c506acbe4ae2d65aef1bfd6752a26a95fd91a8456cc54da85e47c731540ee245",
+      "lib64/librcam.so": "72ebc8deebce4a29047c475e77ab4edbf2860abb1f572fea45260fe17ad0bda5",
+      "lib64/libdcam_frwk.so": "6d26f038175fc736dfc3e6b67c93f2d997895014be8e5c3040654cfb26bb501e"
+    },
+    "checked_instructions": 16,
+    "raw_candidates": [
+      {
+        "profile": "video_3840x2160_2997",
+        "width": 3840,
+        "height": 2160,
+        "format": "DUSS_PIXFMT_RAW16_OPAQUE",
+        "port": "EAGLE2_PORT_BOUT0",
+        "buffers": 3,
+        "behavior": "DCAM_STREAM_BEHAVIOR_REPEATING",
+        "flags": [
+          "DCAM_STREAM_FLAG_ON_DEMAND"
+        ],
+        "topology": "TPLG_IMX461BQR_VIDEO_4K2160_12BIT_30FPS",
+        "compiled_mode": {
+          "hal_entry": 13,
+          "sensor_mode": 35,
+          "nominal_fps": 30.0,
+          "sensor_width": 3920,
+          "sensor_height": 2192,
+          "hal_bits": 12,
+          "driver_mode_name": "IMX461_4k2160_12b_M5C_30P"
+        }
+      },
+      {
+        "profile": "video_8192x3428_2400",
+        "width": 8192,
+        "height": 3428,
+        "format": "DUSS_PIXFMT_RAW16_OPAQUE",
+        "port": "EAGLE2_PORT_BOUT0",
+        "buffers": 3,
+        "behavior": "DCAM_STREAM_BEHAVIOR_REPEATING",
+        "flags": [
+          "DCAM_STREAM_FLAG_ON_DEMAND"
+        ],
+        "topology": "TPLG_IMX461BQR_VIDEO_8K3428_11BIT_24FPS",
+        "compiled_mode": {
+          "hal_entry": 16,
+          "sensor_mode": 33,
+          "nominal_fps": 24.0,
+          "sensor_width": 8304,
+          "sensor_height": 3520,
+          "hal_bits": 11,
+          "driver_mode_name": "IMX461_8k3428_11b_M0C_24P"
+        }
+      },
+      {
+        "profile": "video_1920x1080_5994",
+        "width": 3840,
+        "height": 1296,
+        "format": "DUSS_PIXFMT_RAW16_OPAQUE",
+        "port": "EAGLE2_PORT_BOUT0",
+        "buffers": 3,
+        "behavior": "DCAM_STREAM_BEHAVIOR_REPEATING",
+        "flags": [
+          "DCAM_STREAM_FLAG_ON_DEMAND"
+        ],
+        "topology": "TPLG_IMX461BQR_VIDEO_4K1296_12BIT_60FPS",
+        "compiled_mode": {
+          "hal_entry": 19,
+          "sensor_mode": 38,
+          "nominal_fps": 60.0,
+          "sensor_width": 3920,
+          "sensor_height": 1316,
+          "hal_bits": 12,
+          "driver_mode_name": "IMX461_2k1k_12b_M8C_60P"
+        }
+      },
+      {
+        "profile": "video_11656x8742_1000",
+        "width": 11656,
+        "height": 8742,
+        "format": "DUSS_PIXFMT_RAW16_OPAQUE",
+        "port": "EAGLE2_PORT_BOUT0",
+        "buffers": 3,
+        "behavior": "DCAM_STREAM_BEHAVIOR_REPEATING",
+        "flags": [
+          "DCAM_STREAM_FLAG_ON_DEMAND"
+        ],
+        "topology": "TPLG_IMX461BQR_VIDEO_12K_11BIT_10FPS",
+        "compiled_mode": {
+          "hal_entry": 20,
+          "sensor_mode": 3,
+          "nominal_fps": 10.0,
+          "sensor_width": 11760,
+          "sensor_height": 8842,
+          "hal_bits": 12,
+          "driver_mode_name": "IMX461_12k9k_11b_M0D_10P"
+        }
+      }
+    ],
+    "full_resolution_14bit": {
+      "hal_entry": 12,
+      "sensor_mode": 1,
+      "nominal_fps": 6.0,
+      "sensor_width": 11760,
+      "sensor_height": 8842,
+      "hal_bits": 14,
+      "driver_mode_name": "IMX461_12k9k_14b_M0C_6d0P"
+    },
+    "callback_evidence": {
+      "registration_symbol": "cam_cap_eng_register_stream_observer",
+      "consumer_registration_symbol": "cam_stream_consumer_register_observer",
+      "copied_observer_record_bytes": 80
+    },
+    "unresolved": [
+      "Runtime mode activation and measured frame cadence",
+      "RAW16_OPAQUE unpacking, count alignment, Bayer phase and optical-black layout",
+      "DMA mapping/cache synchronization and exact callback ownership ABI",
+      "Per-mode black/white/color/crop calibration",
+      "Camera encoding time, memory pressure, storage and thermal stability"
+    ],
+    "limits": [
+      "Nominal modes do not prove working camera recording",
+      "12K driver mode name says 11-bit while its HAL field says 12; do not silently reconcile",
+      "No X2D II addresses or conclusions are transferred"
+    ]
+  },
+  "host": "Apple M5 Max, 18 cores, 128 GiB",
+  "benchmark": [
+    {
+      "label": "4k30",
+      "width": 3840,
+      "height": 2160,
+      "stride_bytes": 7680,
+      "frames": 8,
+      "quality": 3,
+      "codec_count_bits": 12,
+      "source_count_bits": 12,
+      "summary": {
+        "event": "summary",
+        "frames": 8,
+        "payload_bytes": 11740176,
+        "encode_mean_ms": 3.52692,
+        "peak_rss_bytes": 65896448,
+        "input_mode": "copied_callback",
+        "cnn": false,
+        "complete": true
+      },
+      "wall_seconds": 0.09458537492901087,
+      "file_pipeline_fps": 84.57967213223226,
+      "encode_max_ms": 5.61617,
+      "note": "Top-left crop/quantization of actual still images for compute testing; not a captured sensor video mode, no claimed CFA/readout/quality equivalence",
+      "peak_rss_mib": 62.84375,
+      "native_decoded_frames": 8,
+      "typed_calibration_verified": true
+    },
+    {
+      "label": "8k24",
+      "width": 8192,
+      "height": 3424,
+      "stride_bytes": 16384,
+      "frames": 8,
+      "quality": 3,
+      "codec_count_bits": 12,
+      "source_count_bits": 11,
+      "summary": {
+        "event": "summary",
+        "frames": 8,
+        "payload_bytes": 39249316,
+        "encode_mean_ms": 11.7302,
+        "peak_rss_bytes": 212566016,
+        "input_mode": "copied_callback",
+        "cnn": false,
+        "complete": true
+      },
+      "wall_seconds": 0.2431709999218583,
+      "file_pipeline_fps": 32.898659801418574,
+      "encode_max_ms": 18.5024,
+      "note": "Top-left crop/quantization of actual still images for compute testing; not a captured sensor video mode, no claimed CFA/readout/quality equivalence",
+      "peak_rss_mib": 202.71875,
+      "native_decoded_frames": 8,
+      "typed_calibration_verified": true
+    },
+    {
+      "label": "liveview",
+      "width": 11664,
+      "height": 1248,
+      "stride_bytes": 23552,
+      "frames": 8,
+      "quality": 3,
+      "codec_count_bits": 12,
+      "source_count_bits": 12,
+      "summary": {
+        "event": "summary",
+        "frames": 8,
+        "payload_bytes": 20871148,
+        "encode_mean_ms": 6.12286,
+        "peak_rss_bytes": 114065408,
+        "input_mode": "copied_callback",
+        "cnn": false,
+        "complete": true
+      },
+      "wall_seconds": 0.12951295799575746,
+      "file_pipeline_fps": 61.769880974088025,
+      "encode_max_ms": 9.62879,
+      "note": "Top-left crop/quantization of actual still images for compute testing; not a captured sensor video mode, no claimed CFA/readout/quality equivalence",
+      "peak_rss_mib": 108.78125
+    }
+  ],
+  "cnn": false,
+  "source_photos_published": false,
+  "android_cross_compile": {
+    "ndk": "28.2.13676358",
+    "api": 28,
+    "abi": "arm64-v8a",
+    "build": "Release",
+    "encoder": true,
+    "decoder": true,
+    "mapped_input_static_library": true,
+    "interpreter": "/system/bin/linker64",
+    "needed_libraries": [
+      "libz.so",
+      "libm.so",
+      "libdl.so",
+      "libc.so"
+    ],
+    "executed_on_camera": false,
+    "executed_in_emulator": false,
+    "symbol_name_audit": {
+      "against": "X2D 100C 4.2.0 system libc/libm/libdl/libz",
+      "missing_required_strong_symbol_names": [],
+      "symbol_versions_and_runtime_behavior_verified": false
+    }
+  }
+}

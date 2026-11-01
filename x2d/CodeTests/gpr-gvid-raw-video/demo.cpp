@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Offline frame adapter. Codec/container/capture implementation is in GPR.
 #include "gpr_capture.h"
+#include "mapped_input.h"
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -48,7 +50,8 @@ static void release_input(void *) {} // One stable source buffer, flush before r
 
 int main(int argc,char **argv) {
     try {
-        if(argc!=8)throw std::runtime_error("usage: gvid_raw_demo width height bits quality fps manifest.tsv output.gvid");
+        if(argc!=8 && argc!=9)throw std::runtime_error("usage: gvid_raw_demo width height bits quality fps manifest.tsv output.gvid [callback_stride_bytes]");
+        const bool callback_copy = argc==9;
         uint64_t values[5];for(unsigned i=0;i<5;++i) {
             values[i]=number(argv[i+1]);
             if(values[i]>UINT32_MAX)throw std::runtime_error("configuration exceeds uint32");
@@ -60,6 +63,12 @@ int main(int argc,char **argv) {
         cfg.video={uint32_t(values[0]),uint32_t(values[1]),uint32_t(values[4]),1,
                    uint32_t(values[3]),uint32_t(values[2]),{'R','G','G','B'}};
         cfg.stride_bytes=cfg.video.width*2;cfg.max_inflight=1;cfg.workspace_bytes=1024*1024;
+        if(callback_copy) {
+            const uint64_t stride=number(argv[8]);
+            if(stride<cfg.stride_bytes || stride>INT32_MAX)
+                throw std::runtime_error("invalid callback row pitch");
+            cfg.stride_bytes=uint32_t(stride);
+        }
         const std::string clip_meta="{\"schema\":\"x2d.gpr_gvid.demo.v1\",\"timestamp_source\":\"manifest\"}";
         cfg.metadata=clip_meta.data();cfg.metadata_size=clip_meta.size();
         std::ifstream manifest(argv[6]);if(!manifest)throw std::runtime_error("cannot open manifest");
@@ -70,7 +79,7 @@ int main(int argc,char **argv) {
         gpr_capture_callbacks callbacks={write_bytes,completed,file.get()};gpr_capture *created=nullptr;
         if(gpr_capture_create(&cfg,&callbacks,&created))throw std::runtime_error("capture configuration rejected");
         std::unique_ptr<gpr_capture,decltype(&gpr_capture_destroy)> capture(created,gpr_capture_destroy);
-        std::vector<uint8_t> raw(size_t(cfg.video.width)*cfg.video.height*2);
+        std::vector<uint8_t> raw(size_t(cfg.stride_bytes)*cfg.video.height);
         const uint16_t endian=1;
         if(*reinterpret_cast<const uint8_t *>(&endian)!=1)
             throw std::runtime_error("demo requires a little-endian host");
@@ -83,7 +92,7 @@ int main(int argc,char **argv) {
             std::ifstream input(relative(argv[6],line.substr(0,a)),std::ios::binary);
             if(!input.read(reinterpret_cast<char *>(raw.data()),raw.size()) || input.peek()!=EOF)
                 throw std::runtime_error("RAW input size differs from declared packed geometry");
-            if(cfg.video.sample_bits<16) {
+            if(!callback_copy && cfg.video.sample_bits<16) {
                 const uint16_t *samples=reinterpret_cast<const uint16_t *>(raw.data());
                 const uint32_t limit=1u<<cfg.video.sample_bits;
                 for(size_t sample=0;sample<raw.size()/2;++sample)
@@ -91,7 +100,16 @@ int main(int argc,char **argv) {
             }
             auto meta=metadata(relative(argv[6],line.substr(a+1,b-a-1)));
             gpr_capture_frame frame={raw.data(),raw.size(),index,number(line.substr(b+1)),meta.data(),meta.size(),release_input,nullptr};
-            if(gpr_capture_submit(created,&frame,UINT32_MAX) || gpr_capture_flush(created))
+            int submitted;
+            if(callback_copy) {
+                gvid_mapped_frame mapped={raw.data(),raw.size(),cfg.video.width,cfg.video.height,
+                    cfg.stride_bytes,cfg.video.sample_bits,GVID_MAPPED_RGGB_U16_LE_COUNTS,
+                    index,frame.timestamp_ns,meta.data(),meta.size()};
+                submitted=gvid_submit_mapped(created,&cfg,&mapped);
+                // Simulate immediate producer reuse, before waiting for encoding.
+                std::fill(raw.begin(),raw.end(),0);
+            } else submitted=gpr_capture_submit(created,&frame,UINT32_MAX);
+            if(submitted || gpr_capture_flush(created))
                 throw std::runtime_error("capture rejected frame or writer failed");
             ++index;
         }
@@ -106,7 +124,9 @@ int main(int argc,char **argv) {
 #endif
         std::cout<<"{\"event\":\"summary\",\"frames\":"<<stats.written<<",\"payload_bytes\":"<<stats.payload_bytes
                  <<",\"encode_mean_ms\":"<<(double(stats.encode_ns)/index/1e6)
-                 <<",\"peak_rss_bytes\":"<<rss<<",\"cnn\":false,\"complete\":true}\n";
+                 <<",\"peak_rss_bytes\":"<<rss<<",\"input_mode\":\""
+                 <<(callback_copy ? "copied_callback":"leased_file")
+                 <<"\",\"cnn\":false,\"complete\":true}\n";
         return 0;
     } catch(const std::exception &e) {std::cerr<<e.what()<<'\n';return 1;}
 }
