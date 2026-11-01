@@ -35,6 +35,7 @@ The table groups the research currently documented in this repository by topic. 
 | X2D II | [IBIS and Earth rotation](x2d2/research/1.3.16.2/IBIS-GPS-EARTH-ROTATION.md) | Location fields and compensation calls identified; controller formula and fallback remain unknown. |
 | X2D II | [AF icons and UI assets](x2d2/README.md) | AF-S/AF-C interface assets extracted for offline inspection; no device UI change. |
 | X2D II | [Encrypted models and PDAF](x2d2/research/1.3.16.2/MODEL-AND-PDAF-STATUS.md) | 39 model files remain encrypted; PDAF comparison is static, with no second-generation inference or device test. |
+| X2D II | [Sub-menu row visibility](x2d2/research/menu-visibility/README.md) | Row filter contract, item layout and role numbering read statically on 1.1.9.2, 1.3.16.2 and 1.3.18.1; one device observation on one camera, and no claim that a new row can be added. |
 | X2D 100C | [AF-C backend and menu](x2d/research/AFC-MENU-RUNTIME-RESULT.md) | Stock continuous-focus state reached on hardware; a menu gate alone does not establish focusing performance. |
 | X2D 100C | [Twelfth menu entry](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md) | Stock-style menu behavior was confirmed in a temporary device session; the public source is not a persistent installer. |
 | X2D 100C | [AF-S Type1 scan candidate](x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md) | Exact-version offline generator verified two changed instructions; end-to-end focusing and camera safety remain untested. |
@@ -166,6 +167,7 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 | X2D II | [IBIS 与地球自转](x2d2/research/1.3.16.2/IBIS-GPS-EARTH-ROTATION.md) | 确认定位字段与补偿调用；控制器公式和无定位降级尚不清楚。 |
 | X2D II | [对焦图标与界面资源](x2d2/README.md) | 提取 AF-S／AF-C 界面资源供离线查看；未改动实机界面。 |
 | X2D II | [加密模型与 PDAF](x2d2/research/1.3.16.2/MODEL-AND-PDAF-STATUS.md) | 39 个模型文件仍未解密；PDAF 仅静态对照，无二代推理或实机测试。 |
+| X2D II | [子菜单条目可见性](x2d2/research/menu-visibility/README.md) | 1.1.9.2、1.3.16.2、1.3.18.1 上静态读出行过滤契约、条目布局与角色编号；仅一台相机的一项实机观察，不构成可新增条目的结论。 |
 | X2D 100C | [AF-C 后端与菜单](x2d/research/AFC-MENU-RUNTIME-RESULT.md) | 实机进入原厂连续对焦状态；仅开放菜单 gate 不等于对焦效果验收。 |
 | X2D 100C | [第十二格菜单入口](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md) | 临时实机确认原厂风格菜单交互；公开源码不是持久安装包。 |
 | X2D 100C | [AF-S Type1 扫描候选](x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md) | 精确版本离线生成器验证两条指令变化；整体合焦与相机安全未实测。 |

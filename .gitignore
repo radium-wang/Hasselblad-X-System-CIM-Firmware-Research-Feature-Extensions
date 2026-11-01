@@ -163,3 +163,6 @@ __pycache__/
 !/x2d2/research/exmcu/CONTAINER-VALIDATION.md
 !/x2d2/research/exmcu/INPUT-PATH.md
 !/x2d2/research/exmcu/VERSION-COMPARISON.md
+
+# Reviewed X2D II sub-menu row visibility research.
+!/x2d2/research/menu-visibility/README.md

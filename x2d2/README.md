@@ -10,6 +10,8 @@
 
 - [八向摇杆：实现、离线测试与实机验收](joystick-eight-way/README.md) — 四斜向、长按与松手已确认；未常驻安装。
 
+- [子菜单条目可见性与行过滤契约](research/menu-visibility/README.md)
+
 - [模型解密状态与 PDAF 对照边界](research/1.3.16.2/MODEL-AND-PDAF-STATUS.md)
 - [LiDAR 数据链与 AF-S / AF-C 对照](research/1.3.16.2/LIDAR-PIPELINE.md)
 - [AF-S 与 LiDAR 遮挡路径](research/1.3.16.2/AFS-WITHOUT-LIDAR.md)
