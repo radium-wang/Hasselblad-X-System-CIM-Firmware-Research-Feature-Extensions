@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-01",
+  "validation_level": "desktop_offline",
+  "source_model": "X2D 100C",
+  "cnn": false,
+  "machine": "Apple M5 Max; macOS; 18 CPU cores; 128 GiB RAM",
+  "ffmpeg": "8.1.1",
+  "quick_50": {
+    "frames": 50,
+    "dimensions": [
+      3840,
+      2160
+    ],
+    "count_bits": 12,
+    "quality": 3,
+    "nominal_fps": 30,
+    "encode_mean_ms": 2.725,
+    "payload_bytes": 26806188,
+    "payload_mbps_at_nominal_fps": 128.6697024,
+    "raw_psnr_db": 54.51227751264759,
+    "all_native_decoded": true,
+    "all_metadata_and_pts_verified": true,
+    "first_last_typed_dng_calibration_verified": true,
+    "movies": [
+      {
+        "file": "review-1080p.mp4",
+        "bytes": 3240366,
+        "probe": {
+          "codec_name": "h264",
+          "profile": "High",
+          "width": 1920,
+          "height": 1080,
+          "pix_fmt": "yuv420p",
+          "r_frame_rate": "30/1",
+          "nb_read_frames": "50"
+        }
+      },
+      {
+        "file": "gvid-to-prores-hq.mov",
+        "bytes": 156817216,
+        "probe": {
+          "codec_name": "prores",
+          "profile": "HQ",
+          "width": 3840,
+          "height": 2160,
+          "pix_fmt": "yuv422p10le",
+          "r_frame_rate": "30/1",
+          "nb_read_frames": "50"
+        }
+      }
+    ],
+    "prores_encoder": "prores_videotoolbox"
+  },
+  "full_entry_smoke": {
+    "frames_per_case": 2,
+    "gvid_cases_passed": 30,
+    "ffmpeg_cases_passed": 64,
+    "all_ffmpeg_outputs_fully_decoded": true,
+    "all_ffmpeg_quality_metric_frames_checked": true,
+    "prores_encoders": [
+      "prores_ks",
+      "prores_videotoolbox"
+    ],
+    "purpose": "exercise all workflow branches; two-frame rates are not representative bitrate measurements"
+  },
+  "software_quick_smoke": {
+    "frames": 2,
+    "prores_encoder": "prores_ks",
+    "complete": true
+  },
+  "native_3fr_preparation": {
+    "frames": 1,
+    "dimensions": [
+      11664,
+      8744
+    ],
+    "all_prepared_samples_equal_libraw_visible_crop": true
+  },
+  "limits": [
+    "No camera execution or acquisition rate validation",
+    "Synthetic playback timestamps",
+    "Rescaled Bayer stills do not emulate physical sensor modes",
+    "No ProRes RAW encoding or actual ProRes RAW sample decoding tested",
+    "Private photos, original metadata and generated movies are not distributed"
+  ]
+}

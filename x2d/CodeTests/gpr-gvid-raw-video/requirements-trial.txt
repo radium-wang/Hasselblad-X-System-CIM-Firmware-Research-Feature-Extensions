@@ -1,0 +1,4 @@
+numpy==2.4.6
+rawpy==0.27.0
+Pillow==12.2.0
+tifffile==2026.6.1

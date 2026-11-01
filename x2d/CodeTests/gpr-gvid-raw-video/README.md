@@ -11,6 +11,81 @@ MP4。编码器、容器和有界采集 API 均由 GPR 提供；本目录只维�
 **桌面离线实验**，没有连接相机、修改固件或证明机内录像可用。X2D II 的
 传感器接口、内存与性能需要独立验证。
 
+## 拍 50 张照片后，一条命令查看结果
+
+面向第一代 **X2D 100C** 的电脑端复现入口是 `camera_trial.py`。把相机拍摄的
+50 张 FFF / 3FR / 已校准 Bayer DNG 复制到一个本地目录，即可运行。无需先手写
+RAW 清单或逐项执行编码、解码、显影命令；不连接或控制相机。
+
+首次准备需要 Python 3.11+、CMake 3.20+、C/C++ 编译器、zlib，以及含 `libx264`
+和 `prores_ks` 的 FFmpeg / ffprobe。完整矩阵需要 `setpts` 的 `strip_fps` 功能；
+实测 FFmpeg 8.1.1。以下命令从本模块目录执行：
+
+```sh
+python3 -m venv outputs/venv
+. outputs/venv/bin/activate
+python -m pip install -r requirements-trial.txt
+python camera_trial.py /path/to/50-photos \
+  --reference /path/to/same-model-calibrated.dng --output outputs/quick
+```
+
+FFF / 3FR **还需一份同型号的有效标定 DNG 或 GPR** 提供颜色矩阵；普通 JPEG
+不能代替。若输入目录已有合格 DNG，可省略 `--reference`。GPR 仅用于标定，
+不作为原始像素输入。当前入口只接受第一代 X2D 100C，不能把二代数据当作已经验证。
+首次运行自动下载固定版本的公开 GPR 源码并编译；不上传照片、影片或元数据。
+
+默认自然排序选取前 50 张照片，生成 **3840×2160、12-bit 计数、Q3 GVID**，
+逐帧原生解码、检查校验/PTS/标定，并输出 1080p H.264 查看电影和 4K ProRes HQ。
+打开 `outputs/quick/report.html` 即可比较编码时间、实测码率、RAW PSNR，并点击
+影片链接。默认查看曝光为 0 EV，可用 `--exposure-ev 1` 调整显影；不改变保存的 RAW。
+浏览器可能不直接播放 MOV，报告中的 MP4 供直接查看，MOV 可用支持 ProRes 的播放器打开。
+
+**已用 50 张实际 X2D FFF 验证快捷入口**：50 帧均完成原生解码及元数据/校验检查，
+MP4 与 ProRes HQ 均由 FFmpeg 完整解码并核对帧数。该次 M5 测试平均编码约
+2.73 ms，VC-5 载荷在名义 30 fps 下约 128.7 Mb/s，RAW 样本 PSNR 为 54.51 dB。
+这些是该组照片的电脑测量，不是相机采集或持续录像性能。
+汇总见 [trial_evidence.json](trial_evidence.json)。完整入口另以 2 张真实照片跑通
+30 组 GVID 与 64 组 FFmpeg，全部解码/帧数检查通过；2 帧只用于流程验收，
+不用于代表长片码率。软件 ProRes 快捷路径与原生 3FR 像素准备也分别验证通过。
+
+完整试验另用一个输出目录：
+
+```sh
+python camera_trial.py /path/to/50-photos \
+  --reference /path/to/same-model-calibrated.dng --output outputs/full --all --plan
+python camera_trial.py /path/to/50-photos \
+  --reference /path/to/same-model-calibrated.dng --output outputs/full --all
+```
+
+`--plan` 仅显示输入数量和试验范围。`--all` 执行：
+
+| 类别 | 范围 |
+| --- | --- |
+| GVID | 4K 12-bit / 30 fps；8192×3424 的 11-bit 计数 / 24 fps；3840×1296 RAW / 60 fps；完整对齐尺寸 14-bit / 6 fps、16-bit / 2.7 fps；每种 Q0–Q5 |
+| ProRes | 1080p60、4K24、4K30、8192×3424 / 24；Proxy、LT、Standard、HQ、4444、4444 XQ |
+| H.264 目标码率 | 1080p60：5/10/20/40 Mb/s；4K24/30：10/25/50/100；8K24：50/100/200/400 |
+
+GVID 为质量预设驱动的可变码率，报告提供实际码率。ProRes 同样按 profile 选择；
+H.264 分别报告目标和实际码率。macOS 若提供 VideoToolbox，会另测要求硬件的
+ProRes 路径；快捷导出默认使用软件编码。完整矩阵中不支持的组合在报告中标出失败原因，不当作通过。其他系统使用软件路径。
+普通 ProRes 是去马赛克后的视频，**不是 ProRes RAW**；工具记录后者的编码器/解码器
+可用性，但没有将“安装了解码器”当作实际 RAW 文件解码成功。
+
+快捷试验建议预留至少 20 GB；50 张完整试验建议至少 100 GB，复杂画面可能更多。
+完整试验包含 30 组 GVID、至多 64 组 FFmpeg 组合，生成大体积无损像素 NUT 参考片，
+并对影片完整解码、计算 PSNR / SSIM，耗时明显长于快捷试验。可先用 `--limit 2`
+验证本机依赖，再用 50 张比较质量。编码计时与整段文件/显影时间分开记录；FFmpeg
+时间包含输入与转换开销。RAW PSNR 与显影后 PSNR / SSIM 不能直接互相比数值。
+
+相同命令可以继续已有输出中的已完成组合；输入哈希或选项改变时拒绝复用目录。
+中途失败可留下不完整当前组合，需查看日志并保留或清理该组合后重试；已完成组合
+有 `result.json`，报告随完成情况更新。私有输入清单保存原始路径和哈希，所有输出
+均应留在本地。输入目录只读，输出必须位于输入目录之外。
+
+缩小输入使用偶数原点裁切及分 Bayer 平面的 Lanczos 缩放，再量化计数。它们用于
+计算负载与压缩比较，**不模拟真实传感器跳行/binning、读出或噪声**。播放时间戳是
+合成的；拍 50 张照片可以验证编解码链，不能验证持续传感器采集或相机发热。
+
 ## 已测结果
 
 2026-11-01，Apple M5 Max、18 核 CPU、128 GiB 内存、macOS 26.7.1，Release
@@ -45,7 +120,10 @@ RSS 是进程驻留内存，不是 malloc 总容量、相机 DMA 预算或最坏
 - `inspect_firmware.py`：固定哈希的第一代固件配置、HAL 与传感器模式离线核对。
 - `firmware_evidence.json`：固件候选模式与对应尺寸的电脑测试汇总。
 - `decode_frame.cpp`：调用依赖的原生 VC-5 解码 API。
-- `prepare.py`：可选的 X2D FFF / Bayer DNG 像素与标定准备。
+- `camera_trial.py`：50 张照片的快捷 / 完整试验入口与本地 HTML 报告。
+- `trial_gvid.py` / `trial_ffmpeg.py`：批量原生往返与影片 profile / 码率验证。
+- `requirements-trial.txt`：桌面照片试验的固定 Python 依赖。
+- `prepare.py`：可选的 X2D FFF / 3FR / Bayer DNG 像素与标定准备。
 - `extract.py`：验证完整 GVID，原生解码并核对 GPR / DNG 标定。
 - `render.py`：LibRaw 常规显影、缩小和 FFmpeg H.264 查看导出。
 - `test_offline.py`：可自行生成的小型合成输入与完整往返/错误路径检查。
@@ -137,7 +215,8 @@ ffprobe -v error -count_frames -select_streams v:0 \
 
 ## 副作用、限制与后续接口
 
-所有入口纯离线，只读显式提供的输入并新建输出；输出拒绝覆盖。失败可留下
+所有入口只读显式提供的输入并新建输出；照片与影片处理纯离线。首次构建可下载公开依赖。
+底层入口拒绝覆盖；`camera_trial.py` 可按输入身份继续已有完成组合。失败可留下
 不完整文件或部分提取目录，退出非零不能视为完成。每帧 flush 后才复用 RAW
 缓冲区；当前策略便于验证生命周期，并不演示传感器流水线并行。
 `fflush` / 关闭检查不提供 `fsync` 持久化保证。
