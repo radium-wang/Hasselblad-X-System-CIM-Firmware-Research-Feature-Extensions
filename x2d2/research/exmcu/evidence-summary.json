@@ -1,0 +1,92 @@
+{
+  "scope": "X2D II exMCU static research and historical offline validation summaries",
+  "archived": "2026-11-01",
+  "inputs": [
+    {
+      "version": "1.3.16.2",
+      "name": "exMCU_hb722.cont",
+      "bytes": 1854048,
+      "sha256": "3e23ad78b1b5cef9321f8f02aac272e740164b7f49bd1d4c7f5b37e1978db1af"
+    },
+    {
+      "version": "1.3.16.2",
+      "name": "exMCUloader.cont",
+      "bytes": 15168,
+      "sha256": "db07b6c3d16515c64a54be0583e03d11c1fe2244ebc40274cc50cef22a393968"
+    },
+    {
+      "version": "1.3.18.1",
+      "name": "exMCU_hb722.cont",
+      "bytes": 1854048,
+      "sha256": "f4ffdae8350d7a7f536940f8965f26e24a9d6bfe6337dc8a031b9a81bbb64d11"
+    },
+    {
+      "version": "1.3.18.1",
+      "name": "exMCUloader.cont",
+      "bytes": 15168,
+      "sha256": "cc998e8f5c0e960482370a92881eca6353ac0a66cb9a34d9d5ca22285f418b3b"
+    }
+  ],
+  "validation": {
+    "version": "1.3.18.1",
+    "app_crc": "0x207e070f",
+    "loader_crc": "0x3b5ca7c9",
+    "both_original_crc_matches": true,
+    "original_loader_emulated": false,
+    "modified_image_flash_boot_or_recovery_tested": false
+  },
+  "version_comparison": {
+    "old": "1.3.16.2",
+    "new": "1.3.18.1",
+    "raw_changed_bytes": 230583,
+    "regions": [
+      {
+        "label": "header/vector",
+        "start": "0x0",
+        "end": "0x400",
+        "raw_changed_byte_positions": 4
+      },
+      {
+        "label": "resource data/padding",
+        "start": "0x400",
+        "end": "0x4a9fc",
+        "raw_changed_byte_positions": 183634
+      },
+      {
+        "label": "same-address main text 1",
+        "start": "0x4a9fc",
+        "end": "0xe2694",
+        "raw_changed_byte_positions": 4111
+      },
+      {
+        "label": "font initializer",
+        "start": "0xe2694",
+        "end": "0xe27e4",
+        "raw_changed_byte_positions": 286
+      },
+      {
+        "label": "shifted C++ island",
+        "start": "0xe27e4",
+        "end": "0xecb20",
+        "raw_changed_byte_positions": 38773
+      },
+      {
+        "label": "same-address main text 2",
+        "start": "0xecb20",
+        "end": "0x120000",
+        "raw_changed_byte_positions": 1377
+      },
+      {
+        "label": "tail strings/resources/tables",
+        "start": "0x120000",
+        "end": "0x1c4a60",
+        "raw_changed_byte_positions": 2398
+      }
+    ],
+    "glyph_records": 357,
+    "glyph_metadata_equal": 357,
+    "glyph_payloads_equal": 357,
+    "initializer_final_stores_equal": 38
+  },
+  "evidence_boundary": "Selected identities and historical aggregates, not raw decompiler output, original firmware, device logs or complete reproduction of all static analysis."
+}

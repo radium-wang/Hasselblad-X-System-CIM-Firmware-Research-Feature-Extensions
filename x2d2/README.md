@@ -1,6 +1,12 @@
 # X2D II 固件研究与功能实现
 
-静态对照研究基线为1.3.16.2；八向摇杆模块适用于1.3.18.1，已完成一次45秒实体测试。各主题分别标注版本、证据和限制。
+静态对照研究基线为1.3.16.2；新增 exMCU 研究覆盖1.3.18.1及两版比较。八向摇杆模块适用于1.3.18.1，已完成一次45秒实体测试。各主题分别标注版本、证据和限制。
+
+- [exMCU 研究总览](research/exmcu/README.md)
+  - [肩屏 MCU 架构与界面](research/exmcu/ARCHITECTURE.md)
+  - [容器校验机制与主机侧证据纠正](research/exmcu/CONTAINER-VALIDATION.md)
+  - [摇杆 MCU 输入链](research/exmcu/INPUT-PATH.md)
+  - [1.3.16.2 → 1.3.18.1 MCU 深入比较](research/exmcu/VERSION-COMPARISON.md)
 
 - [八向摇杆：实现、离线测试与实机验收](joystick-eight-way/README.md) — 四斜向、长按与松手已确认；未常驻安装。
 

@@ -156,3 +156,10 @@ __pycache__/
 !/x2d2/joystick-eight-way/CodeTests/input-synthesis/README.md
 !/x2d2/joystick-eight-way/FunctionalTests/liveview-eight-way/README.md
 !/x2d2/joystick-eight-way/research/INPUT-PATH.md
+
+# Reviewed X2D II exMCU offline research summaries.
+!/x2d2/research/exmcu/README.md
+!/x2d2/research/exmcu/ARCHITECTURE.md
+!/x2d2/research/exmcu/CONTAINER-VALIDATION.md
+!/x2d2/research/exmcu/INPUT-PATH.md
+!/x2d2/research/exmcu/VERSION-COMPARISON.md

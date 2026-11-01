@@ -24,6 +24,10 @@ The table groups the research currently documented in this repository by topic. 
 
 | Camera | Research | Current progress and limits |
 | --- | --- | --- |
+| X2D II | [exMCU architecture and shoulder display](x2d2/research/exmcu/ARCHITECTURE.md) | 1.3.18.1 local Qul UI and host property relay mapped statically; individual display states not device-validated. |
+| X2D II | [exMCU container validation](x2d2/research/exmcu/CONTAINER-VALIDATION.md) | Located CRC32/format checks and reproduced both original CRCs offline; incomplete indirect-path coverage, no modified-image flash or boot test. |
+| X2D II | [MCU joystick input path](x2d2/research/exmcu/INPUT-PATH.md) | Four independent direction sources mapped; no direct diagonal mode found in inspected configuration paths. |
+| X2D II | [exMCU version comparison](x2d2/research/exmcu/VERSION-COMPARISON.md) | 1.3.16.2 → 1.3.18.1 differences classified as resource/layout/build changes in inspected regions; no MCU cause for low-light rear-display improvement established. |
 | X2D II | [八向摇杆 / Eight-way joystick](x2d2/joystick-eight-way/README.md) | 1.3.18.1 native input synthesis, evdev/uinput adapter and offline tests; all four diagonals, hold and release confirmed in one 45-second camera test. No persistent installation or long-term validation. |
 | X2D II | [LiDAR and autofocus](x2d2/research/1.3.16.2/LIDAR-PIPELINE.md) | ADS6401 depth and AF-S/AF-C decision paths mapped offline; no second-generation camera validation. |
 | X2D II | [Startup resources and variants](x2d2/research/1.3.16.2/STARTUP-LOGO-VARIANTS.md) | Six hardware-stage identifiers and Logo resources inspected; cold-start selection remains unverified. |
@@ -151,6 +155,10 @@ The check rejects known binary or firmware formats, personal absolute paths, lik
 
 | 机型 | 研究主题 | 当前进展与限制 |
 | --- | --- | --- |
+| X2D II | [exMCU 与肩屏架构](x2d2/research/exmcu/ARCHITECTURE.md) | 1.3.18.1 本地 Qul 界面与主机属性中继静态核对；显示状态未逐项实机验收。 |
+| X2D II | [exMCU 容器校验](x2d2/research/exmcu/CONTAINER-VALIDATION.md) | 已定位 CRC32／格式检查，两份原厂 CRC 离线复算一致；间接路径未完全覆盖，修改镜像未刷写或启动验证。 |
+| X2D II | [MCU 摇杆输入链](x2d2/research/exmcu/INPUT-PATH.md) | 四方向独立源已映射；已查配置路径未发现直接八向模式。 |
+| X2D II | [exMCU 两版深入比较](x2d2/research/exmcu/VERSION-COMPARISON.md) | 比较 1.3.16.2 → 1.3.18.1 的资源搬移、重定位和构建差异；未建立 MCU 导致后屏弱光改善的证据。 |
 | X2D II | [八向摇杆实现](x2d2/joystick-eight-way/README.md) | 1.3.18.1 输入状态机、原生适配及离线测试；45秒实体测试确认四斜向、长按、松手正常。未做常驻安装或长期验收。 |
 | X2D II | [LiDAR 测距与自动对焦](x2d2/research/1.3.16.2/LIDAR-PIPELINE.md) | 离线梳理 ADS6401 深度数据及 AF-S／AF-C 决策链；未做二代实机验收。 |
 | X2D II | [启动资源与版本差异](x2d2/research/1.3.16.2/STARTUP-LOGO-VARIANTS.md) | 核对六个硬件阶段标识与 Logo 资源；冷启动选择链未验证。 |

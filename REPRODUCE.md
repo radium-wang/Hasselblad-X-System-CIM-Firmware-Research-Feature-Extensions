@@ -37,6 +37,7 @@ python3 x2d2/joystick-eight-way/tools/check_offline.py
 
 | Area | Entry | Reproduction scope |
 | --- | --- | --- |
+| X2D II exMCU | [research and read-only CRC inspection](x2d2/research/exmcu/README.md) | Operator-supplied pinned 1.3.18.1 original app/loader, Python standard library; no firmware writing or device access |
 | X2D II eight-way joystick | [source, tests and hardware summary](x2d2/joystick-eight-way/README.md) | C11 state machine/runtime, fake Linux calls and relative-time replay; no deployment backend |
 | Menu | [source and tests](x2d/CodeTests/temporary_af_speed_probe/original-menu-candidate/README.md) | Source QML, SVG and desktop checks |
 | AF-S | [candidate](x2d/CodeTests/temporary_af_speed_probe/pdaf-scan-type1-candidate/README.md) | Exact-version offline hash gates and byte-diff checks |
