@@ -21,6 +21,21 @@ def run(command):
     subprocess.run([str(v) for v in command], check=True)
 
 
+def ensure_build(root, build=None):
+    build = build.resolve() if build else root / "build"
+    if not all(
+        (build / name).exists() for name in ("gvid_raw_demo", "gvid_decode_frame")
+    ):
+        run(["cmake", "-S", HERE, "-B", build, "-DCMAKE_BUILD_TYPE=Release"])
+        run(["cmake", "--build", build, "-j", "4"])
+    cache = (build / "CMakeCache.txt").read_text()
+    match = re.search(r"^GPR_SOURCE_DIR:PATH=(.+)$", cache, re.M)
+    gpr_source = Path(match.group(1)) if match else build / "_deps/gpr_dependency-src"
+    if not (gpr_source / "tools/raw_media.py").exists():
+        raise ValueError("cannot locate pinned GPR tools in build")
+    return build, gpr_source
+
+
 def natural(path):
     return [int(v) if v.isdigit() else v.lower() for v in re.split(r"(\d+)", path.name)]
 
@@ -306,10 +321,14 @@ def report(root):
         rows.append(
             f"<tr><td>{html.escape(r['case'])}</td><td>{r['encode_wall_seconds']:.2f} s total</td><td>{r.get('actual_mbps', 0):.1f} Mb/s</td><td>{r.get('ssim', 0):.6f} SSIM</td><td>{view}</td></tr>"
         )
+    reference_info = ""
+    if (root / "reference.dng").exists():
+        reference_info = '<p>Automatically created <a href="reference.dng">original-sample reference DNG</a> / <a href="reference-provenance.json">Color profile provenance</a>. LibRaw X2D model D65 profile; Phocus rendering is not reproduced.</p>'
     text = (
         '<!doctype html><meta charset="utf-8"><title>X2D RAW video trial</title><style>body{font:16px system-ui;margin:3rem;max-width:1200px}td,th{padding:.5rem;text-align:left;border-bottom:1px solid #ddd}table{border-collapse:collapse}</style><h1>X2D RAW video trial</h1><p>Local desktop experiment using operator photographs. Nominal playback rates do not establish camera acquisition. GVID time is codec mean per frame; FFmpeg time is total encode pipeline time. RAW and rendered-image quality metrics have different domains. No CNN. No photos are uploaded.</p><table><tr><th>Case</th><th>Time</th><th>Measured bitrate</th><th>Quality</th><th>Movie</th></tr>'
         + "".join(rows)
         + "</table>"
+        + reference_info
     )
     (root / "report.html").write_text(text)
 
@@ -321,7 +340,7 @@ def main():
     parser.add_argument(
         "--reference",
         type=Path,
-        help="Same-model calibrated DNG/GPR; required for FFF/3FR",
+        help="Optional same-model DNG/GPR color profile override",
     )
     parser.add_argument("--limit", type=int, default=50)
     parser.add_argument(
@@ -375,17 +394,17 @@ def main():
     reference = args.reference or next(
         (p for p in files if p.suffix.lower() == ".dng"), None
     )
-    if reference is None:
-        parser.error(
-            "FFF/3FR input needs --reference with one same-model calibrated DNG/GPR"
-        )
-    if not reference.is_file():
+    if reference is not None and not reference.is_file():
         parser.error("reference file does not exist: " + str(reference))
     if args.plan:
         print(
             json.dumps(
                 dict(
                     selected_photos=len(files),
+                    color_profile="operator reference"
+                    if reference
+                    else "automatic LibRaw X2D D65",
+                    creates_reference_dng=reference is None,
                     run="full matrix" if args.all else "4K Q3 + ProRes HQ",
                     gvid_quality_presets=list(range(6)) if args.all else [3],
                     modes=[
@@ -418,7 +437,9 @@ def main():
         ],
         all=args.all,
         exposure_ev=args.exposure_ev,
-        reference_sha256=hashlib.sha256(reference.read_bytes()).hexdigest(),
+        reference_sha256=hashlib.sha256(reference.read_bytes()).hexdigest()
+        if reference
+        else None,
     )
     identity_path = root / "private-input-manifest.json"
     if identity_path.exists() and json.loads(identity_path.read_text()) != identity:
@@ -426,15 +447,7 @@ def main():
             "existing output belongs to different inputs/options; choose a new output directory"
         )
     identity_path.write_text(json.dumps(identity, indent=2) + "\n")
-    build = args.build.resolve() if args.build else root / "build"
-    if not (build / "gvid_raw_demo").exists():
-        run(["cmake", "-S", HERE, "-B", build, "-DCMAKE_BUILD_TYPE=Release"])
-        run(["cmake", "--build", build, "-j", "4"])
-    cache = (build / "CMakeCache.txt").read_text()
-    match = re.search(r"^GPR_SOURCE_DIR:PATH=(.+)$", cache, re.M)
-    gpr_source = Path(match.group(1)) if match else build / "_deps/gpr_dependency-src"
-    if not (gpr_source / "tools/raw_media.py").exists():
-        raise ValueError("cannot locate pinned GPR tools in build")
+    build, gpr_source = ensure_build(root, args.build)
     base = root / "base16"
     if not (base / "preparation.json").exists():
         from prepare import prepare
@@ -443,7 +456,39 @@ def main():
     sys.path.insert(0, str(gpr_source / "tools"))
     import raw_media
 
-    first = json.loads((base / "000000.json").read_text())["raw_metadata"]
+    first_frame = json.loads((base / "000000.json").read_text())
+    first = first_frame["raw_metadata"]
+    if reference is None:
+        generated_reference = root / "reference.dng"
+        if not generated_reference.exists():
+            raw_media.write(
+                generated_reference, first, (base / "000000.raw").read_bytes(), "dng"
+            )
+        actual = raw_media.extract(generated_reference, 16)
+        if any(
+            actual[k] != first[k] for k in ("width", "height", "sample_bits", "cfa")
+        ) or any(
+            sorted(actual[k], key=lambda t: t["code"])
+            != sorted(first[k], key=lambda t: t["code"])
+            for k in ("image", "exif", "gps")
+        ):
+            raise ValueError("generated reference DNG metadata differs")
+        (root / "reference-provenance.json").write_text(
+            json.dumps(
+                dict(
+                    color_profile_kind=first_frame["color_profile_kind"],
+                    calibration_source=first_frame["calibration_source"],
+                    rawpy_version=first_frame["rawpy_version"],
+                    libraw_version=first_frame["libraw_version"],
+                    source_frame_index=0,
+                    sensor_samples="unaltered after documented alignment crop",
+                    manufacturer_rendering_reproduced=False,
+                ),
+                indent=2,
+            )
+            + "\n"
+        )
+        print("Created local reference.dng from the first source frame", flush=True)
     model = next(t for t in first["image"] if t["code"] == 272)
     if b"X2D 100C" not in raw_media.unpack_record(model):
         raise ValueError("this trial targets first-generation X2D 100C")

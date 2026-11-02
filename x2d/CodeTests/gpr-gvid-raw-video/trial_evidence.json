@@ -82,5 +82,43 @@
     "Rescaled Bayer stills do not emulate physical sensor modes",
     "No ProRes RAW encoding or actual ProRes RAW sample decoding tested",
     "Private photos, original metadata and generated movies are not distributed"
-  ]
+  ],
+  "automatic_reference_workflow": {
+    "validation_date": "2026-11-02",
+    "external_reference_required": false,
+    "fresh_pinned_dependency_download_and_build": true,
+    "real_x2d_fff_trial_frames": 50,
+    "all_native_decoded": true,
+    "all_metadata_and_pts_verified": true,
+    "movie_frames_verified": [
+      {
+        "codec": "h264",
+        "frames": 50
+      },
+      {
+        "codec": "prores",
+        "frames": 50
+      }
+    ],
+    "generated_reference_dng_original_sensor_samples": true,
+    "profile": "LibRaw X2D model D65, single illuminant",
+    "rawpy_version": "0.27.0",
+    "libraw_version": "0.22.1",
+    "standalone_formats_verified": [
+      "FFF",
+      "3FR"
+    ],
+    "standalone_original_dng_samples_equal_source_after_alignment_crop": true,
+    "standalone_gpr_native_decode_and_typed_calibration_verified": true,
+    "color_matrix_direction_and_invalid_profile_tests": "2/2 passed",
+    "manufacturer_rendering_claimed": false,
+    "validation_date_timezone": "UTC",
+    "generated_reference_dng_all_samples_checked_against_source": true,
+    "generated_dng_reused_as_explicit_reference": true,
+    "automatic_reference_full_entry_smoke": {
+      "frames_per_case": 2,
+      "gvid_cases_passed": 30,
+      "ffmpeg_cases_passed": 64
+    }
+  }
 }

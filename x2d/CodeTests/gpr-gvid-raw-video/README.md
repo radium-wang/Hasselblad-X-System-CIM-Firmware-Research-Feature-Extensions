@@ -25,14 +25,19 @@ RAW 清单或逐项执行编码、解码、显影命令；不连接或控制相�
 python3 -m venv outputs/venv
 . outputs/venv/bin/activate
 python -m pip install -r requirements-trial.txt
-python camera_trial.py /path/to/50-photos \
-  --reference /path/to/same-model-calibrated.dng --output outputs/quick
+python camera_trial.py /path/to/50-photos --output outputs/quick
 ```
 
-FFF / 3FR **还需一份同型号的有效标定 DNG 或 GPR** 提供颜色矩阵；普通 JPEG
-不能代替。若输入目录已有合格 DNG，可省略 `--reference`。GPR 仅用于标定，
-不作为原始像素输入。当前入口只接受第一代 X2D 100C，不能把二代数据当作已经验证。
-首次运行自动下载固定版本的公开 GPR 源码并编译；不上传照片、影片或元数据。
+**不需要另外准备 DNG/GPR。** FFF / 3FR 默认使用 LibRaw 已有的 X2D 型号 D65
+颜色矩阵，结合每张原文件的白平衡、黑白电平、方向和裁切，自动创建本地
+`reference.dng` 与 `reference-provenance.json`。该 DNG 保存第一帧对齐后的原始
+传感器样本，不从有损 GPR 解码生成。它是单光源型号配置，不是新做的单机标定，
+也不声称复现 Phocus / HNCS、镜头修正或双光源颜色配置。
+
+已有同机型有效 DNG/GPR 的用户仍可用 `--reference` 覆盖默认颜色配置；输入目录
+中的合格 DNG 也可自动提供参考。GPR 不作为原始像素输入。当前入口只接受第一代
+X2D 100C，不能把二代数据当作已经验证。首次运行自动下载固定版本的公开 GPR
+源码并编译；不上传照片、影片或元数据。
 
 默认自然排序选取前 50 张照片，生成 **3840×2160、12-bit 计数、Q3 GVID**，
 逐帧原生解码、检查校验/PTS/标定，并输出 1080p H.264 查看电影和 4K ProRes HQ。
@@ -48,13 +53,15 @@ MP4 与 ProRes HQ 均由 FFmpeg 完整解码并核对帧数。该次 M5 测试�
 30 组 GVID 与 64 组 FFmpeg，全部解码/帧数检查通过；2 帧只用于流程验收，
 不用于代表长片码率。软件 ProRes 快捷路径与原生 3FR 像素准备也分别验证通过。
 
+自动参考模式另外以全新依赖下载/构建及 50 张实际 X2D FFF 跑通，未提供
+`--reference`；两个查看影片均为 50 帧。单独转换的 X2D 3FR 与 FFF 均生成 DNG
+及 GPR，DNG 每个样本与对齐后的原始传感器样本相同，GPR 原生解码与标定检查通过。
+
 完整试验另用一个输出目录：
 
 ```sh
-python camera_trial.py /path/to/50-photos \
-  --reference /path/to/same-model-calibrated.dng --output outputs/full --all --plan
-python camera_trial.py /path/to/50-photos \
-  --reference /path/to/same-model-calibrated.dng --output outputs/full --all
+python camera_trial.py /path/to/50-photos --output outputs/full --all --plan
+python camera_trial.py /path/to/50-photos --output outputs/full --all
 ```
 
 `--plan` 仅显示输入数量和试验范围。`--all` 执行：
@@ -85,6 +92,39 @@ ProRes 路径；快捷导出默认使用软件编码。完整矩阵中不支持�
 缩小输入使用偶数原点裁切及分 Bayer 平面的 Lanczos 缩放，再量化计数。它们用于
 计算负载与压缩比较，**不模拟真实传感器跳行/binning、读出或噪声**。播放时间戳是
 合成的；拍 50 张照片可以验证编解码链，不能验证持续传感器采集或相机发热。
+
+## 单独把相机文件转换成 DNG / GPR
+
+使用上面的 Python 环境与编译依赖；不需要 FFmpeg 或预先存在的参考图。
+可给单张、多张文件或本地目录。默认最多前 50 张，输出目录必须不存在：
+
+```sh
+python convert_stills.py /path/to/photo.3FR --output outputs/still
+python convert_stills.py /path/to/photos --output outputs/stills --limit 50
+```
+
+默认保留完整对齐尺寸（通常为 11664×8744），不经过快捷试验的 4K 缩放。
+每张生成 `frames/000000.dng` 与 `frames/000000.gpr`，依次编号：
+
+- **DNG**：未去马赛克的 uint16 Bayer；仅按本模块约定裁去底部不对齐行。
+  逐样本验证与准备后的源 RAW 完全相同，并核对类型化标定；不经过 VC-5。
+- **GPR**：Q3 VC-5 有损压缩，颜色/黑白电平/白平衡/裁切与 DNG 相同。
+  逐帧原生解码并验证载荷与标定。`--quality 0` 至 `--quality 5` 选择压缩预设；
+  16-bit 输入不代表 16-bit 无损压缩。
+- `conversion.json`：逐帧完成状态、颜色来源与验证结果。`prepared/` 与中间
+  `encoded.gvid` 也留在本地；输出含私人照片信息，不应上传。
+
+仅需要精确像素 DNG 时加 `--format dng`；仅需要 GPR 时加 `--format gpr`。
+`--build /path/to/existing-build` 可复用本模块构建；`--reference` 是可选颜色
+配置覆盖项。现有文件拒绝覆盖，失败目录保留供检查，重试请用新输出目录。
+导出的原始样本 DNG 可作为后续显式 `--reference`，没有已有 GPR 的循环依赖。
+
+默认通过 RawPy `rgb_xyz_matrix` 读取 LibRaw `cam_xyz`，按 XYZ→camera 的 DNG
+`ColorMatrix1` 方向直接写入，**不转置或求逆**，光源为 D65。这里只使用已有
+型号矩阵，不根据拍摄场景猜测矩阵。依据：
+[LibRaw 的矩阵方向说明](https://www.libraw.org/node/2099)、
+[RawPy 属性实现](https://github.com/letmaik/rawpy/blob/main/rawpy/_rawpy.pyx)、
+[LibRaw 型号颜色表](https://github.com/LibRaw/LibRaw/blob/master/src/tables/colordata.cpp)。
 
 ## 已测结果
 
@@ -120,9 +160,11 @@ RSS 是进程驻留内存，不是 malloc 总容量、相机 DMA 预算或最坏
 - `inspect_firmware.py`：固定哈希的第一代固件配置、HAL 与传感器模式离线核对。
 - `firmware_evidence.json`：固件候选模式与对应尺寸的电脑测试汇总。
 - `decode_frame.cpp`：调用依赖的原生 VC-5 解码 API。
-- `camera_trial.py`：50 张照片的快捷 / 完整试验入口与本地 HTML 报告。
+- `camera_trial.py`：50 张照片的快捷 / 完整试验入口、自动参考 DNG 与本地 HTML 报告。
+- `convert_stills.py`：直接把 X2D FFF / 3FR 转成精确样本 DNG 与有损 GPR。
 - `trial_gvid.py` / `trial_ffmpeg.py`：批量原生往返与影片 profile / 码率验证。
 - `requirements-trial.txt`：桌面照片试验的固定 Python 依赖。
+- `test_color_profile.py`：颜色矩阵方向、D65 标签及无效配置拒绝检查。
 - `prepare.py`：可选的 X2D FFF / 3FR / Bayer DNG 像素与标定准备。
 - `extract.py`：验证完整 GVID，原生解码并核对 GPR / DNG 标定。
 - `render.py`：LibRaw 常规显影、缩小和 FFmpeg H.264 查看导出。
@@ -133,7 +175,8 @@ RSS 是进程驻留内存，不是 malloc 总容量、相机 DMA 预算或最坏
 合成检查与提取脚本只用 Python 3 标准库和 GPR 自带工具。
 准备真实输入另需 `rawpy`、`numpy`、`tifffile`；查看导出另需 `rawpy`、
 `Pillow` 和带 `libx264` 的 FFmpeg。实测 Python 依赖版本见汇总。
-原始照片及同机型颜色标定参考由操作者提供，不随仓库附带。
+原始照片由操作者提供，不随仓库附带；默认颜色配置来自 LibRaw 型号表，
+同机型外部颜色参考仅为可选覆盖项。
 
 依赖固定为 `dcliftreaves/gpr` 提交
 `0a194995f481d09f347e99252d41558de3d97c77`，下载归档 SHA-256：
@@ -150,6 +193,12 @@ GPR 保留其 Apache-2.0 / MIT 许可；本目录适配器按仓库 MIT 许可�
 cmake -S . -B outputs/build -DCMAKE_BUILD_TYPE=Release
 cmake --build outputs/build -j 4
 ctest --test-dir outputs/build --output-on-failure
+```
+
+安装照片试验的 Python 依赖后，可另运行颜色矩阵检查：
+
+```sh
+python test_color_profile.py --gpr-source outputs/build/_deps/gpr_dependency-src
 ```
 
 默认下载模式下，后续 Python 命令的 `--gpr-source` 使用
@@ -174,10 +223,10 @@ ctest --test-dir outputs/build --output-on-failure
 相对路径以清单目录为基准，PTS 必须严格递增。编码器把帧 JSON 作为不透明
 字节保存；`extract.py` 在导出前检查标定与头部契约。
 
-已有校准 DNG 可直接准备；X2D FFF 还需同机型参考 DNG/GPR 提供颜色矩阵：
+已有校准 DNG 可直接准备；X2D FFF / 3FR 默认自动补齐型号颜色矩阵：
 
 ```sh
-python3 prepare.py input-a.FFF input-b.FFF --reference same-model-reference.dng \
+python3 prepare.py input-a.FFF input-b.FFF \
   --gpr-source outputs/build/_deps/gpr_dependency-src --output outputs/prepared --fps 24
 outputs/build/gvid_raw_demo 11664 8744 16 3 24 \
   outputs/prepared/frames.tsv outputs/clip.gvid
@@ -189,7 +238,8 @@ outputs/build/gvid_raw_demo 11664 8744 16 3 24 \
 不会静默忽略非空 opcode 等信息。
 
 FFF 的可见像素来自 LibRaw；逐张黑白电平、白平衡、方向与裁切来自 FFF，
-静态颜色标定来自操作者提供的同机型参考。**未重现厂家镜头/opcode 处理，
+静态颜色矩阵默认来自 LibRaw X2D D65 型号配置，也可由同机型外部参考覆盖。
+**未重现厂家镜头/opcode 处理，
 不声称与 Phocus 显影完全一致。** 输入 GPR 不能作为原始像素来源；参考 GPR
 只提供颜色标定，不会再次压缩其有损像素。
 

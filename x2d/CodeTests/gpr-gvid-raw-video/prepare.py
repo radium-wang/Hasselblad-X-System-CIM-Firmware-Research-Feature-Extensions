@@ -1,9 +1,9 @@
 """Prepare operator-supplied X2D FFF/3FR or calibrated Bayer DNG for the offline demo.
 
 Optional host dependencies: rawpy, numpy, tifffile. No demosaicing or CNN is
-used here. FFF/3FR requires a same-model reference DNG/GPR for camera color tags;
-FFF supplies per-shot WB, black/white, crop and orientation. Manufacturer lens
-correction/opcode processing is not reconstructed by that FFF adapter.
+used here. Without an explicit reference, use LibRaw's X2D model D65 matrix;
+FFF/3FR supplies per-shot WB, black/white, crop and orientation. Manufacturer
+lens/opcode processing and Phocus color rendering are not reconstructed.
 """
 
 import argparse
@@ -13,6 +13,44 @@ import json
 from pathlib import Path
 import struct
 import sys
+
+
+def libraw_color_tags(raw, media):
+    """Serialize LibRaw cam_xyz as XYZ-to-camera DNG ColorMatrix1, not its inverse."""
+    from fractions import Fraction
+    import numpy as np
+
+    matrix = np.asarray(raw.rgb_xyz_matrix, dtype=np.float64)
+    if (
+        matrix.shape != (4, 3)
+        or not np.isfinite(matrix).all()
+        or np.any(matrix[3] != 0)
+        or abs(np.linalg.det(matrix[:3])) < 1e-8
+    ):
+        raise ValueError("LibRaw did not supply a valid RGB camera color matrix")
+    # RawPy exposes LibRaw cam_xyz, despite its easily misread property name.
+    # For the verified X2D model this is LibRaw's daylight / D65 table profile.
+    # See README sources; never infer a color matrix from the photographed scene.
+    rationals = [Fraction(float(v)).limit_denominator(1000000) for v in matrix[:3].flat]
+    packed = struct.pack(
+        "<18i", *(n for v in rationals for n in (v.numerator, v.denominator))
+    )
+
+    def ascii_tag(code, value):
+        data = value.encode("ascii") + b"\0"
+        return media.record(code, 2, len(data), data)
+
+    return [
+        ascii_tag(271, "Hasselblad"),
+        ascii_tag(272, "X2D 100C"),
+        ascii_tag(50708, "Hasselblad X2D 100C"),
+        media.record(50706, 1, 4, bytes((1, 4, 0, 0))),
+        media.record(50707, 1, 4, bytes((1, 1, 0, 0))),
+        media.record(50710, 1, 3, bytes((0, 1, 2))),
+        media.record(50711, 3, 1, struct.pack("<H", 1)),
+        media.record(50721, 10, 9, packed),
+        media.record(50778, 3, 1, struct.pack("<H", 21)),
+    ]
 
 
 def prepare(inputs, output, gpr_source, reference=None, fps=24):
@@ -69,13 +107,10 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
         path = Path(name)
         is_fff = path.suffix.lower() in (".fff", ".3fr")
         if is_fff:
-            if reference_meta is None:
-                raise ValueError(
-                    "FFF/3FR requires --reference from the same camera model"
-                )
-            tags = {t["code"]: t for t in reference_meta["image"]}
-            if b"X2D 100C" not in media.unpack_record(tags[272]):
-                raise ValueError("reference must identify X2D 100C")
+            if reference_meta is not None:
+                tags = {t["code"]: t for t in reference_meta["image"]}
+                if media.unpack_record(tags[272]).rstrip(b"\0") != b"X2D 100C":
+                    raise ValueError("reference must identify X2D 100C")
             with tifffile.TiffFile(path) as file:
                 parent = file.pages[0]
                 if parent.tags["Model"].value != "X2D 100C":
@@ -119,11 +154,15 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
                     crop_origin[0] - raw.sizes.left_margin,
                     crop_origin[1] - raw.sizes.top_margin,
                 )
-                image = [
-                    copy.deepcopy(t)
-                    for t in reference_meta["image"]
-                    if t["code"] in color_codes
-                ]
+                image = (
+                    [
+                        copy.deepcopy(t)
+                        for t in reference_meta["image"]
+                        if t["code"] in color_codes
+                    ]
+                    if reference_meta is not None
+                    else libraw_color_tags(raw, media)
+                )
                 image += [
                     media.record(274, 3, 1, struct.pack("<H", orientation)),
                     media.record(33421, 3, 2, struct.pack("<2H", 2, 2)),
@@ -162,9 +201,22 @@ def prepare(inputs, output, gpr_source, reference=None, fps=24):
             source_kind="libraw_hasselblad_sensor_samples"
             if is_fff
             else "libraw_dng_sensor_samples",
-            calibration_source="reference color matrices plus per-shot RAW tags"
+            calibration_source=(
+                "reference color matrices plus per-shot RAW tags"
+                if reference_meta is not None
+                else "LibRaw X2D model D65 matrix plus per-shot RAW tags"
+            )
             if is_fff
             else "source_dng",
+            color_profile_kind=(
+                "operator_reference"
+                if reference_meta is not None
+                else "libraw_model_d65_single_illuminant"
+            )
+            if is_fff
+            else "source_dng",
+            rawpy_version=rawpy.__version__,
+            libraw_version=list(rawpy.libraw_version),
             calibration_limits="manufacturer lens/opcode processing not reproduced"
             if is_fff
             else "declared supported DNG tags",
